@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json());
 dotenv.config();
 
-app.use(express.static(path.join(__dirname, "../raksa-web/dist/raksa")));
+// app.use(express.static(path.join(__dirname, "../raksa-web/dist/raksa")));
 
 const paymentRouter = require("./routes/payment.routes");
 
