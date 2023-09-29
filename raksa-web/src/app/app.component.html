@@ -1,0 +1,179 @@
+<header class="header fixed-top" *ngIf="showHeader">
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a
+        class="navbar-brand"
+        [routerLink]="isAstrologerPage ? ['/astrologer'] : ['/']"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        data-bs-toggle="collapse"
+        data-bs-target=".navbar-collapse.show"
+      >
+        <img class="img-fluid me-2" src="../assets/images/logo.png" />
+        <span>Raksa</span>
+      </a>
+
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#mainNavigation"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse col" id="mainNavigation">
+        <ul class="navbar-nav ms-auto me-lg-4">
+          <li class="nav-item" *ngIf="showThreeNavs">
+            <a
+              class="nav-link"
+              routerLink="/horoscopes"
+              routerLinkActive="active"
+              data-bs-toggle="collapse"
+              data-bs-target=".navbar-collapse.show"
+              >Horoscopes</a
+            >
+          </li>
+          <li class="nav-item" *ngIf="showThreeNavs">
+            <a
+              class="nav-link"
+              routerLink="/chat"
+              routerLinkActive="active"
+              data-bs-toggle="collapse"
+              data-bs-target=".navbar-collapse.show"
+              >Chat</a
+            >
+          </li>
+          <li class="nav-item" *ngIf="showThreeNavs">
+            <a
+              class="nav-link"
+              routerLink="/call"
+              routerLinkActive="active"
+              data-bs-toggle="collapse"
+              data-bs-target=".navbar-collapse.show"
+              >Call</a
+            >
+          </li>
+          <li class="nav-item" *ngIf="showThreeNavs">
+            <a
+              class="nav-link"
+              routerLink="/live"
+              routerLinkActive="active"
+              data-bs-toggle="collapse"
+              data-bs-target=".navbar-collapse.show"
+              >Live</a
+            >
+          </li>
+          <li class="nav-item" *ngIf="showNotificationNavs">
+            <div class="nav-link" (click)="openChatNotiifcations()">
+              <div>Chat Notifications</div>
+              <div class="notificaations">
+                {{ chatNotificaitionArray?.length }}
+              </div>
+            </div>
+          </li>
+
+          <li class="nav-item" *ngIf="showNotificationNavs">
+            <div class="nav-link" (click)="openCallNotiifcations()">
+              <div>Call Notifications</div>
+              <div class="notificaations">
+                {{ callNotificaitionArray?.length }}
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <div
+          *ngIf="!authService.activeUserValue"
+          class="d-flex justify-content-center p-2"
+        >
+          <button class="btn btn-silver" type="button" (click)="login()">
+            Login/SignUp
+          </button>
+        </div>
+
+        <div
+          *ngIf="authService.activeUserValue"
+          class="dropdown user-profile d-inline-block"
+          ngbDropdown
+        >
+          <button type="button" class="btn" ngbDropdownToggle>
+            <img class="rounded-circle" src="../assets/images/login-user.png" />
+          </button>
+          <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+            <a class="dropdown-item" (click)="openProfileModal()"> Profile </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" (click)="openWalletModal()"> Wallet </a>
+            <div class="dropdown-divider"></div>
+            <a
+              href="javascript:void(0);"
+              class="dropdown-item"
+              (click)="logout()"
+            >
+              Logout
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <div class="page-content">
+    <router-outlet></router-outlet>
+  </div>
+</main>
+
+<footer class="footer" *ngIf="showFooter">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 d-flex justify-content-center text-center">
+        <div class="footer-widget">
+          <h3 class="fw-semi-bold mb-2">Company</h3>
+          <ul class="list-unstyled mb-lg-0">
+            <li><a href="/">Home</a></li>
+            <li><a href="/about-ous">About Us</a></li>
+            <li><a href="/contact-ous">Contact Us</a></li>
+            <li><a href="/terms-and-conditions">Terms And Condiditions</a></li>
+            <li><a href="/privacy-policy">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-4 d-flex justify-content-center text-center">
+        <div class="footer-widget">
+          <h3 class="fw-semi-bold mb-2">Social Media</h3>
+          <ul class="list-unstyled mb-lg-0">
+            <li><a href="javascript:void(0);">Instagram</a></li>
+            <li><a href="javascript:void(0);">Facebook</a></li>
+            <li><a href="javascript:void(0);">Twitter</a></li>
+            <li><a href="javascript:void(0);">Telegram</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="footer-widget text-lg-end">
+          <h3 class="fw-semi-bold mb-2">Apps</h3>
+          <ul class="list-unstyled mb-lg-0">
+            <li>
+              <a href="javascript:void(0);"
+                ><img src="../assets/images/google.png"
+              /></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"
+                ><img src="../assets/images/apple.png"
+              /></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="copy-right">
+    <p>&copy; 2023 Raksā</p>
+  </div>
+</footer>

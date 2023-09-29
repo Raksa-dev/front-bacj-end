@@ -1,0 +1,120 @@
+<div class="modal-header mb-5">
+  <h4 class="modal-title" id="modal-basic-title">User Wallet</h4>
+  <button
+    type="button"
+    class="btn-close bg-white"
+    aria-label="Close"
+    (click)="onCancel()"
+  ></button>
+</div>
+<div class="modal-body mb-5">
+  <div class="container-fluid">
+    <div class="row d-flex align-content-center justify-content-center">
+      <div class="col-md-7 login-form">
+        <div class="d-flex login-signup"></div>
+        <div class="position-relative">
+          <div
+            class="d-flex justify-content-center align-content-lg-center position-relative"
+          >
+            <div class="profile-pic">
+              Current Balance
+              <i (click)="refreshScreen()" class="bx bx-sm bx-refresh"></i>
+              <div class="your-letter">
+                <p>
+                  {{
+                    currentUser?.walletBalance ? currentUser?.walletBalance : 0
+                  }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div ngbAccordion [closeOthers]="true">
+            <!-- my details -->
+            <div ngbAccordionItem>
+              <h6 ngbAccordionHeader>
+                <button ngbAccordionButton>
+                  <i class="bx bx-sm bx-wallet-alt"></i>
+                  <span class="m-1">Add Money</span>
+                </button>
+              </h6>
+              <div ngbAccordionCollapse>
+                <div ngbAccordionBody>
+                  <ng-template>
+                    <!-- signup form -->
+                    <form
+                      class="needs-validation"
+                      (ngSubmit)="submitAmountDetailsForm()"
+                      [formGroup]="addMoneyForm"
+                      autocomplete="off"
+                    >
+                      <div class="mb-2">
+                        <label for="amount" class="form-fields-label"
+                          >Amount</label
+                        >
+                        <input
+                          type="number"
+                          id="amount"
+                          formControlName="amount"
+                          class="form-control"
+                          placeholder="Enter Amount"
+                        />
+                      </div>
+
+                      <div class="d-flex justify-content-center">
+                        <button
+                          type="submit"
+                          id="sign-in-button"
+                          class="btn gradient-button"
+                          [disabled]="addMoneyForm.invalid"
+                        >
+                          <span>Proceed</span>
+                        </button>
+                      </div>
+                    </form>
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+            <!-- family details -->
+            <!-- <div *ngIf="!currentUser?.isAstrologer" ngbAccordionItem>
+              <h6 ngbAccordionHeader>
+                <button ngbAccordionButton>
+                  <i class="bx bx-sm bx-group"></i>Family Details
+                </button>
+              </h6>
+              <div ngbAccordionCollapse>
+                <div ngbAccordionBody>
+                  <ng-template>
+                    <div>NO DATA</div>
+                  </ng-template>
+                </div>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="overlay-conformation" *ngIf="showPaymentOverlay">
+  <h3>Choose Your Payment Partner</h3>
+  <div class="payment-buttons">
+    <button
+      type="submit"
+      id="sign-in-button"
+      class="btn gradient-button"
+      (click)="openPayment('phonePay')"
+    >
+      <span>Phone Pe</span>
+    </button>
+    <button
+      id="sign-in-button"
+      class="btn gradient-button"
+      (click)="openPayment('ccAvenue')"
+    >
+      <span><img src="https://www.ccavenue.com/images_mcpg/logo.png" />></span>
+    </button>
+  </div>
+  <h3 (click)="closeOverlay()" class="mt-5">Go Back</h3>
+</div>

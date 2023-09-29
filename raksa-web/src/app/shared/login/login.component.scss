@@ -1,0 +1,114 @@
+.modal-body {
+  .modal-bg {
+    min-height: 500px;
+    background-image: url(../../../assets/images/login-bg.png);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    object-fit: cover;
+  }
+}
+
+.select-box {
+  color: black; /* Set the text color of the selected option */
+}
+
+// .select-box option {
+//   color: black; /* Set the text color of all options */
+// }
+
+select option {
+  margin: 40px;
+  background: #230033;
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+}
+
+.gradient-button {
+  background: linear-gradient(
+    150.77deg,
+    #d700ff 0%,
+    #7000ff 98.92%
+  ); /* Adjust colors as needed */
+
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.gradient-button:hover {
+  background: linear-gradient(
+    150.77deg,
+    #d700ff 0%,
+    #7000ff 80.92%
+  ); /* Reverse the gradient colors on hover */
+}
+.login-signup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.add-relative-btn {
+  height: 1.5rem;
+  font-size: small;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    width: 60%;
+  }
+}
+
+.ng-select.custom {
+  .ng-dropdown-panel {
+    background: #230033;
+    color: #fff;
+    .ng-option {
+      color: #fff;
+      &.ng-option-selected {
+        color: #ffffffa7;
+      }
+    }
+  }
+}
+.ng-select-multiple {
+  .ng-select-container {
+    .ng-value-container {
+      .ng-value {
+        .ng-star-inserted {
+          background: linear-gradient(150.77deg, #d700ff 0%, #7000ff 80.92%);
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+.back-button {
+  position: absolute;
+  top: 0.5rem;
+  width: 70%;
+}
+
+.upload-photo-id {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid white;
+  border-radius: 5px;
+  background: transparent;
+  height: 3rem;
+  font-size: 1rem;
+  font-weight: bold;
+}
+// .needs-validation {
+//   background: red;
+
+//   @media only screen and (min-width: 320px) and (max-width: 767px) {
+//     background: green;
+//   }
+// }
