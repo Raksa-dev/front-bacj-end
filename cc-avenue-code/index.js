@@ -12,9 +12,7 @@ app.use(express.static(path.join(__dirname, "../raksa-web/dist/raksa")));
 
 const paymentRouter = require("./routes/payment.routes");
 
-app.get("/", function (req, res) {
-  console.log(__dirname);
-  // res.send("CCavenu server!!");
+app.get("*", function (req, res) {
   res.sendFile(path.join(__dirname, "../raksa-web/dist/raksa/index.html"));
 });
 
