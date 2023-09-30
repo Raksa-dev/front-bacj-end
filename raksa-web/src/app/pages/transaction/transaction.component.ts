@@ -42,7 +42,7 @@ export class TransactionComponent implements OnInit {
       const getUserId = decryptedData.transactionId.split('_');
       this.userService
         .updateUserWalletAmount(
-          Number(decryptedData.amount),
+          Number(decryptedData.amount) / 100, // converting passa into rupee
           getUserId[2],
           decryptedData['transactionId'],
           decryptedData['providerReferenceId'],
@@ -86,7 +86,7 @@ export class TransactionComponent implements OnInit {
       const getUserId = decryptedData.transactionId.split('_');
 
       this.userService.updateUserWalletAmountForElse(
-        Number(decryptedData.amount),
+        Number(decryptedData.amount) / 100, // converting passa into rupee
         getUserId[2],
         decryptedData['transactionId'],
         decryptedData['providerReferenceId'],

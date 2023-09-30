@@ -5,12 +5,12 @@ const { encodeRequest, signRequest, request } = require("../helper");
 const PAYMENT_INITIATED = "PAYMENT_INITIATED";
 const PAYMENT_SUCCESS = "PAYMENT_SUCCESS";
 const PAYMENT_ERROR = "PAYMENT_ERROR";
-const BASE_URL_PROD = "https://raksa.tech";
+const BASE_URL_PROD = "https://astroraksa.com";
 const BASE_URL_LOCAL = "http://localhost:3000";
 const BASE_URL = BASE_URL_PROD;
 
 const FRONTEND_LOCAL = "http://localhost:8080";
-const FRONTEND_PROD = "https://www.astroraksa.com";
+const FRONTEND_PROD = "https://astroraksa.com";
 
 const FRONT_END_BASE = FRONTEND_PROD;
 
