@@ -10,10 +10,10 @@ class PaymentController {
       });
       const orderParams = {
         redirect_url: encodeURIComponent(
-          `https://raksa.tech/api/response?access_code=${req.body.keys?.access_code}&working_key=${req.body.keys?.working_key}`
+          `https://astroraksa.com/api/response?access_code=${req.body.keys?.access_code}&working_key=${req.body.keys?.working_key}`
         ),
         cancel_url: encodeURIComponent(
-          `https://raksa.tech/api/response?access_code=${req.body.keys?.access_code}&working_key=${req.body.keys?.working_key}`
+          `https://astroraksa.com/api/response?access_code=${req.body.keys?.access_code}&working_key=${req.body.keys?.working_key}`
         ),
         billing_name: "Name of the customer",
         currency: "INR",
@@ -36,10 +36,10 @@ class PaymentController {
       });
       const orderParams = {
         redirect_url: encodeURIComponent(
-          `https://raksa.tech/api/response?access_code=${req.body.keys?.access_code}&working_key=${req.body.keys?.working_key}`
+          `https://astroraksa.com/api/response?access_code=${req.body.keys?.access_code}&working_key=${req.body.keys?.working_key}`
         ),
         cancel_url: encodeURIComponent(
-          `https://raksa.tech/api/response?access_code=${req.body.keys?.access_code}&working_key=${req.body.keys?.working_key}`
+          `https://astroraksa.com/api/response?access_code=${req.body.keys?.access_code}&working_key=${req.body.keys?.working_key}`
         ),
         billing_name: "Name of the customer",
         currency: "INR",
@@ -71,12 +71,10 @@ class PaymentController {
       ).toString();
       if (ccavResponse["order_status"] == "Success") {
         res.redirect(
-          `https://www.astroraksa.com/transaction?type=success&val=${ciphertext}`
+          `https://astroraksa.com/transaction?type=success&val=${ciphertext}`
         );
       } else {
-        res.redirect(
-          `https://www.astroraksa.com/transaction?val=${ciphertext}`
-        );
+        res.redirect(`https://astroraksa.com/transaction?val=${ciphertext}`);
       }
     } catch (error) {
       next(error);
