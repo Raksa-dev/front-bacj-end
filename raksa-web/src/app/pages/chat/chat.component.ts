@@ -1,22 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Astrologer } from 'src/app/core/models';
+import { AstrologerService, UserService } from 'src/app/core/services';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { ChatuiComponent } from 'src/app/shared/chatui/chatui.component';
 import { LoginComponent } from 'src/app/shared/login/login.component';
 import { ProfileComponent } from 'src/app/shared/profile/profile.component';
+import { WalletComponent } from 'src/app/shared/wallet/wallet.component';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
 })
-export class ChatComponent {
+export class ChatComponent implements OnInit {
+  userData = null;
   constructor(
     private modalService: NgbModal,
-    public authService: AuthService
+    public authService: AuthService,
+    public astroServices: AstrologerService,
+    public userService: UserService
   ) {}
-
   public astrologers: Astrologer[] = [
     {
       _id: 1,
@@ -98,7 +102,31 @@ export class ChatComponent {
       reviews: 2500,
       online: true,
     },
+    {
+      _id: 8,
+      avatar: '../../../assets/images/astrologer/avatar-1.png',
+      astrologerName: 'Yadav Raj',
+      experience: '30+ years of experience',
+      tags: 'Vedic astrologer, Vastu expert',
+      rating: 4.5,
+      reviews: 2500,
+      online: true,
+    },
   ];
+
+  public astrologersData = [];
+  ngOnInit(): void {
+    this.astroServices.getAllAstrologersData().then((data) => {
+      data.forEach((doc) => {
+        this.astrologersData.push(doc.data());
+      });
+    });
+    this.userService
+      .getUserDataInfo(this.authService.activeUserValue.uid)
+      .then((userVal) => {
+        this.userData = userVal;
+      });
+  }
 
   public openFilter(content: any): void {
     const modalRef = this.modalService
@@ -123,6 +151,32 @@ export class ChatComponent {
         size: 'lg',
         scrollable: true,
       });
+    } else {
+      const modalRef = this.modalService.open(LoginComponent, {
+        backdrop: 'static',
+        keyboard: false,
+        centered: true,
+        size: 'lg',
+        modalDialogClass: 'login',
+      });
+    }
+  }
+  sendChatNotificationToAstrologer(astroData) {
+    if (this.authService.activeUserValue) {
+      if (this.userData.walletBalance > astroData['chatChargePerMinute']) {
+        this.userService
+          .NotifyAstrologerForChat(astroData, this.userService.getUserData)
+          .then((data) => {});
+      } else {
+        // top up balance
+        const modalRef = this.modalService.open(WalletComponent, {
+          backdrop: 'static',
+          keyboard: false,
+          centered: true,
+          size: 'lg',
+          scrollable: true,
+        });
+      }
     } else {
       const modalRef = this.modalService.open(LoginComponent, {
         backdrop: 'static',

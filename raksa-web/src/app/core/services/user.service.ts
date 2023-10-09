@@ -141,6 +141,8 @@ export class UserService {
       gender: '',
       profilePicUrl: '',
       maritialStatus: '',
+      relatives: [],
+      walletBalance: 0,
     });
     setDoc(astroRef, data);
     return updateDoc(astroLinkRef, { submitted: true });
@@ -346,5 +348,28 @@ export class UserService {
     const transRef = doc(this.firestore, 'transactions', tranxId);
     const data = await getDoc(transRef);
     return data.data();
+  }
+  async createEntryInSession({
+    amount,
+    astrologerId,
+    callDuration,
+    callerId,
+    sessionType,
+  }) {
+    const min = 1000000000;
+    const max = 9999999999;
+    const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+    let sessionId = `session_${randomNum}`;
+    const sessionRef = doc(this.firestore, 'sessions', sessionId);
+
+    return setDoc(sessionRef, {
+      amount,
+      astrologerId,
+      callDuration,
+      callerId,
+      sessionType,
+      id: sessionId,
+      date: new Date(),
+    });
   }
 }

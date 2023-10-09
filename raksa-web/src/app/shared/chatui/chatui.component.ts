@@ -36,6 +36,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from '@angular/fire/storage';
+import { async } from '@angular/core/testing';
 
 @Component({
   selector: 'app-chatui',
@@ -61,6 +62,7 @@ export class ChatuiComponent implements OnInit, OnDestroy {
   private readonly storage: Storage = inject(Storage);
 
   currentUser = this.userService?.getUserData;
+  astrologerData = null;
   messageText: string = '';
   timer: number = 0;
   timerSubscription: Subscription;
@@ -82,6 +84,13 @@ export class ChatuiComponent implements OnInit, OnDestroy {
     window.onbeforeunload = () => {
       localStorage.setItem('chatTimer', this.timer.toString());
     };
+    console.log('this i aprent dtaa:', this.parentData);
+    if (!this.parentData.userIsAstrologer) {
+      this.astroData().then((data) => {
+        this.astrologerData = data;
+      });
+    }
+
     this.fetchData();
   }
 
@@ -99,7 +108,9 @@ export class ChatuiComponent implements OnInit, OnDestroy {
 
     newData.subscribe((data) => {
       this.messages = data;
-      this.scrollToBottom();
+      setTimeout(() => {
+        this.scrollToBottom();
+      }, 0);
     });
   }
 
@@ -110,7 +121,61 @@ export class ChatuiComponent implements OnInit, OnDestroy {
   continue(): void {
     this.confirmationOverlay = false;
   }
+  calculateRate(rate, sec) {
+    const ratePerMinute = rate; // Rs per minute
+    const seconds = sec;
+
+    // Convert seconds to minutes
+    const minutes = seconds / 60;
+
+    // Calculate the cost
+    const cost = ratePerMinute * minutes;
+
+    // Round the cost to two decimal places
+    const roundedCost = Math.round(cost * 100) / 100;
+    return roundedCost;
+  }
+
+  async deductBalanceFromUserAccount(uid, amount) {
+    if (this.currentUser && this.currentUser['walletBalance']) {
+      const data = await this.userService.UpdateUser(uid, {
+        walletBalance: this.currentUser['walletBalance'] - amount,
+      });
+
+      return data;
+    }
+  }
+  async astroData() {
+    let astrologerData = await this.userService.getUserDataInfo(
+      this.parentData.notificationData['senderId']
+    );
+    return astrologerData;
+  }
   async endChat() {
+    // the below contion is to get the astrolger pricring per min and parentData.userIsAstrologer false means this is a
+    // user take sender id because sender is astrolger
+
+    if (!this.parentData.userIsAstrologer) {
+      let astrologerData = this.astrologerData;
+
+      let charge = this.calculateRate(
+        astrologerData['chatChargePerMinute'],
+        this.timer
+      );
+
+      // save in session data base
+      this.deductBalanceFromUserAccount(this.currentUser.uid, charge).then(
+        async (data) => {
+          await this.userService.createEntryInSession({
+            amount: Math.round(charge * 100) / 100,
+            astrologerId: this.parentData.notificationData['senderId'],
+            callDuration: this.timer,
+            callerId: this.currentUser.uid,
+            sessionType: 'chat',
+          });
+        }
+      );
+    }
     // mark notification data as read
 
     const chatRoomCollection = collection(
@@ -143,7 +208,6 @@ export class ChatuiComponent implements OnInit, OnDestroy {
     );
 
     this.confirmationOverlay = false;
-    let timeChateed = this.formatTime(this.timer);
     const storedTimer = localStorage.removeItem('chatTimer');
     this.openUserData = false;
     this.activeModal.close({ response: false });
@@ -163,11 +227,26 @@ export class ChatuiComponent implements OnInit, OnDestroy {
     this.timerSubscription.unsubscribe();
     window.onbeforeunload = null;
   }
+  checkTheBalance() {
+    if (this.currentUser && this.currentUser['walletBalance']) {
+      let trackBalance =
+        this.currentUser['walletBalance'] -
+        this.calculateRate(
+          this.astrologerData['chatChargePerMinute'],
+          this.timer
+        );
+      if (trackBalance <= this.astrologerData['chatChargePerMinute']) {
+        // end the call top up the wallet to continue
+        this.endChat();
+      }
+    }
+  }
   startTimer() {
     this.ngZone.runOutsideAngular(() => {
       this.timerSubscription = interval(1000).subscribe(() => {
         this.ngZone.run(() => {
           this.timer++;
+          this.checkTheBalance();
         });
       });
     });
@@ -200,7 +279,9 @@ export class ChatuiComponent implements OnInit, OnDestroy {
           senderId: this.currentUser.uid,
           senderIsAstrologer: false,
           senderName: 'name',
-          senderPhotoUrl: this.currentUser?.profilePicUrl,
+          senderPhotoUrl: this.currentUser?.profilePicUrl
+            ? this.currentUser?.profilePicUrl
+            : '',
           time: new Date(),
           type: type,
         });
@@ -302,8 +383,6 @@ export class ChatuiComponent implements OnInit, OnDestroy {
     const Data = await this.userService.getDataFromUserCollection(
       this.parentData.notificationData?.senderId
     );
-
-    console.log('the DATA', Data);
     if (Data) {
       this.confirmationOverlay = true;
       this.relations = Data;

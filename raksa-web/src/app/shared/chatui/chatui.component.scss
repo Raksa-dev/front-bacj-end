@@ -35,6 +35,9 @@
 .chat-message-sender {
   background-color: #ab55c8;
 }
+.chat-message-receiver {
+  background-color: #4d225b;
+}
 
 .chat-input {
   /* Style the input box and send button */
@@ -52,7 +55,6 @@
     #d700ff 0%,
     #7000ff 98.92%
   ); /* Adjust colors as needed */
-
   color: white;
   padding: 8px 10px;
   border: none;
@@ -82,7 +84,21 @@ textarea {
   object-fit: cover;
   border-radius: 50%;
 }
+.your-letter {
+  height: 30px !important;
+  width: 30px !important;
+  border-radius: 50%;
+  background-color: #ab55c8;
+  text-align: center;
+}
 
+.your-letter-sender {
+  height: 30px !important;
+  width: 30px !important;
+  border-radius: 50%;
+  background-color: #4d225b;
+  text-align: center;
+}
 .display-block {
   display: block;
 }
@@ -120,6 +136,7 @@ textarea {
 }
 .confirmation-text {
   font-weight: 600;
+  text-align: center;
 }
 .confirmation-buttongroup {
   display: flex;

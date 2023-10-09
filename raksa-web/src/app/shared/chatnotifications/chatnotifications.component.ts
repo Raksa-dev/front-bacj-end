@@ -23,8 +23,7 @@ export class ChatnotificationsComponent implements OnInit {
 
   @Input() notificaitionData;
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
   async openChatWindow(notificationData) {
     // steps
     // 1.create room code and room

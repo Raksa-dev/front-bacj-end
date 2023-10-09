@@ -16,7 +16,7 @@
     </div>
 
     <div class="row">
-      <ng-container *ngFor="let astrologer of astrologers">
+      <ng-container *ngFor="let astrologer of astrologersData">
         <div class="col-xl-3 col-lg-6">
           <div class="card astrologer text-center">
             <div class="card-body">
@@ -33,34 +33,55 @@
                   <img
                     src="../../../assets/images/view.png"
                     class="me-1"
-                  /><span>750</span>
+                  /><span>{{ astrologersData.length }}</span>
                 </p>
               </div>
-
+              <div
+                class="d-flex justify-content-center"
+                *ngIf="!astrologer['profilePicUrl']"
+              >
+                <div
+                  class="avatar-md rounded-circle mb-2 bg-dark content-center"
+                >
+                  {{ astrologer["firstName"][0]?.toUpperCase() }}
+                </div>
+              </div>
               <img
                 class="avatar-md rounded-circle mb-2"
-                src="{{ astrologer['avatar'] }}"
+                src="{{ astrologer['profilePicUrl'] }}"
+                *ngIf="astrologer['profilePicUrl']"
               />
-              <h3 class="fw-semi-bold mb-2">
-                {{ astrologer["astrologerName"] }}
-              </h3>
-              <p class="mb-2">{{ astrologer["experience"] }}</p>
+              <h4 class="fw-semi-bold mb-2">
+                {{
+                  astrologer["firstName"]?.toUpperCase() +
+                    " " +
+                    astrologer["lastName"]?.toUpperCase()
+                }}
+              </h4>
+              <p class="mb-2">
+                {{ astrologer["yearsOfExperience"] }} years of experience
+              </p>
 
               <div class="tags">
-                <h5 class="text-muted mb-2">{{ astrologer["tags"] }}</h5>
+                <h5 class="text-muted mb-2">
+                  {{ astrologer["specialties"]?.join(",") }}
+                </h5>
               </div>
 
               <div class="reviews">
                 <h6 class="mb-2">
-                  <span>{{ astrologer["rating"] }}</span>
+                  <span>4.5</span>
                   <img src="../../../assets/images/star.png" class="mx-1" />
                   <span class="me-1">|</span>
-                  <span>{{ astrologer["reviews"] }}+ Reviews</span>
+                  <span>10000+ Reviews</span>
                 </h6>
               </div>
 
               <div class="session mt-1">
-                <button (click)="openChatWindow()" class="btn btn-white">
+                <button
+                  (click)="sendChatNotificationToAstrologer(astrologer)"
+                  class="btn btn-white"
+                >
                   Notify Now
                 </button>
               </div>

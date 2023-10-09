@@ -48,7 +48,15 @@
               <p>{{ message.receiverName[0] }}</p>
             </div>
           </div>
-          <div class="chat-messages">
+          <div class="chat-messages" *ngIf="message.type == 'text'">
+            {{ message.text }}
+          </div>
+          <div
+            class="chat-messages chat-message-receiver image-text"
+            *ngIf="message.type == 'image_text'"
+            (click)="downloadFileFromChat(message)"
+          >
+            <img [src]="message.file_url" alt="Image Preview" width="60" />
             {{ message.text }}
           </div>
         </div>
@@ -74,7 +82,7 @@
               class="pro-pic"
               *ngIf="message.senderPhotoUrl"
             />
-            <div class="your-letter" *ngIf="!message.senderPhotoUrl">
+            <div class="your-letter-sender" *ngIf="!message.senderPhotoUrl">
               <p>{{ message.senderName[0] }}</p>
             </div>
           </div>

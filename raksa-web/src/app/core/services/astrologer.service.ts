@@ -76,8 +76,9 @@ export class AstrologerService {
       senderId: userData['uid'],
       senderIsAstrologer: true,
       senderName: userData['firstName'],
-      senderPhotoUrl:
-        'https://firebasestorage.googleapis.com/v0/b/raksa-1e906.appspot.com/o/profilepics%2Fdata%2Fuser%2F0%2Fcom.example.raksa%2Fcache%2F14e38a7a-0b58-479e-8efe-b6d197f9e85a%2F1000021856.jpg2023-07-29%2012%3A16%3A56.346867%7D?alt=media&token=81f6e22c-876e-4e9b-ba1c-65dd25409791',
+      senderPhotoUrl: userData['profilePicUrl']
+        ? userData['profilePicUrl']
+        : '',
       time: new Date(),
       type: 'text',
     });
