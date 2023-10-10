@@ -528,6 +528,7 @@ export class LoginComponent implements OnInit {
     if (relativeDataArray.length) {
       formValues['relatives'] = relativeDataArray;
     }
+    formValues['walletBalance']=0;
     this.userService
       .CreateUser(formValues)
       .then((data) => {

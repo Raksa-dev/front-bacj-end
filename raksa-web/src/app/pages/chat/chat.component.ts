@@ -165,7 +165,11 @@ export class ChatComponent implements OnInit {
     if (this.authService.activeUserValue) {
       if (this.userData.walletBalance > astroData['chatChargePerMinute']) {
         this.userService
-          .NotifyAstrologerForChat(astroData, this.userService.getUserData)
+          .NotifyAstrologerForChat(
+            astroData,
+            this.userService.getUserData,
+            'chat'
+          )
           .then((data) => {});
       } else {
         // top up balance

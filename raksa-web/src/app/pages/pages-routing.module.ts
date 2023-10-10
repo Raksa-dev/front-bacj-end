@@ -36,6 +36,10 @@ const routes: Routes = [
     component: ChatComponent,
   },
   {
+    path: 'call',
+    component: CallComponent,
+  },
+  {
     path: 'admin',
     component: AdminComponent,
   },

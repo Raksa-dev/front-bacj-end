@@ -57,7 +57,8 @@ export class ChatnotificationsComponent implements OnInit {
       // }
       const notify = await this.userservice.NotifyUserForChat(
         this.userservice.getUserData,
-        notificationData
+        notificationData,
+        'chat'
       );
       let modelRef = this.modalService.open(ChatuiComponent, {
         backdrop: 'static',
@@ -74,7 +75,8 @@ export class ChatnotificationsComponent implements OnInit {
     } else {
       const notify = await this.userservice.NotifyUserForChat(
         this.userservice.getUserData,
-        notificationData
+        notificationData,
+        'chat'
       );
       // notify user that room has been created
       let modelRef = this.modalService.open(ChatuiComponent, {

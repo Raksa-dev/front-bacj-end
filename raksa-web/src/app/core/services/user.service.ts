@@ -163,11 +163,11 @@ export class UserService {
     const data = await getDocs(q);
     return data;
   }
-  async NotifyAstrologerForChat(astrologerData, userData) {
+  async NotifyAstrologerForChat(astrologerData, userData, type) {
     const alreadyNotificationPresent = await this.checkNotificationIsThere(
       astrologerData['uid'],
       userData['uid'],
-      'chat'
+      type
     );
     if (alreadyNotificationPresent?.size) {
       // notification present
@@ -180,13 +180,13 @@ export class UserService {
         'notifications'
       );
       addDoc(notificationsRef, {
-        type: 'chat',
+        type,
         isRead: false,
-        body: 'Want to Chat',
+        body: `Want to ${type}`,
         date: new Date(),
         title: `hey ${
           userData['firstName'] + ' ' + userData['lastName']
-        } wants to chat with you`,
+        } wants to have ${type} with you`,
         senderId: userData['uid'],
         senderName: userData['firstName'],
         profilePicUrl: userData['profilePicUrl']
@@ -196,11 +196,11 @@ export class UserService {
       return true;
     }
   }
-  async NotifyUserForChat(userData, notificaitionData) {
+  async NotifyUserForChat(userData, notificaitionData, type) {
     const alreadyNotificationPresent = await this.checkNotificationIsThere(
       notificaitionData['senderId'],
       userData['uid'],
-      'chat'
+      type
     );
 
     if (alreadyNotificationPresent?.size) {
@@ -213,16 +213,18 @@ export class UserService {
         'notifications'
       );
       addDoc(notificationsRef, {
-        type: 'chat',
+        type,
         isRead: false,
-        body: 'Want to Chat',
+        body: `Want to ${type}`,
         date: new Date(),
         title: `hey ${
           userData['firstName'] + ' ' + userData['lastName']
-        } wants to chat with you`,
+        } wants to have ${type} with you`,
         senderId: userData['uid'],
         senderName: userData['firstName'],
-        profilePicUrl: userData['profilePicUrl'],
+        profilePicUrl: userData['profilePicUrl']
+          ? userData['profilePicUrl']
+          : '',
       });
       return false;
     }

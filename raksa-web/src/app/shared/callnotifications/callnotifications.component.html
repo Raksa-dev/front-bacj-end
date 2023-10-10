@@ -1,5 +1,5 @@
 <div class="modal-header mb-5">
-  <h4 class="modal-title" id="modal-basic-title">Call Notifications</h4>
+  <h4 class="modal-title" id="modal-basic-title">Chat Notifications</h4>
   <button
     type="button"
     class="btn-close bg-white"
@@ -8,15 +8,43 @@
   ></button>
 </div>
 <div class="modal-body mb-5">
-  <div class="container-fluid">
-    <div class="row d-flex align-content-center justify-content-center">
-      <div class="col-md-7 login-form">
-        <div class="d-flex login-signup"></div>
-        <div class="position-relative">
-          <div
-            class="d-flex justify-content-center align-content-lg-center position-relative"
-          ></div>
+  <div *ngFor="let notification of notificaitionData">
+    <div class="notification-tile">
+      <div class="image-and-title">
+        <div class="image">
+          <div *ngIf="!notification['profilePicUrl']">
+            <div class="image-container">
+              {{ notification["senderName"][0] }}
+            </div>
+          </div>
+          <img
+            class="image-container"
+            src="{{ notification['profilePicUrl'] }}"
+            *ngIf="notification['profilePicUrl']"
+          />
         </div>
+        <div class="message-head-continer">
+          <div class="message">
+            {{ notification["title"] }}
+          </div>
+          <div class="message-time">
+            notification received at
+            {{
+              notification["date"].toDate().toDateString() +
+                " " +
+                notification["date"].toDate().toLocaleTimeString()
+            }}
+          </div>
+        </div>
+      </div>
+      <div class="action-col">
+        <button
+          id="sign-in-button"
+          class="btn gradient-button"
+          (click)="openChatWindow(notification)"
+        >
+          <span>Start Chat</span>
+        </button>
       </div>
     </div>
   </div>

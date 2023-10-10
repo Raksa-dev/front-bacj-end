@@ -45,7 +45,7 @@
               *ngIf="message.receiverPhotoUrl"
             />
             <div class="your-letter" *ngIf="!message.receiverPhotoUrl">
-              <p>{{ message.receiverName[0] }}</p>
+              <p>{{ message.senderName[0] }}</p>
             </div>
           </div>
           <div class="chat-messages" *ngIf="message.type == 'text'">

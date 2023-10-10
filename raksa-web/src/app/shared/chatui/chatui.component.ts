@@ -191,12 +191,14 @@ export class ChatuiComponent implements OnInit, OnDestroy {
       mediaUrl: '',
       message: 'User Has End The Chat',
       receiverId: '',
-      receiverName: 'some name',
+      receiverName: '',
       receiverPhotoUrl: '',
       senderId: this.currentUser.uid,
       senderIsAstrologer: false,
       senderName: this.currentUser.firstName,
-      senderPhotoUrl: this.currentUser?.profilePicUrl,
+      senderPhotoUrl: this.currentUser?.profilePicUrl
+        ? this.currentUser?.profilePicUrl
+        : '',
       time: new Date(),
       type: 'text',
     });
@@ -272,13 +274,13 @@ export class ChatuiComponent implements OnInit, OnDestroy {
           file_url: file_url,
           isRead: false,
           mediaUrl: '',
-          message: 'hi',
+          message: this.messageText,
           receiverId: '',
-          receiverName: 'some name',
+          receiverName: '',
           receiverPhotoUrl: '',
           senderId: this.currentUser.uid,
           senderIsAstrologer: false,
-          senderName: 'name',
+          senderName: this.currentUser?.firstName,
           senderPhotoUrl: this.currentUser?.profilePicUrl
             ? this.currentUser?.profilePicUrl
             : '',
