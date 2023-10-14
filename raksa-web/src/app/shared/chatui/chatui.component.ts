@@ -37,6 +37,7 @@ import {
   getDownloadURL,
 } from '@angular/fire/storage';
 import { async } from '@angular/core/testing';
+import { increment } from 'firebase/firestore';
 
 @Component({
   selector: 'app-chatui',
@@ -84,7 +85,6 @@ export class ChatuiComponent implements OnInit, OnDestroy {
     window.onbeforeunload = () => {
       localStorage.setItem('chatTimer', this.timer.toString());
     };
-    console.log('this i aprent dtaa:', this.parentData);
     if (!this.parentData.userIsAstrologer) {
       this.astroData().then((data) => {
         this.astrologerData = data;
@@ -145,6 +145,15 @@ export class ChatuiComponent implements OnInit, OnDestroy {
       return data;
     }
   }
+  async addBalanceToAstrolgerAccount(uid, amount) {
+    if (this.currentUser && this.currentUser['walletBalance']) {
+      const data = await this.userService.UpdateUser(uid, {
+        walletBalance: increment(amount),
+      });
+
+      return data;
+    }
+  }
   async astroData() {
     let astrologerData = await this.userService.getUserDataInfo(
       this.parentData.notificationData['senderId']
@@ -173,6 +182,11 @@ export class ChatuiComponent implements OnInit, OnDestroy {
             callerId: this.currentUser.uid,
             sessionType: 'chat',
           });
+
+          await this.addBalanceToAstrolgerAccount(
+            this.parentData.notificationData['senderId'],
+            charge
+          );
         }
       );
     }
@@ -328,22 +342,6 @@ export class ChatuiComponent implements OnInit, OnDestroy {
         },
         () => {
           getDownloadURL(storageRef).then((data) => {
-            // this.userService
-            //   .UpdateUser(this.authService.activeUserValue['uid'], {
-            //     profilePicUrl: data,
-            //   })
-            //   .then((data) => {
-            //     this.userService.fetchUserData(
-            //       this.userService.getUserData.uid
-            //     );
-            //     // this.uploadProgress = 0;
-            //     this.confirmationOverlay = false;
-            //     this.sendImageInMessage = false;
-            //     this.activeModal.close({ response: true });
-            //   })
-            //   .catch((error: any) => {
-            //     console.log(error);
-            //   });
             if (this.sendMessage('image_text', data)) {
               this.confirmationOverlay = false;
               this.sendImageInMessage = false;

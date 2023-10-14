@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Astrologer } from 'src/app/core/models';
 import { AstrologerService, UserService } from 'src/app/core/services';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { CalluiComponent } from 'src/app/shared/callui/callui.component';
 import { ChatuiComponent } from 'src/app/shared/chatui/chatui.component';
 import { LoginComponent } from 'src/app/shared/login/login.component';
 import { ProfileComponent } from 'src/app/shared/profile/profile.component';
@@ -145,7 +146,7 @@ export class CallComponent implements OnInit {
 
   openChatWindow() {
     if (this.authService.activeUserValue) {
-      this.modalService.open(ChatuiComponent, {
+      this.modalService.open(CalluiComponent, {
         backdrop: 'static',
         keyboard: false,
         centered: true,
@@ -166,7 +167,11 @@ export class CallComponent implements OnInit {
     if (this.authService.activeUserValue) {
       if (this.userData.walletBalance > astroData['callChargePerMinute']) {
         this.userService
-          .NotifyAstrologerForChat(astroData, this.userService.getUserData,'call')
+          .NotifyAstrologerForChat(
+            astroData,
+            this.userService.getUserData,
+            'call'
+          )
           .then((data) => {});
       } else {
         // top up balance

@@ -18,12 +18,16 @@ import {
 } from '@angular/fire/firestore';
 
 import { Auth, onAuthStateChanged, signOut } from '@angular/fire/auth';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AstrologerService {
-  constructor(private firestore: Firestore) {}
+  BASE_URL_PROD = 'https://astroraksa.com';
+  BASE_URL_LOCAL = 'http://localhost:3000';
+  BASE_URL = this.BASE_URL_PROD;
+  constructor(private firestore: Firestore, private http: HttpClient) {}
 
   async getAllAstrologersData() {
     const data = await getDocs(collection(this.firestore, 'astrologers'));
@@ -83,5 +87,8 @@ export class AstrologerService {
       type: 'text',
     });
     return { isRoomThere: false };
+  }
+  async generateRoomCodeForCall(roomName) {
+    return this.http.post(`${this.BASE_URL}/api/roomcode`, { name: roomName });
   }
 }

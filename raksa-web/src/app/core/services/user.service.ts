@@ -196,7 +196,12 @@ export class UserService {
       return true;
     }
   }
-  async NotifyUserForChat(userData, notificaitionData, type) {
+  async NotifyUserForChat(
+    userData,
+    notificaitionData,
+    type,
+    callRoomCode?: String
+  ) {
     const alreadyNotificationPresent = await this.checkNotificationIsThere(
       notificaitionData['senderId'],
       userData['uid'],
@@ -225,6 +230,7 @@ export class UserService {
         profilePicUrl: userData['profilePicUrl']
           ? userData['profilePicUrl']
           : '',
+        callRoomCode: type == 'call' ? callRoomCode : '',
       });
       return false;
     }

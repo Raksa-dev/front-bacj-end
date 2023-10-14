@@ -1,6 +1,7 @@
 var express = require("express");
 var paymentController = require("../controllers/payment.controller");
 var PhonePePaymentController = require("../controllers/paymentPhonePe.controller");
+var msController = require("../controllers/100ms.controller");
 var paymentRouter = express.Router();
 
 paymentRouter.post(
@@ -26,5 +27,5 @@ paymentRouter.get(
   "/phonepe/healthCheck",
   PhonePePaymentController.handlePaymentControllerPhonePayHealthCheck
 );
-
+paymentRouter.post("/roomcode", msController.handleRoomCode);
 module.exports = paymentRouter;

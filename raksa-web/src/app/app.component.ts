@@ -157,13 +157,14 @@ export class AppComponent implements OnInit {
     modelRef.componentInstance.notificaitionData = this.chatNotificaitionArray;
   }
   openCallNotiifcations() {
-    this.modalService.open(CallnotificationsComponent, {
-      // backdrop: 'static',
+    const modelRef = this.modalService.open(CallnotificationsComponent, {
+      backdrop: 'static',
       keyboard: false,
-      // centered: true,
+      centered: true,
       size: 'lg',
       scrollable: true,
     });
+    modelRef.componentInstance.notificaitionData = this.callNotificaitionArray;
   }
 
   openWalletModal(): void {

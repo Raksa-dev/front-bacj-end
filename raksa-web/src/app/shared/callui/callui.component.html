@@ -1,1 +1,87 @@
-<p>callui works!</p>
+<div class="modal-header mb-5">
+  <h4 class="modal-title" id="modal-basic-title">Calling</h4>
+  <span *ngIf="joinedCall"> Timer: {{ formatTime(timer) }}</span>
+  <button
+    type="button"
+    class="btn-close bg-white"
+    aria-label="Close"
+    (click)="onCancel()"
+  ></button>
+</div>
+<div class="modal-body mb-5">
+  <div class="container-fluid">
+    <div class="d-flex align-content-center justify-content-evenly">
+      <div *ngIf="!joinedCall" ngbAccordion [closeOthers]="true">
+        <button class="btn gradient-button" (click)="joinRoom()">Join</button>
+      </div>
+      <div
+        *ngIf="joinedCall"
+        class="d-flex align-content-center justify-content-evenly w-100"
+      >
+        <div
+          class="d-flex align-content-center justify-content-center flex-column gap-1"
+        >
+          <div
+            class="peer-box d-flex align-content-center justify-content-center"
+          >
+            You
+          </div>
+          <div
+            (click)="muteAudioClick()"
+            class="upload-pic-box gradient-background d-flex align-content-center justify-content-center"
+          >
+            <i
+              class="bx"
+              [class.bx-microphone]="!muteLocalPeer"
+              [class.bx-microphone-off]="muteLocalPeer"
+            ></i>
+          </div>
+        </div>
+        <div *ngFor="let peer of peers">
+          <div
+            class="d-flex align-content-center justify-content-center flex-column gap-1"
+          >
+            <div
+              class="peer-box d-flex align-content-center justify-content-center"
+            >
+              {{ peer.name[0] }}
+            </div>
+            <!-- <div
+              (click)="muteAudioClick()"
+              class="upload-pic-box gradient-background d-flex align-content-center justify-content-center"
+            >
+              <i class="bx bx-microphone"></i>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="joinedCall" class="modal-footer">
+  <button class="btn gradient-button" (click)="openConfirmation()">
+    Leave Call
+  </button>
+</div>
+
+<div class="overlay-conformation" *ngIf="confirmationOverlay">
+  <!-- closing button -->
+  <div class="position-absolute top-0 end-0">
+    <button
+      type="button"
+      class="btn-close btn-close-white"
+      ngbAutofocus
+      aria-label="Close"
+      (click)="closeOverlay()"
+    ></button>
+  </div>
+  <!-- closing cinfirmation -->
+  <div class="conformation-box">
+    <p class="confirmation-text">Are You Sure Want To End This Call?</p>
+    <div class="confirmation-buttongroup">
+      <button class="btn gradient-button" (click)="continue()">CONTINUE</button>
+      <button class="btn gradient-button" (click)="leaveRoom()">END</button>
+    </div>
+  </div>
+</div>
