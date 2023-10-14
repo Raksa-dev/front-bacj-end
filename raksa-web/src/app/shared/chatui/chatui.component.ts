@@ -147,8 +147,10 @@ export class ChatuiComponent implements OnInit, OnDestroy {
   }
   async addBalanceToAstrolgerAccount(uid, amount) {
     if (this.currentUser && this.currentUser['walletBalance']) {
+      const roundedAmount = Math.round(amount * 100) / 100;
+
       const data = await this.userService.UpdateUser(uid, {
-        walletBalance: increment(amount),
+        walletBalance: increment(roundedAmount),
       });
 
       return data;
