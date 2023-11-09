@@ -15,6 +15,8 @@ import { TransactionComponent } from './transaction/transaction.component';
 import { AstrologerComponent } from './astrologer/astrologer.component';
 import { HoroscopesComponent } from './horoscopes/horoscopes.component';
 import { HoroscopeComponent } from './horoscopes/horoscope/horoscope.component';
+import { FlamesComponent } from './flames/flames.component';
+import { MatchMakingComponent } from './match-making/match-making.component';
 
 const routes: Routes = [
   {
@@ -70,6 +72,14 @@ const routes: Routes = [
   {
     path: 'live',
     component: LiveComponent,
+  },
+  {
+    path: 'flames',
+    component: FlamesComponent,
+  },
+  {
+    path: 'match-making',
+    component: MatchMakingComponent,
   },
   {
     path: '**',

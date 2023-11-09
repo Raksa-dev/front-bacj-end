@@ -17,10 +17,12 @@ import { TransactionComponent } from './transaction/transaction.component';
 import { AstrologerComponent } from './astrologer/astrologer.component';
 import { HoroscopesComponent } from './horoscopes/horoscopes.component';
 import { HoroscopeComponent } from './horoscopes/horoscope/horoscope.component';
+import { FlamesComponent } from './flames/flames.component';
+import { MatchMakingComponent } from './match-making/match-making.component';
 
 
 @NgModule({
-    declarations: [RoutingComponents, AdminComponent, LinkcreationComponent, AboutousComponent, ContactousComponent, PrivacypolicyComponent, TermsandconditionsComponent, TransactionComponent, AstrologerComponent, HoroscopesComponent, HoroscopeComponent],
+    declarations: [RoutingComponents, AdminComponent, LinkcreationComponent, AboutousComponent, ContactousComponent, PrivacypolicyComponent, TermsandconditionsComponent, TransactionComponent, AstrologerComponent, HoroscopesComponent, HoroscopeComponent, FlamesComponent, MatchMakingComponent],
     imports: [
         CommonModule,
         FormsModule, ReactiveFormsModule,

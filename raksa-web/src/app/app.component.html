@@ -9,7 +9,12 @@
         data-bs-toggle="collapse"
         data-bs-target=".navbar-collapse.show"
       >
-        <img class="img-fluid me-2" src="../assets/images/logo.png" />
+        <img
+          class="img-fluid me-2"
+          height="30px"
+          width="30px"
+          src="../assets/images/logo.png"
+        />
         <span>Raksa</span>
       </a>
 
@@ -60,13 +65,33 @@
           <li class="nav-item" *ngIf="showThreeNavs">
             <a
               class="nav-link"
+              routerLink="/flames"
+              routerLinkActive="active"
+              data-bs-toggle="collapse"
+              data-bs-target=".navbar-collapse.show"
+              >Flames</a
+            >
+          </li>
+          <li class="nav-item" *ngIf="showThreeNavs">
+            <a
+              class="nav-link"
+              routerLink="/match-making"
+              routerLinkActive="active"
+              data-bs-toggle="collapse"
+              data-bs-target=".navbar-collapse.show"
+              >Match Making</a
+            >
+          </li>
+          <!-- <li class="nav-item" *ngIf="showThreeNavs">
+            <a
+              class="nav-link"
               routerLink="/live"
               routerLinkActive="active"
               data-bs-toggle="collapse"
               data-bs-target=".navbar-collapse.show"
               >Live</a
             >
-          </li>
+          </li> -->
           <li class="nav-item" *ngIf="showNotificationNavs">
             <div class="nav-link" (click)="openChatNotiifcations()">
               <div>Chat Notifications</div>
@@ -138,19 +163,34 @@
             <li><a href="/">Home</a></li>
             <li><a href="/about-ous">About Us</a></li>
             <li><a href="/contact-ous">Contact Us</a></li>
-            <li><a href="/terms-and-conditions">Terms And Condiditions</a></li>
+            <li><a href="/terms-and-conditions">Terms And Conditions</a></li>
             <li><a href="/privacy-policy">Privacy Policy</a></li>
           </ul>
         </div>
       </div>
+
       <div class="col-lg-4 d-flex justify-content-center text-center">
         <div class="footer-widget">
           <h3 class="fw-semi-bold mb-2">Social Media</h3>
           <ul class="list-unstyled mb-lg-0">
-            <li><a href="javascript:void(0);">Instagram</a></li>
-            <li><a href="javascript:void(0);">Facebook</a></li>
-            <li><a href="javascript:void(0);">Twitter</a></li>
-            <li><a href="javascript:void(0);">Telegram</a></li>
+            <li>
+              <a href="https://www.instagram.com/astro.raksa/" target="_blank"
+                >Instagram</a
+              >
+            </li>
+            <li>
+              <a href="https://www.facebook.com/astroraksa" target="_blank"
+                >Facebook</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://www.linkedin.com/company/rak%E1%B9%A3%C4%81/"
+                target="_blank"
+                >Linkedin</a
+              >
+            </li>
+            <!-- <li><a href="javascript:void(0);">Telegram</a></li> -->
           </ul>
         </div>
       </div>
@@ -163,11 +203,13 @@
                 ><img src="../assets/images/google.png"
               /></a>
             </li>
-            <li>
+            <li><a href="javascript:void(0);">IOS App coming soon</a></li>
+
+            <!-- <li>
               <a href="javascript:void(0);"
                 ><img src="../assets/images/apple.png"
               /></a>
-            </li>
+            </li> -->
           </ul>
         </div>
       </div>

@@ -1,0 +1,65 @@
+<div class="container">
+  <div class="form-section">
+    <h2>Kundali Matching Form</h2>
+
+    <form action="/submit-kundali-details" method="post">
+      <fieldset>
+        <legend>Details of the Boy:</legend>
+
+        <label for="boyName">Full Name:</label>
+        <input type="text" id="boyName" name="boyName" required />
+
+        <label for="boyDob">Date of Birth:</label>
+        <input
+          type="text"
+          id="boyDob"
+          name="boyDob"
+          placeholder="DD/MM/YYYY"
+          required
+        />
+
+        <label for="boyTob">Time of Birth:</label>
+        <input
+          type="text"
+          id="boyTob"
+          name="boyTob"
+          placeholder="HH:MM (24-hour format)"
+          required
+        />
+
+        <label for="boyPob">Place of Birth:</label>
+        <input type="text" id="boyPob" name="boyPob" required />
+      </fieldset>
+
+      <fieldset>
+        <legend>Details of the Girl:</legend>
+
+        <label for="girlName">Full Name:</label>
+        <input type="text" id="girlName" name="girlName" required />
+
+        <label for="girlDob">Date of Birth:</label>
+        <input
+          type="text"
+          id="girlDob"
+          name="girlDob"
+          placeholder="DD/MM/YYYY"
+          required
+        />
+
+        <label for="girlTob">Time of Birth:</label>
+        <input
+          type="text"
+          id="girlTob"
+          name="girlTob"
+          placeholder="HH:MM (24-hour format)"
+          required
+        />
+
+        <label for="girlPob">Place of Birth:</label>
+        <input type="text" id="girlPob" name="girlPob" required />
+      </fieldset>
+
+      <input type="submit" value="Submit" class="submit-btn" />
+    </form>
+  </div>
+</div>
