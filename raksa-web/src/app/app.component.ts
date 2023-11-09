@@ -89,6 +89,7 @@ export class AppComponent implements OnInit {
       this.fetchNotificationData();
       this.showNotificationNavs = true;
     }
+    // this.userServices.importDataFromJson();
     localStorage.removeItem('user-sign-up-data');
     localStorage.removeItem('relative-data');
     this.activatedRoute.queryParams.subscribe((params) => {

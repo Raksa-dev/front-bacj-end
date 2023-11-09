@@ -57,7 +57,7 @@
               >Call</a
             >
           </li>
-          <li class="nav-item" *ngIf="showThreeNavs">
+          <!-- <li class="nav-item" *ngIf="showThreeNavs">
             <a
               class="nav-link"
               routerLink="/live"
@@ -65,6 +65,16 @@
               data-bs-toggle="collapse"
               data-bs-target=".navbar-collapse.show"
               >Live</a
+            >
+          </li> -->
+          <li class="nav-item" *ngIf="showThreeNavs">
+            <a
+              class="nav-link"
+              routerLink="/blogs"
+              routerLinkActive="active"
+              data-bs-toggle="collapse"
+              data-bs-target=".navbar-collapse.show"
+              >Blogs</a
             >
           </li>
           <li class="nav-item" *ngIf="showNotificationNavs">

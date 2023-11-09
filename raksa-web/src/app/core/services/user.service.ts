@@ -110,18 +110,14 @@ export class UserService {
     return saveData;
   }
   async importDataFromJson() {
-    // const data = await this.http.get('/assets/MonthlyHoroscope.json');
+    // console.log('this is import data from json');
+    // const data = await this.http.get('/assets/Blogs.json');
     // data.subscribe((dataum: []) => {
-    // let yearlycollectinRef = collection(
-    //   this.firestore,
-    //   'horoscopes',
-    //   'monthly',
-    //   'data'
-    // );
-    // dataum.forEach((element) => {
-    //   console.log(element);
-    //   addDoc(yearlycollectinRef, element);
-    // });
+    //   console.log('this is datum:', dataum);
+    //   let yearlycollectinRef = collection(this.firestore, 'blogs');
+    //   dataum.forEach((element) => {
+    //     addDoc(yearlycollectinRef, element);
+    //   });
     // });
   }
   async CreateAstrologer(userid, data, code): Promise<any> {
