@@ -16,9 +16,36 @@ import { WalletComponent } from 'src/app/shared/wallet/wallet.component';
   styleUrls: ['./call.component.scss'],
 })
 export class CallComponent implements OnInit {
+  specialtiesArray = [
+    { name: 'Vedic', checked: false },
+    { name: 'Numerology', checked: false },
+    { name: 'Psychic', checked: false },
+    { name: 'KP', checked: false },
+    { name: 'Palmistry', checked: false },
+    { name: 'Nadi', checked: false },
+    { name: 'Vaastu', checked: false },
+    { name: 'Psycology', checked: false },
+    { name: 'Prashana', checked: false },
+    { name: 'Face Reading', checked: false },
+  ];
+  genderArray = [
+    { name: 'Male', checked: false, value: 'Male' },
+    { name: 'Female', checked: false, value: 'Female' },
+  ];
+  yearsOfExperienceArray = [
+    { name: '1 to 5 Years', checked: false, value: '1and5' },
+    { name: '5 to 10 Years', checked: false, value: '5and10' },
+    { name: 'Greater than 10 Years', checked: false, value: '10' },
+  ];
+  languagesArray = [
+    { name: 'English', checked: false },
+    { name: 'Hindi', checked: false },
+  ];
   userData = null;
   toast = false;
   message = '';
+  genderOption = '';
+  yearOption = '';
   constructor(
     private modalService: NgbModal,
     public authService: AuthService,
@@ -40,18 +67,98 @@ export class CallComponent implements OnInit {
       });
   }
 
+  async specialtiesArrayChecked(e, index) {
+    this.specialtiesArray[index]['checked'] = e.target.checked;
+  }
+  async languageArrayChecked(e, index) {
+    this.languagesArray[index]['checked'] = e.target.checked;
+  }
+  async genderArrayChecked(e, optionValue) {
+    this.genderOption = optionValue;
+  }
+
+  async yearsOfExperienceArrayChecked(e, optionValue) {
+    this.yearOption = optionValue;
+  }
+
+  async applyFilter() {
+    let filterSpecialties = this.specialtiesArray
+      .filter((data) => data.checked)
+      .map((data1) => data1.name);
+    let filterLanguage = this.languagesArray
+      .filter((data) => data.checked)
+      .map((data1) => data1.name);
+
+    let data = await this.astroServices.getAllAstrologersDataFilterApply({
+      filterSpecialties,
+      filterLanguage,
+      yearOption: this.yearOption,
+      genderOption: this.genderOption,
+    });
+    data.subscribe((data1) => {
+      if (filterLanguage.length) {
+        data1 = data1.filter((item) =>
+          item.languages.some((lang) => filterLanguage.includes(lang))
+        );
+      }
+      this.astrologersData = data1;
+      this.modalService.dismissAll();
+    });
+  }
+  async resetFilter() {
+    this.genderArray = this.genderArray.map((data) => {
+      data.checked = false;
+      return data;
+    });
+    this.specialtiesArray = this.specialtiesArray.map((data) => {
+      data.checked = false;
+      return data;
+    });
+    this.languagesArray = this.languagesArray.map((data) => {
+      data.checked = false;
+      return data;
+    });
+    this.yearsOfExperienceArray = this.yearsOfExperienceArray.map((data) => {
+      data.checked = false;
+      return data;
+    });
+    this.yearOption = '';
+    this.genderOption = '';
+
+    let data = await this.astroServices.getAllAstrologersDataFilterApply({
+      filterSpecialties: [],
+      filterLanguage: [],
+      yearOption: '',
+      genderOption: '',
+    });
+    data.subscribe((data1) => {
+      this.astrologersData = data1;
+      this.modalService.dismissAll();
+    });
+  }
+
   public openFilter(content: any): void {
-    const modalRef = this.modalService
-      .open(content, {
+    if (this.authService.activeUserValue) {
+      const modalRef = this.modalService
+        .open(content, {
+          backdrop: 'static',
+          keyboard: false,
+          centered: true,
+          size: 'lg',
+        })
+        .result.then(
+          (result) => {},
+          (reason) => {}
+        );
+    } else {
+      const modalRef = this.modalService.open(LoginComponent, {
         backdrop: 'static',
         keyboard: false,
         centered: true,
         size: 'lg',
-      })
-      .result.then(
-        (result) => {},
-        (reason) => {}
-      );
+        modalDialogClass: 'login',
+      });
+    }
   }
 
   resetToast() {

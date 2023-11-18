@@ -33,7 +33,9 @@
                   <img
                     src="../../../assets/images/view.png"
                     class="me-1"
-                  /><span>{{ astrologersData.length }}</span>
+                  /><span
+                    >{{ astrologer["callChargePerMinute"] }} INR / min</span
+                  >
                 </p>
               </div>
               <div
@@ -145,50 +147,97 @@
       <div class="flex-shrink-0 border-right py-3">
         <ul ngbNav #navFilters="ngbNav" class="filter-nav flex-column">
           <li [ngbNavItem]="1">
-            <a ngbNavLink>Sort</a>
+            <a ngbNavLink>Expertise</a>
+
             <ng-template ngbNavContent>
-              <div class="form-check form-check-sm">
-                <input
-                  class="form-check-input me-2"
-                  type="radio"
-                  name="flexRadioDefault"
-                  id="flexRadioDefault1"
-                />
-                <label class="form-check-label" for="flexRadioDefault1">
-                  <span>Formatted Logs</span>
-                </label>
-              </div>
-              <div class="form-check form-check-sm">
-                <input
-                  class="form-check-input me-2"
-                  type="radio"
-                  name="flexRadioDefault"
-                  id="flexRadioDefault2"
-                />
-                <label class="form-check-label" for="flexRadioDefault2">
-                  <span>Raw Inputs</span>
-                </label>
+              <div *ngFor="let expertise of specialtiesArray; let i = index">
+                <div class="form-check form-check-sm">
+                  <input
+                    class="form-check-input me-2"
+                    type="checkbox"
+                    (change)="specialtiesArrayChecked($event, i)"
+                    [(ngModel)]="expertise.checked"
+                    id="{{ i }}"
+                  />
+                  <label
+                    for="{{ i }}"
+                    class="form-check-label"
+                    for="flexRadioDefault1"
+                  >
+                    <span>{{ expertise.name }}</span>
+                  </label>
+                </div>
               </div>
             </ng-template>
           </li>
           <li [ngbNavItem]="2">
-            <a ngbNavLink>Consultation Mode</a>
-            <ng-template ngbNavContent> </ng-template>
+            <a ngbNavLink>Language</a>
+
+            <ng-template ngbNavContent>
+              <div *ngFor="let language of languagesArray; let i = index">
+                <div class="form-check form-check-sm">
+                  <input
+                    class="form-check-input me-2"
+                    type="checkbox"
+                    (change)="languageArrayChecked($event, i)"
+                    [(ngModel)]="language.checked"
+                    id="{{ i }}"
+                  />
+                  <label class="form-check-label" for="{{ i }}">
+                    <span>{{ language.name }}</span>
+                  </label>
+                </div>
+              </div>
+            </ng-template>
           </li>
           <li [ngbNavItem]="3">
-            <a ngbNavLink>Availability</a>
+            <a ngbNavLink>Gender</a>
+
+            <ng-template ngbNavContent>
+              <div *ngFor="let gender of genderArray; let i = index">
+                <div class="form-check form-check-sm">
+                  <input
+                    class="form-check-input me-2"
+                    type="radio"
+                    name="gender"
+                    [value]="gender.name"
+                    (change)="genderArrayChecked($event, gender.name)"
+                    id="{{ i }}"
+                    [checked]="gender.name == genderOption"
+                  />
+                  <label class="form-check-label" for="{{ i }}">
+                    <span>{{ gender.name }}</span>
+                  </label>
+                </div>
+              </div>
+            </ng-template>
           </li>
           <li [ngbNavItem]="4">
-            <a ngbNavLink>Expertise</a>
-          </li>
-          <li [ngbNavItem]="5">
-            <a ngbNavLink>Experience</a>
-          </li>
-          <li [ngbNavItem]="6">
-            <a ngbNavLink>Languages</a>
-          </li>
-          <li [ngbNavItem]="7">
-            <a ngbNavLink>Ratings</a>
+            <a ngbNavLink>Year Of Experience</a>
+
+            <ng-template ngbNavContent>
+              <div
+                *ngFor="let experience of yearsOfExperienceArray; let i = index"
+              >
+                <div class="form-check form-check-sm">
+                  <input
+                    class="form-check-input me-2"
+                    type="radio"
+                    name="yearofexperience"
+                    (change)="yearsOfExperienceArrayChecked($event, i)"
+                    [value]="experience.name"
+                    (change)="
+                      yearsOfExperienceArrayChecked($event, experience.value)
+                    "
+                    id="{{ i }}"
+                    [checked]="experience.value == yearOption"
+                  />
+                  <label class="form-check-label" for="{{ i }}">
+                    <span>{{ experience.name }}</span>
+                  </label>
+                </div>
+              </div>
+            </ng-template>
           </li>
         </ul>
       </div>
@@ -198,7 +247,9 @@
     </div>
   </div>
   <div class="modal-footer">
-    <a class="me-3" href="javascript:void(0);">Reset</a>
-    <button tyle="button" class="btn btn-white">Apply</button>
+    <a class="me-3" (click)="resetFilter()">Reset</a>
+    <button tyle="button" class="btn btn-white" (click)="applyFilter()">
+      Apply
+    </button>
   </div>
 </ng-template>
