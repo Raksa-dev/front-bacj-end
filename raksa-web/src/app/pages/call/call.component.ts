@@ -17,104 +17,14 @@ import { WalletComponent } from 'src/app/shared/wallet/wallet.component';
 })
 export class CallComponent implements OnInit {
   userData = null;
+  toast = false;
+  message = '';
   constructor(
     private modalService: NgbModal,
     public authService: AuthService,
     public astroServices: AstrologerService,
     public userService: UserService
   ) {}
-  // public astrologers: Astrologer[] = [
-  //   {
-  //     _id: 1,
-  //     avatar: '../../../assets/images/astrologer/avatar-1.png',
-  //     astrologerName: 'Pandit Pradeep',
-  //     experience: '10+ years of experience',
-  //     tags: 'Palm reading, Tarrot Cards, Numerology',
-  //     rating: 4.5,
-  //     reviews: 1000,
-  //     online: true,
-  //   },
-  //   {
-  //     _id: 2,
-  //     avatar: '../../../assets/images/astrologer/avatar-2.png',
-  //     astrologerName: 'Yadav Raj',
-  //     experience: '30+ years of experience',
-  //     tags: 'Vedic astrologer, Vastu expert',
-  //     rating: 4.5,
-  //     reviews: 2500,
-  //     online: false,
-  //   },
-  //   {
-  //     _id: 3,
-  //     avatar: '../../../assets/images/astrologer/avatar-3.png',
-  //     astrologerName: 'Pandit Pradeep',
-  //     experience: '10+ years of experience',
-  //     tags: 'Palm reading, Tarrot Cards, Numerology',
-  //     rating: 4.5,
-  //     reviews: 1000,
-  //     online: true,
-  //   },
-  //   {
-  //     _id: 4,
-  //     avatar: '../../../assets/images/astrologer/avatar-4.png',
-  //     astrologerName: 'Yadav Raj',
-  //     experience: '30+ years of experience',
-  //     tags: 'Vedic astrologer, Vastu expert',
-  //     rating: 4.5,
-  //     reviews: 2500,
-  //     online: true,
-  //   },
-  //   {
-  //     _id: 5,
-  //     avatar: '../../../assets/images/astrologer/avatar-5.png',
-  //     astrologerName: 'Pandit Pradeep',
-  //     experience: '10+ years of experience',
-  //     tags: 'Palm reading, Tarrot Cards, Numerology',
-  //     rating: 4.5,
-  //     reviews: 1000,
-  //     online: true,
-  //   },
-  //   {
-  //     _id: 6,
-  //     avatar: '../../../assets/images/astrologer/avatar-6.png',
-  //     astrologerName: 'Yadav Raj',
-  //     experience: '30+ years of experience',
-  //     tags: 'Vedic astrologer, Vastu expert',
-  //     rating: 4.5,
-  //     reviews: 2500,
-  //     online: false,
-  //   },
-  //   {
-  //     _id: 7,
-  //     avatar: '../../../assets/images/astrologer/avatar-7.png',
-  //     astrologerName: 'Pandit Pradeep',
-  //     experience: '10+ years of experience',
-  //     tags: 'Palm reading, Tarrot Cards, Numerology',
-  //     rating: 4.5,
-  //     reviews: 1000,
-  //     online: true,
-  //   },
-  //   {
-  //     _id: 8,
-  //     avatar: '../../../assets/images/astrologer/avatar-1.png',
-  //     astrologerName: 'Yadav Raj',
-  //     experience: '30+ years of experience',
-  //     tags: 'Vedic astrologer, Vastu expert',
-  //     rating: 4.5,
-  //     reviews: 2500,
-  //     online: true,
-  //   },
-  //   {
-  //     _id: 8,
-  //     avatar: '../../../assets/images/astrologer/avatar-1.png',
-  //     astrologerName: 'Yadav Raj',
-  //     experience: '30+ years of experience',
-  //     tags: 'Vedic astrologer, Vastu expert',
-  //     rating: 4.5,
-  //     reviews: 2500,
-  //     online: true,
-  //   },
-  // ];
 
   public astrologersData = [];
   ngOnInit(): void {
@@ -144,6 +54,10 @@ export class CallComponent implements OnInit {
       );
   }
 
+  resetToast() {
+    this.toast = false;
+  }
+
   openChatWindow() {
     if (this.authService.activeUserValue) {
       this.modalService.open(CalluiComponent, {
@@ -163,9 +77,35 @@ export class CallComponent implements OnInit {
       });
     }
   }
-  sendChatNotificationToAstrologer(astroData) {
+  openWallet() {
+    this.modalService.dismissAll();
+    // top up balance
+    const modalRef = this.modalService.open(WalletComponent, {
+      backdrop: 'static',
+      keyboard: false,
+      centered: true,
+      size: 'lg',
+      scrollable: true,
+    });
+  }
+  openConfirmation(content) {
+    this.modalService
+      .open(content, {
+        ariaLabelledBy: 'modal-basic-title',
+        backdrop: 'static',
+        keyboard: false,
+        centered: true,
+        size: 'lg',
+        scrollable: true,
+      })
+      .result.then();
+  }
+  sendChatNotificationToAstrologer(astroData, content) {
     if (this.authService.activeUserValue) {
-      if (this.userData.walletBalance > astroData['callChargePerMinute']) {
+      let checkBalance = astroData['chatChargePerMinute'] * 5;
+
+      if (this.userData.walletBalance > checkBalance) {
+        this.toast = true;
         this.userService
           .NotifyAstrologerForChat(
             astroData,
@@ -174,14 +114,8 @@ export class CallComponent implements OnInit {
           )
           .then((data) => {});
       } else {
-        // top up balance
-        const modalRef = this.modalService.open(WalletComponent, {
-          backdrop: 'static',
-          keyboard: false,
-          centered: true,
-          size: 'lg',
-          scrollable: true,
-        });
+        this.message = `Minimum balance of 5 minutes (${checkBalance} INR) is required to start call.`;
+        this.openConfirmation(content);
       }
     } else {
       const modalRef = this.modalService.open(LoginComponent, {

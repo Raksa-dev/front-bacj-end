@@ -5,6 +5,7 @@ import {
   doc,
   getDoc,
   setDoc,
+  and,
   addDoc,
   updateDoc,
   deleteDoc,
@@ -32,6 +33,46 @@ export class AstrologerService {
   async getAllAstrologersData() {
     const data = await getDocs(collection(this.firestore, 'astrologers'));
     return data;
+  }
+  async getAllAstrologersDataFilterApply({
+    filterSpecialties,
+    filterLanguage,
+    yearOption,
+    genderOption,
+  }) {
+    let quearies = [];
+    let specialties =
+      filterSpecialties.length &&
+      quearies.push(
+        where('specialties', 'array-contains-any', filterSpecialties)
+      );
+
+    let experise =
+      yearOption.length &&
+      (yearOption == '10'
+        ? quearies.push(where('yearsOfExperience', '>=', 10))
+        : yearOption == '1and5'
+        ? quearies.push(
+            and(
+              where('yearsOfExperience', '>=', 1),
+              where('yearsOfExperience', '<=', 5)
+            )
+          )
+        : quearies.push(
+            where('yearsOfExperience', '>=', 5),
+            where('yearsOfExperience', '<=', 10)
+          ));
+
+    let gender =
+      genderOption.length && quearies.push(where('gender', '==', genderOption));
+
+    const dataAstro = collection(this.firestore, 'astrologers');
+    let q1 = query(dataAstro, and(...quearies));
+
+    let collectiondata = collectionData(q1);
+
+
+    return collectiondata;
   }
   async fetchUserNotificatonsCount(id: string) {
     const coll = collection(

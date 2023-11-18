@@ -60,6 +60,50 @@
                           placeholder="Enter Amount"
                         />
                       </div>
+                      <div class="payment-buttons-bits">
+                        <div
+                          id="sign-in-button"
+                          class="btn gradient-button"
+                          (click)="setAmount(50)"
+                        >
+                          <span>50 Rs</span>
+                        </div>
+                        <div
+                          id="sign-in-button"
+                          class="btn gradient-button"
+                          (click)="setAmount(100)"
+                        >
+                          <span>100 Rs</span>
+                        </div>
+                        <div
+                          id="sign-in-button"
+                          class="btn gradient-button"
+                          (click)="setAmount(200)"
+                        >
+                          <span>200 Rs</span>
+                        </div>
+                        <div
+                          id="sign-in-button"
+                          class="btn gradient-button"
+                          (click)="setAmount(500)"
+                        >
+                          <span>500 Rs</span>
+                        </div>
+                        <div
+                          id="sign-in-button"
+                          class="btn gradient-button"
+                          (click)="setAmount(1000)"
+                        >
+                          <span>1000 Rs</span>
+                        </div>
+                        <div
+                          id="sign-in-button"
+                          class="btn gradient-button"
+                          (click)="setAmount(2000)"
+                        >
+                          <span>2000 Rs</span>
+                        </div>
+                      </div>
 
                       <div class="d-flex justify-content-center">
                         <button
@@ -68,7 +112,7 @@
                           class="btn gradient-button"
                           [disabled]="addMoneyForm.invalid"
                         >
-                          <span>Proceed</span>
+                          <span>Proceed To Pay</span>
                         </button>
                       </div>
                     </form>
@@ -99,6 +143,12 @@
 </div>
 <div class="overlay-conformation" *ngIf="showPaymentOverlay">
   <h3>Choose Your Payment Partner</h3>
+  <div class="amout-to-pay">
+    <p>Recharge Amount</p>
+    <p>&#8377;{{ this.addMoneyForm.value.amount }}</p>
+    <p>Amount After Adding GST@18%</p>
+    <p>&#8377;{{ amountWithGstAddition }}</p>
+  </div>
   <div class="payment-buttons">
     <button
       type="submit"

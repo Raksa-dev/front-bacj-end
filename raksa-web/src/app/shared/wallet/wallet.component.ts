@@ -16,6 +16,7 @@ import {
 })
 export class WalletComponent implements OnInit {
   showPaymentOverlay: boolean = false;
+  amountWithGstAddition = 0;
   constructor(
     public authService: AuthService,
     public userService: UserService,
@@ -30,35 +31,42 @@ export class WalletComponent implements OnInit {
 
   ngOnInit(): void {}
   async submitAmountDetailsForm() {
+    this.addMoneyForm.value.amount + 18;
+    this.amountWithGstAddition =
+      this.addMoneyForm.value.amount +
+      this.addMoneyForm.value.amount * (18 / 100);
     this.showPaymentOverlay = true;
   }
   closeOverlay() {
     this.showPaymentOverlay = false;
+  }
+  setAmount(amount) {
+    this.addMoneyForm.setValue({ amount });
   }
   async openPayment(type) {
     const formValues = this.addMoneyForm.value;
     if (type == 'phonePay') {
       (
         await this.userService.GetPhonePayPaymentForm(
-          formValues.amount,
-          this.currentUser['uid']
+          this.amountWithGstAddition,
+          this.authService.activeUserValue['uid']
         )
       ).subscribe((data) => {
-        console.log('this is daata: from phoen pe server :', data);
-        console.log(
-          'thisj is data phone pay:',
-          data['data'].instrumentResponse.redirectInfo.url
-        );
+        this.amountWithGstAddition = 0;
+        this.showPaymentOverlay = false;
         window.open(data['data'].instrumentResponse.redirectInfo.url, '_blank');
       });
     }
+
     if (type == 'ccAvenue') {
       (
         await this.userService.GetCcavenuePaymentForm(
-          formValues.amount,
-          this.currentUser['uid']
+          this.amountWithGstAddition,
+          this.authService.activeUserValue['uid']
         )
       ).subscribe((data: string) => {
+        this.amountWithGstAddition = 0;
+        this.showPaymentOverlay = false;
         let child = window.open('about:blank', 'myChild');
         child.document.write(data);
         child.document.close();
