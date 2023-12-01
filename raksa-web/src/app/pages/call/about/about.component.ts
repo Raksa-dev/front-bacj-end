@@ -9,7 +9,7 @@ import { LoginComponent } from 'src/app/shared/login/login.component';
 import { WalletComponent } from 'src/app/shared/wallet/wallet.component';
 
 @Component({
-  selector: 'app-about',
+  selector: 'app-call-about',
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.scss'],
 })
