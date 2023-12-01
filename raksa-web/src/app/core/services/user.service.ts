@@ -385,4 +385,8 @@ export class UserService {
     const reviewRef = collection(this.firestore, 'reviews');
     addDoc(reviewRef, { ...data, reviewDate: new Date() });
   }
+  async createEntryPayment(data, paymentId) {
+    const reviewRef = doc(this.firestore, 'paymentLogs', paymentId);
+    setDoc(reviewRef, { id: paymentId, date: new Date(), ...data });
+  }
 }

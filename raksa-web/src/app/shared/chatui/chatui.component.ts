@@ -305,6 +305,15 @@ export class ChatuiComponent implements OnInit, OnDestroy {
             this.parentData.notificationData['senderId'],
             charge
           );
+          await this.userService.createEntryPayment(
+            {
+              amount: charge,
+              astrologerId: this.parentData.notificationData['senderId'],
+              type: 'chat',
+              userId: this.currentUser.uid,
+            },
+            `payment_${randomNum}`
+          );
 
           if (eventType && eventType == 'review') {
             await this.reviewSubmissionAndCalculation(sessionId);

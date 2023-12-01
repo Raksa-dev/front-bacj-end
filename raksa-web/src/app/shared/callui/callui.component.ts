@@ -360,6 +360,15 @@ export class CalluiComponent implements OnInit, OnDestroy {
             this.parentData.notificationData['senderId'],
             Math.round(charge * 100) / 100
           );
+          await this.userService.createEntryPayment(
+            {
+              amount: charge,
+              astrologerId: this.parentData.notificationData['senderId'],
+              type: 'call',
+              userId: this.currentUser.uid,
+            },
+            `payment_${randomNum}`
+          );
           if (eventType && eventType == 'review') {
             await this.reviewSubmissionAndCalculation(sessionId);
           }
