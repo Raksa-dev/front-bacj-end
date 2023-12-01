@@ -60,9 +60,12 @@ export class AboutAstrolgerComponent implements OnInit {
     if (this.astrologer && this.astrologer?.profilePicUrl) {
       this.showImage = true;
     }
-    console.log('this isn auth services', this.authService.activeUserValue.uid);
+    console.log(
+      'this isn auth services',
+      this.authService?.activeUserValue?.uid
+    );
     this.userService
-      .getUserDataInfo(this.authService.activeUserValue.uid)
+      .getUserDataInfo(this.authService?.activeUserValue?.uid)
       .then((userVal) => {
         this.userData = userVal;
       });
