@@ -51,13 +51,16 @@ export class AboutAstrolgerComponent implements OnInit {
     partnerPlaceOfBirth: [null],
   });
   ngOnInit(): void {
+    console.log('this is init');
     this.astrologer = this.astroServices.getAstrologerBriefDataStore;
+    console.log('this jsiasrtolger dta in int :', this.astrologer);
     if (!this.astrologer) {
       this.router.navigate(['/chat']);
     }
     if (this.astrologer && this.astrologer?.profilePicUrl) {
       this.showImage = true;
     }
+    console.log('this isn auth services', this.authService.activeUserValue.uid);
     this.userService
       .getUserDataInfo(this.authService.activeUserValue.uid)
       .then((userVal) => {
@@ -67,12 +70,17 @@ export class AboutAstrolgerComponent implements OnInit {
   }
 
   getAllReviewsForAstroUser() {
-    this.astroServices.allReview(this.astrologer?.uid).then((data) => {
-      data?.subscribe((data1) => {
-        console.log('all reviews in chat::', data1);
-        this.allReviews = data1;
+    console.log('this is egt astrolgers:', this.astrologer);
+    if (this.astrologer) {
+      console.log('this inside if is egt astrolgers:', this.astrologer);
+
+      this.astroServices.allReview(this.astrologer?.uid).then((data) => {
+        data?.subscribe((data1) => {
+          console.log('all reviews in chat::', data1);
+          this.allReviews = data1;
+        });
       });
-    });
+    }
   }
 
   readMoreText() {
