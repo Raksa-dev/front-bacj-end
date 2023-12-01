@@ -10,7 +10,7 @@ import {
   Input,
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import {
   Firestore,
@@ -38,6 +38,7 @@ import {
 } from '@angular/fire/storage';
 import { async } from '@angular/core/testing';
 import { increment } from 'firebase/firestore';
+import { WalletComponent } from '../wallet/wallet.component';
 
 @Component({
   selector: 'app-chatui',
@@ -58,7 +59,8 @@ export class ChatuiComponent implements OnInit, OnDestroy {
     public activeModal: NgbActiveModal,
     public formBuilder: FormBuilder,
     private ngZone: NgZone,
-    public firestore: Firestore
+    public firestore: Firestore,
+    private modalService: NgbModal
   ) {}
   private readonly storage: Storage = inject(Storage);
 
@@ -73,8 +75,15 @@ export class ChatuiComponent implements OnInit, OnDestroy {
   downloadFile = false;
   relations;
   openUserData = false;
+  rechargeWallet: boolean = false;
 
   messages;
+  message = '';
+
+  selectedStars = 0;
+  maxStars = 5;
+  textArea = '';
+  reviewSubmitted = false;
 
   ngOnInit() {
     const storedTimer = localStorage.getItem('chatTimer');
@@ -114,8 +123,15 @@ export class ChatuiComponent implements OnInit, OnDestroy {
     });
   }
 
+  getStarColor(index: number): string {
+    return index <= this.selectedStars ? 'white' : 'gold'; // Change this to the desired colors
+  }
   openConfirmation(): void {
     this.confirmationOverlay = true;
+  }
+  closeRechargeWalletOverlay() {
+    this.rechargeWallet = false;
+    this.endChat();
   }
 
   continue(): void {
@@ -156,13 +172,109 @@ export class ChatuiComponent implements OnInit, OnDestroy {
       return data;
     }
   }
+
   async astroData() {
     let astrologerData = await this.userService.getUserDataInfo(
       this.parentData.notificationData['senderId']
     );
     return astrologerData;
   }
-  async endChat() {
+
+  refreshScreen() {
+    this.userService.fetchUserData(this.currentUser['uid']).then((data) => {
+      this.currentUser = data;
+      let trackBalance =
+        this.currentUser['walletBalance'] -
+        this.calculateRate(
+          this.astrologerData['chatChargePerMinute'],
+          this.timer
+        );
+      let checkBalance = this.astrologerData['chatChargePerMinute'] * 5;
+      if (
+        trackBalance - checkBalance >=
+        this.astrologerData['chatChargePerMinute']
+      ) {
+        // end the call top up the wallet to continue
+        this.message = ``;
+        this.rechargeWallet = false;
+      }
+    });
+  }
+
+  async submitReview() {
+    if (this.parentData?.userIsAstrologer) {
+      this.endChat();
+      return;
+    }
+    this.confirmationOverlay = false;
+    this.reviewSubmitted = true;
+    // this.reviewSubmissionAndCalculation('helllo');
+  }
+  async onClickReivewSubmitButton() {
+    this.endChat('review');
+  }
+  onTextareaChange(event: Event): void {
+    // Handle the change event here
+    const value = (event.target as HTMLTextAreaElement).value;
+    this.textArea = value?.trim();
+    // You can perform further actions with the value as needed
+  }
+
+  calculateOverAllRating(astrologerData) {
+    if (astrologerData?.ratings && astrologerData?.totalReview) {
+      let data: { [key: number]: number } = astrologerData?.ratings;
+      const total = Object.entries(data).reduce(
+        (acc, [key, value]) => acc + Number(key) * value,
+        0
+      );
+      return Math.round(total / astrologerData?.totalReview);
+    }
+    return Math.round(this.selectedStars);
+  }
+  calculateRating(astrologerData) {
+    if (
+      astrologerData?.ratings &&
+      Object.entries(astrologerData?.ratings).length
+    ) {
+      let ratings = astrologerData?.ratings;
+      ratings[this.selectedStars] = ratings[this.selectedStars] + 1;
+      return ratings;
+    }
+    let ratings = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+    ratings[this.selectedStars] = ratings[this.selectedStars] + 1;
+    return ratings;
+  }
+
+  async reviewSubmissionAndCalculation(sessionId) {
+    let astrologerData = this.astrologerData;
+
+    //create a entry in review and update review and overall rating in astrolger entry
+    this.userService
+      .UpdateAstroUser(this.parentData.notificationData['senderId'], {
+        totalReview: astrologerData?.totalReview
+          ? astrologerData?.totalReview + 1
+          : 1,
+        overallRating: astrologerData?.overallRating
+          ? this.calculateOverAllRating(astrologerData)
+          : this.selectedStars,
+        ratings: this.calculateRating(astrologerData),
+      })
+      .then((data) => {
+      });
+    this.userService.createEntryReview({
+      astrolgerId: astrologerData['uid'],
+      userId: this.currentUser.uid,
+      userName:
+        this.currentUser['firstName'] + ' ' + this.currentUser['lastName'],
+      userProfilePic: this.currentUser['profilePicUrl'],
+      rating: this.selectedStars,
+      reviewText: this.textArea,
+      sessionType: 'chat',
+      sessionId,
+    });
+  }
+
+  async endChat(eventType?) {
     // the below contion is to get the astrolger pricring per min and parentData.userIsAstrologer false means this is a
     // user take sender id because sender is astrolger
 
@@ -174,6 +286,10 @@ export class ChatuiComponent implements OnInit, OnDestroy {
         this.timer
       );
 
+      const min = 1000000000;
+      const max = 9999999999;
+      const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+      let sessionId = `session_${randomNum}`;
       // save in session data base
       this.deductBalanceFromUserAccount(this.currentUser.uid, charge).then(
         async (data) => {
@@ -183,12 +299,17 @@ export class ChatuiComponent implements OnInit, OnDestroy {
             callDuration: this.timer,
             callerId: this.currentUser.uid,
             sessionType: 'chat',
+            sessionId,
           });
 
           await this.addBalanceToAstrolgerAccount(
             this.parentData.notificationData['senderId'],
             charge
           );
+
+          if (eventType && eventType == 'review') {
+            await this.reviewSubmissionAndCalculation(sessionId);
+          }
         }
       );
     }
@@ -228,6 +349,7 @@ export class ChatuiComponent implements OnInit, OnDestroy {
     this.confirmationOverlay = false;
     const storedTimer = localStorage.removeItem('chatTimer');
     this.openUserData = false;
+    this.reviewSubmitted = false;
     this.activeModal.close({ response: false });
   }
 
@@ -253,9 +375,15 @@ export class ChatuiComponent implements OnInit, OnDestroy {
           this.astrologerData['chatChargePerMinute'],
           this.timer
         );
-      if (trackBalance <= this.astrologerData['chatChargePerMinute']) {
+      let checkBalance = this.astrologerData['chatChargePerMinute'] * 5;
+
+      if (
+        trackBalance - checkBalance <=
+        this.astrologerData['chatChargePerMinute']
+      ) {
         // end the call top up the wallet to continue
-        this.endChat();
+        this.message = `Minimum balance of 5 minutes (${checkBalance} INR) is required to start chat.`;
+        this.rechargeWallet = true;
       }
     }
   }
@@ -267,6 +395,17 @@ export class ChatuiComponent implements OnInit, OnDestroy {
           this.checkTheBalance();
         });
       });
+    });
+  }
+
+  openWallet() {
+    // top up balance
+    const modalRef = this.modalService.open(WalletComponent, {
+      backdrop: 'static',
+      keyboard: false,
+      centered: true,
+      size: 'lg',
+      scrollable: true,
     });
   }
 
@@ -309,7 +448,6 @@ export class ChatuiComponent implements OnInit, OnDestroy {
       console.log('this is error :', error);
     }
   }
-
   async sendImageMessage() {
     const inputElement = this.fileInput.nativeElement;
     const selectedFile = inputElement.files[0];
@@ -381,7 +519,6 @@ export class ChatuiComponent implements OnInit, OnDestroy {
     this.openUserData = false;
   }
   async seeUserDetails() {
-    console.log(this.parentData);
     const Data = await this.userService.getDataFromUserCollection(
       this.parentData.notificationData?.senderId
     );

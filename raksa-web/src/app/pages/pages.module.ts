@@ -2,7 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { NgbModule, NgbModalModule, NgbNavModule, NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbModule,
+  NgbModalModule,
+  NgbNavModule,
+  NgbToastModule,
+  NgbActiveModal,
+} from '@ng-bootstrap/ng-bootstrap';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { NgSelectModule } from '@ng-select/ng-select';
 
@@ -19,18 +25,41 @@ import { HoroscopesComponent } from './horoscopes/horoscopes.component';
 import { HoroscopeComponent } from './horoscopes/horoscope/horoscope.component';
 import { FlamesComponent } from './flames/flames.component';
 import { MatchMakingComponent } from './match-making/match-making.component';
-
+import { AboutAstrolgerComponent } from './chat/about/about.component';
+import { CustomeTimePickerComponent } from '../custome-time-picker/custome-time-picker.component';
+import { AboutCallComponent } from './call/about/about.component';
 
 @NgModule({
-    declarations: [RoutingComponents, AdminComponent, LinkcreationComponent, AboutousComponent, ContactousComponent, PrivacypolicyComponent, TermsandconditionsComponent, TransactionComponent, AstrologerComponent, HoroscopesComponent, HoroscopeComponent, FlamesComponent, MatchMakingComponent],
-    imports: [
-        CommonModule,
-        FormsModule, ReactiveFormsModule,
-        NgbModule, NgbModalModule, NgbNavModule,
-        CarouselModule,
-        NgSelectModule,
-        PagesRoutingModule,
-        NgbToastModule
-    ]
+  declarations: [
+    RoutingComponents,
+    AdminComponent,
+    LinkcreationComponent,
+    AboutousComponent,
+    ContactousComponent,
+    PrivacypolicyComponent,
+    TermsandconditionsComponent,
+    TransactionComponent,
+    AstrologerComponent,
+    HoroscopesComponent,
+    HoroscopeComponent,
+    FlamesComponent,
+    MatchMakingComponent,
+    AboutAstrolgerComponent,
+    AboutCallComponent,
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgbModule,
+    NgbModalModule,
+    NgbNavModule,
+    CarouselModule,
+    NgSelectModule,
+    PagesRoutingModule,
+    NgbToastModule,
+    CustomeTimePickerComponent,
+  ],
+  providers: [NgbActiveModal],
 })
-export class PagesModule { }
+export class PagesModule {}

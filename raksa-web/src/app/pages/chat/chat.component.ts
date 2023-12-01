@@ -9,6 +9,7 @@ import { LoginComponent } from 'src/app/shared/login/login.component';
 import { ProfileComponent } from 'src/app/shared/profile/profile.component';
 import { WalletComponent } from 'src/app/shared/wallet/wallet.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
@@ -51,7 +52,8 @@ export class ChatComponent implements OnInit {
     public authService: AuthService,
     public astroServices: AstrologerService,
     public userService: UserService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    public router: Router
   ) {
     this.form = this.formBuilder.group({
       specialties: this.formBuilder.array([]),
@@ -69,6 +71,7 @@ export class ChatComponent implements OnInit {
         this.astrologersData.push(doc.data());
       });
     });
+
     this.userService
       .getUserDataInfo(this.authService.activeUserValue.uid)
       .then((userVal) => {
@@ -88,6 +91,10 @@ export class ChatComponent implements OnInit {
 
   async yearsOfExperienceArrayChecked(e, optionValue) {
     this.yearOption = optionValue;
+  }
+  navigateToAboutPage(astrologer) {
+    this.astroServices.setAstrologerBriefDataStore(astrologer);
+    this.router.navigate([`/chat/about/${astrologer?.uid}`]);
   }
 
   async applyFilter() {
@@ -216,18 +223,24 @@ export class ChatComponent implements OnInit {
       .result.then();
   }
 
-  sendChatNotificationToAstrologer(astroData, content) {
+  sendChatNotificationToAstrologer(e: MouseEvent, astroData, content) {
+    e.stopPropagation();
     if (this.authService.activeUserValue) {
       let checkBalance = astroData['chatChargePerMinute'] * 5;
       if (this.userData.walletBalance > checkBalance) {
-        this.toast = true;
-        this.userService
-          .NotifyAstrologerForChat(
-            astroData,
-            this.userService.getUserData,
-            'chat'
-          )
-          .then((data) => {});
+        // this.userService
+        //   .NotifyAstrologerForChat(
+        //     astroData,
+        //     this.userService.getUserData,
+        //     'chat'
+        //   )
+        //   .then((data) => {
+        //     this.toast = true;
+        //     this.message = data?.message;
+        //   });
+        this.astroServices.setAstrologerBriefDataStore(astroData);
+        this.router.navigate([`chat/about/${astroData?.uid}`]);
+        return;
       } else {
         this.message = `Minimum balance of 5 minutes (${checkBalance} INR) is required to start chat.`;
         this.openConfirmation(content);

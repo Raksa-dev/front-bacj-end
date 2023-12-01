@@ -81,7 +81,82 @@
     <p class="confirmation-text">Are You Sure Want To End This Call?</p>
     <div class="confirmation-buttongroup">
       <button class="btn gradient-button" (click)="continue()">CONTINUE</button>
-      <button class="btn gradient-button" (click)="leaveRoom()">END</button>
+      <button class="btn gradient-button" (click)="submitReview()">END</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay-conformation" *ngIf="rechargeWallet">
+  <div
+    class="modal-body d-flex justify-content-center align-items-center flex-column p-5"
+  >
+    <div class="mb-3">
+      <label for="dateOfBirth">{{ message }}</label>
+      <i (click)="refreshScreen()" class="bx bx-sm bx-refresh"></i>
+    </div>
+    <div class="d-flex justify-content-center align-items-center gap-3">
+      <button
+        type="button"
+        class="btn btn-outline-light"
+        (click)="closeRechargeWalletOverlay()"
+      >
+        Quit Chat
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-light btn-success"
+        (click)="openWallet()"
+      >
+        Recharge Wallet
+      </button>
+    </div>
+  </div>
+</div>
+
+<div
+  class="feedback-overlay-conformation"
+  *ngIf="!parentData?.userIsAstrologer && reviewSubmitted"
+>
+  <div
+    class="modal-body d-flex justify-content-center align-items-center flex-column p-5"
+  >
+    <label for="">Your Review</label>
+    <div class="mb-3">
+      <div>
+        <ngb-rating
+          [(rate)]="selectedStars"
+          [max]="maxStars"
+          [starTemplate]="customStarTemplate"
+        ></ngb-rating>
+      </div>
+
+      <ng-template #customStarTemplate let-fill="fill">
+        <span
+          class="star"
+          [style.color]="getStarColor(fill)"
+          [style.width.%]="fill"
+          [style.font-size.em]="2"
+          >&#9733;</span
+        >
+      </ng-template>
+    </div>
+    <textarea
+      class="form-control w-100 mb-3"
+      placeholder="Your Review Please"
+      rows="3"
+      (change)="onTextareaChange($event)"
+    >
+    </textarea>
+    <div class="d-flex justify-content-center align-items-center gap-3">
+      <button
+        type="button"
+        class="btn btn-outline-light"
+        (click)="onClickReivewSubmitButton()"
+        [disabled]="this.selectedStars <= 0 || this.textArea == ''"
+        [class.btn-success]="this.selectedStars > 0 || this.textArea != ''"
+      >
+        Submit Review
+      </button>
     </div>
   </div>
 </div>

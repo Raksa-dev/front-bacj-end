@@ -42,6 +42,7 @@ import { ChatnotificationsComponent } from './shared/chatnotifications/chatnotif
 import { CallnotificationsComponent } from './shared/callnotifications/callnotifications.component';
 import { WalletComponent } from './shared/wallet/wallet.component';
 import { CalluiComponent } from './shared/callui/callui.component';
+import { TruncatePipe } from './pipes/truncate.pipe';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { CalluiComponent } from './shared/callui/callui.component';
     CallnotificationsComponent,
     WalletComponent,
     CalluiComponent,
+    TruncatePipe,
   ],
   imports: [
     BrowserModule,

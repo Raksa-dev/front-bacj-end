@@ -17,6 +17,8 @@ import { HoroscopesComponent } from './horoscopes/horoscopes.component';
 import { HoroscopeComponent } from './horoscopes/horoscope/horoscope.component';
 import { FlamesComponent } from './flames/flames.component';
 import { MatchMakingComponent } from './match-making/match-making.component';
+import { AboutAstrolgerComponent } from './chat/about/about.component';
+import { AboutCallComponent } from './call/about/about.component';
 
 const routes: Routes = [
   {
@@ -35,11 +37,23 @@ const routes: Routes = [
   },
   {
     path: 'chat',
-    component: ChatComponent,
+    children: [
+      { path: '', component: ChatComponent },
+      {
+        path: 'about/:id',
+        component: AboutAstrolgerComponent,
+      },
+    ],
   },
   {
     path: 'call',
-    component: CallComponent,
+    children: [
+      { path: '', component: CallComponent },
+      {
+        path: 'about/:id',
+        component: AboutCallComponent,
+      },
+    ],
   },
   {
     path: 'admin',

@@ -28,6 +28,7 @@ export class AstrologerService {
   BASE_URL_PROD = 'https://astroraksa.com';
   BASE_URL_LOCAL = 'http://localhost:3000';
   BASE_URL = this.BASE_URL_PROD;
+  astrologerBriefDataStore;
   constructor(private firestore: Firestore, private http: HttpClient) {}
 
   async getAllAstrologersData() {
@@ -103,14 +104,34 @@ export class AstrologerService {
     const getData = await getDocs(coll);
     return getData;
   }
-  async createRoomAndAddMessage(roomId, userData) {
+  async createRoomAndAddMessage(roomId, userData, message?) {
     let isRoomThere = await this.checkRoomIsPresent(roomId);
+    let addTextMessage = message ? 'Your Form Data:\n' + message : null;
     if (isRoomThere.size) {
+      const coll = collection(this.firestore, 'chatRooms', roomId, 'messages');
+      const addMessage = addDoc(coll, {
+        text: addTextMessage || 'hi there',
+        file_url: '',
+        isRead: false,
+        mediaUrl: '',
+        message: 'hi',
+        receiverId: '',
+        receiverName: 'some name',
+        receiverPhotoUrl: '',
+        senderId: userData['uid'],
+        senderIsAstrologer: true,
+        senderName: userData['firstName'],
+        senderPhotoUrl: userData['profilePicUrl']
+          ? userData['profilePicUrl']
+          : '',
+        time: new Date(),
+        type: 'text',
+      });
       return { isRoomThere: true };
     }
     const coll = collection(this.firestore, 'chatRooms', roomId, 'messages');
     const addMessage = addDoc(coll, {
-      text: 'hi there',
+      text: addTextMessage || 'hi there',
       file_url: '',
       isRead: false,
       mediaUrl: '',
@@ -131,5 +152,18 @@ export class AstrologerService {
   }
   async generateRoomCodeForCall(roomName) {
     return this.http.post(`${this.BASE_URL}/api/roomcode`, { name: roomName });
+  }
+  setAstrologerBriefDataStore(data) {
+    this.astrologerBriefDataStore = data;
+  }
+  async allReview(astroId) {
+    const coll = collection(this.firestore, 'reviews');
+    const q1 = query(coll, where('astrolgerId', '==', astroId));
+    const collections = await collectionData(q1);
+    return collections;
+  }
+
+  get getAstrologerBriefDataStore() {
+    return this.astrologerBriefDataStore;
   }
 }

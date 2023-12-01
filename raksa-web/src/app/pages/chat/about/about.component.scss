@@ -1,0 +1,210 @@
+@import "../../../../assets/scss/variables";
+.gradient-border-pseudo {
+  position: relative;
+  padding: 1px 20px;
+  background: linear-gradient(175.65deg, $black 3.53%, #190f37 96.47%);
+  margin: 1px;
+  border-radius: 30px;
+}
+
+.gradient-border-pseudo-review {
+  position: relative;
+  padding: 1px 20px;
+  background: linear-gradient(175.65deg, $black 3.53%, #190f37 96.47%);
+  margin: 1px;
+  border-radius: 30px;
+}
+
+.gradient-border-pseudo::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  margin: -1px;
+  border-radius: inherit;
+  background-image: linear-gradient(150.77deg, #d700ff 0%, #7000ff 98.92%);
+}
+
+.gradient-border-pseudo:hover {
+  background-image: linear-gradient(150.77deg, #ea90fa43 0%, #312c37 98.92%);
+}
+.profile {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  width: 80vw;
+  padding: 10px;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.content-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #7000ff;
+  height: 130px;
+  width: 130px;
+}
+.content-center-review {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #7000ff;
+  height: 40px;
+  width: 40px;
+}
+.profile-section {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+}
+.review-comments-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid white;
+  height: 260px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.user-name {
+  margin: 1rem;
+  font-size: 1.5rem;
+  font-weight: 900;
+}
+.his-discription {
+  // background-color: #7000ff;
+  width: 75%;
+  display: flex;
+  position: relative;
+  word-wrap: break-word;
+  white-space: pre-line;
+  overflow-wrap: break-word;
+  flex-direction: column;
+  .read-button {
+    font-size: 0.75rem;
+    background: linear-gradient(150.77deg, #d700ff 0%, #7000ff 98.92%);
+    align-self: flex-start;
+    padding: 1px 3px 1px 3px;
+    border-radius: 10px;
+  }
+  .read-button:hover {
+    font-size: 0.75rem;
+    background: linear-gradient(150.77deg, #7000ff 0%, #d700ff 98.92%);
+    align-self: flex-start;
+    padding: 1px 3px 1px 3px;
+    border-radius: 10px;
+  }
+  .text-p {
+    width: 100%;
+    display: -webkit-box;
+    max-width: 500px;
+    font-size: 0.8rem;
+  }
+  .cliped-text {
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 90px;
+  }
+  .scrollable-text {
+    overflow-y: scroll;
+    height: 90px;
+  }
+
+  p {
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+}
+.ratings {
+  display: flex;
+  width: 100%;
+  padding: 10px;
+  flex-direction: column;
+}
+.review-box {
+  height: 200px;
+  width: 300px;
+  // background: #f1f1f1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.progress-bar-5 {
+  width: 150px;
+  height: 10px;
+  border: 1px solid white;
+  border-radius: 5px;
+  background: linear-gradient(90deg, #4caf50 10%, transparent 10%);
+}
+
+.review {
+  display: grid;
+  grid-template-columns: 1fr;
+  // border: 1px salmon solid;
+  padding: 10px;
+  width: 80vw;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  justify-items: center;
+}
+.review-container {
+  border: 1px solid white;
+  border-radius: 5px;
+  .review-text {
+    font-size: 1rem;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 1px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Track color */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888; /* Thumb color */
+  border-radius: 6px; /* Rounded corners */
+}
+
+select option {
+  margin: 40px;
+  background: #230033;
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+}
+
+.gradient-button {
+  background: linear-gradient(
+    150.77deg,
+    #d700ff 0%,
+    #7000ff 98.92%
+  ); /* Adjust colors as needed */
+
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.gradient-button:hover {
+  background: linear-gradient(
+    150.77deg,
+    #d700ff 0%,
+    #7000ff 80.92%
+  ); /* Reverse the gradient colors on hover */
+}

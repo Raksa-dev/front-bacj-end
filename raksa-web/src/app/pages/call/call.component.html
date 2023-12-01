@@ -82,7 +82,11 @@
               <div class="session mt-1">
                 <button
                   (click)="
-                    sendChatNotificationToAstrologer(astrologer, content)
+                    sendChatNotificationToAstrologer(
+                      $event,
+                      astrologer,
+                      content
+                    )
                   "
                   class="btn btn-white"
                 >

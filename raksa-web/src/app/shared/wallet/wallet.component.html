@@ -21,9 +21,7 @@
               <i (click)="refreshScreen()" class="bx bx-sm bx-refresh"></i>
               <div class="your-letter">
                 <p>
-                  {{
-                    currentUser?.walletBalance ? currentUser?.walletBalance : 0
-                  }}
+                  {{ currentUser?.walletBalance || 0 | truncate : 2 }}
                 </p>
               </div>
             </div>

@@ -1,0 +1,608 @@
+<div class="d-flex justify-content-center align-items-center mt-3 flex-column">
+  <!-- Profile and rating -->
+  <div class="profile">
+    <!-- profile -->
+    <div class="gradient-border-pseudo profile-section">
+      <div>
+        <h5 class="user-name">
+          {{ astrologer?.firstName + " " + astrologer?.lastName }}
+        </h5>
+      </div>
+      <div>
+        <!-- image -->
+        <div>
+          <div class="d-flex justify-content-between mb-3">
+            <div
+              class="avatar-md rounded-circle mb-2 bg-dark content-center"
+              *ngIf="!astrologer?.profilePicUrl"
+            >
+              {{ astrologer["firstName"][0]?.toUpperCase() }}
+            </div>
+            <div
+              class="avatar-md rounded-circle bg-dark content-center"
+              *ngIf="astrologer?.profilePicUrl"
+            >
+              <img
+                class="avatar-md rounded-circle content-center"
+                src="{{ astrologer['profilePicUrl'] }}"
+              />
+            </div>
+            <!-- text and buttons -->
+            <div class="his-discription">
+              <p
+                class="text-p"
+                [class.scrollable-text]="readMore"
+                [class.cliped-text]="!readMore"
+              >
+                {{ astrologer["bio"] }}
+              </p>
+              <p
+                class="read-button"
+                *ngIf="!readMore && astrologer['bio'].length > 25"
+                (click)="readMoreText()"
+              >
+                Read more >
+              </p>
+              <p
+                class="read-button"
+                *ngIf="readMore && astrologer['bio'].length > 25"
+                (click)="readMoreText()"
+              >
+                Read less >
+              </p>
+
+              <!-- buttons -->
+              <div class="d-flex gap-5">
+                <div class="session read-button">
+                  <button
+                    (click)="sendChatNotificationToAstrologer(content)"
+                    class="btn btn-white"
+                  >
+                    Request Chat
+                  </button>
+                </div>
+                <div class="session read-button">
+                  <button
+                    class="btn btn-white"
+                    (click)="sendCallNotificationToAstrologer(content)"
+                  >
+                    Request Call
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- rating section -->
+    <div class="gradient-border-pseudo ratings">
+      <div>
+        <h5 class="user-name">Overall Rating</h5>
+      </div>
+      <div class="d-flex justify-content-center align-items-center">
+        <div class="review-box">
+          <!-- stars -->
+          <div
+            class="d-flex justify-content-center align-items-center flex-column"
+          >
+            <h3>{{ astrologer["overallRating"] || 0 }}</h3>
+            <div>
+              <ngb-rating
+                [(rate)]="astrologer['overallRating']"
+                [max]="maxStars"
+                [starTemplate]="customStarTemplate"
+                readonly="true"
+              ></ngb-rating>
+            </div>
+
+            <ng-template #customStarTemplate let-fill="fill">
+              <span
+                class="star"
+                [style.color]="getStarColor(fill)"
+                [style.width.%]="fill"
+                >&#9733;</span
+              >
+            </ng-template>
+          </div>
+          <!-- porgress bars -->
+          <div
+            class="d-flex justify-content-center align-items-center flex-column"
+          >
+            <div class="d-flex align-items-center gap-2">
+              <div>5</div>
+              <div
+                class="progress-bar-5"
+                [ngStyle]="{ background: getProgressBarGradient(5) }"
+              ></div>
+            </div>
+            <div class="d-flex justify-content-center align-items-center gap-2">
+              <div>4</div>
+              <div
+                class="progress-bar-5"
+                [ngStyle]="{ background: getProgressBarGradient(4) }"
+              ></div>
+            </div>
+            <div class="d-flex justify-content-center align-items-center gap-2">
+              <div>3</div>
+              <div
+                class="progress-bar-5"
+                [ngStyle]="{ background: getProgressBarGradient(3) }"
+              ></div>
+            </div>
+            <div class="d-flex justify-content-center align-items-center gap-2">
+              <div>2</div>
+              <div
+                class="progress-bar-5"
+                [ngStyle]="{ background: getProgressBarGradient(2) }"
+              ></div>
+            </div>
+            <div class="d-flex justify-content-center align-items-center gap-2">
+              <div>1</div>
+              <div
+                class="progress-bar-5"
+                [ngStyle]="{ background: getProgressBarGradient(1) }"
+              ></div>
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+  </div>
+
+  <h5 class="user-name align-self-center">Review And Comments</h5>
+  <!-- Review section -->
+  <div class="review">
+    <!-- reviews -->
+    <div
+      class="gradient-border-pseudo-review review-comments-section w-100 p-3"
+      *ngIf="allReviews.length == 0"
+    >
+      No Review Yet
+    </div>
+    <div
+      class="gradient-border-pseudo-review review-comments-section w-100 p-3"
+      *ngIf="allReviews.length"
+    >
+      <div *ngFor="let review of allReviews">
+        <div class="review-container p-1 px-3">
+          <div>
+            <ngb-rating
+              [rate]="review?.rating"
+              [max]="maxStars"
+              [starTemplate]="customStarTemplate"
+            ></ngb-rating>
+          </div>
+
+          <ng-template #customStarTemplate let-fill="fill">
+            <span
+              class="star"
+              [style.color]="getStarColor(fill)"
+              [style.width.%]="fill"
+              >&#9733;</span
+            >
+          </ng-template>
+          <div class="review-text">{{ review?.reviewText }}</div>
+          <!-- image -->
+          <div>
+            <div class="d-flex align-items-center gap-1">
+              <div
+                class="avatar-md rounded-circle bg-dark content-center-review"
+                *ngIf="!review?.userProfilePic"
+              >
+                {{ review.userName ? review?.userName[0]?.toUpperCase() : "N" }}
+              </div>
+              <div
+                class="avatar-md rounded-circle bg-dark content-center-review"
+                *ngIf="review?.userProfilePic"
+              >
+                <img
+                  class="avatar-md rounded-circle content-center-review"
+                  src="{{ review['userProfilePic'] }}"
+                />
+              </div>
+              <h6>
+                {{ review?.userName }}
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ngb-toast
+  *ngIf="toast"
+  [autohide]="true"
+  [delay]="5000"
+  class="toast-container position-fixed top-0 end-0 p-3 bg-success text-light"
+  (hidden)="resetToast()"
+  >{{ message }}
+</ngb-toast>
+
+<ng-template #content let-modal>
+  <div
+    class="modal-body d-flex justify-content-center align-items-center flex-column p-5"
+    *ngIf="modalType == 'wallet_form'"
+  >
+    <div class="mb-3">
+      <label for="dateOfBirth">{{ message }}</label>
+    </div>
+    <div class="d-flex justify-content-center align-items-center gap-3">
+      <button
+        type="button"
+        class="btn btn-outline-light"
+        (click)="modal.close()"
+      >
+        Cancel
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-light btn-success"
+        (click)="openWallet()"
+      >
+        Recharge Wallet
+      </button>
+    </div>
+  </div>
+  <div *ngIf="modalType != 'wallet_form'">
+    <div class="modal-header">Chat Form</div>
+    <div
+      class="modal-body d-flex justify-content-center align-items-center flex-column pt-5"
+    >
+      <form
+        class="needs-validation"
+        (ngSubmit)="submitRelativeForm()"
+        [formGroup]="relativeForm"
+        autocomplete="off"
+      >
+        <div class="mb-2">
+          <label for="relation" class="form-fields-label">Relation</label>
+          <select
+            id="relation"
+            formControlName="relation"
+            class="form-control-select-box select-box"
+            [ngClass]="{
+              'is-invalid': relativeSubmitted && relativeFrm['relation'].errors
+            }"
+          >
+            <option value="null" disabled selected>Select User Type</option>
+            <option value="father">Father</option>
+            <option value="mother">Mother</option>
+            <option value="son">Son</option>
+            <option value="lover">Lover</option>
+            <option value="fiancee">Fiancee</option>
+            <option value="friend">Friend</option>
+            <option value="spouse">Spouse</option>
+          </select>
+          <div
+            *ngIf="profileSubmitted && relativeFrm['relation'].errors"
+            class="invalid-feedback"
+          >
+            <span *ngIf="relativeFrm['relation'].errors['required']">
+              Type can't be empty</span
+            >
+          </div>
+        </div>
+        <div class="mb-2">
+          <label for="firstName" class="form-fields-label">First Name</label>
+          <input
+            type="text"
+            id="firstName"
+            formControlName="firstName"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid': relativeSubmitted && relativeFrm['firstName'].errors
+            }"
+            placeholder="Enter your first name"
+          />
+          <div
+            *ngIf="profileSubmitted && relativeFrm['firstName'].errors"
+            class="invalid-feedback"
+          >
+            <span *ngIf="relativeFrm['firstName'].errors['required']"
+              >First Name can't be empty</span
+            >
+          </div>
+        </div>
+
+        <div class="mb-2">
+          <label for="lastName" class="form-fields-label">Last Name</label>
+          <input
+            type="text"
+            id="lastName"
+            formControlName="lastName"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid': relativeSubmitted && relativeFrm['lastName'].errors
+            }"
+            placeholder="Enter your first name"
+          />
+          <div
+            *ngIf="profileSubmitted && relativeFrm['lastName'].errors"
+            class="invalid-feedback"
+          >
+            <span *ngIf="relativeFrm['lastName'].errors['required']"
+              >Last Name can't be empty</span
+            >
+          </div>
+        </div>
+        <div class="mb-2">
+          <label for="gender" class="form-fields-label">Gender</label>
+          <select
+            id="gender"
+            formControlName="gender"
+            class="form-control-select-box select-box"
+            [ngClass]="{
+              'is-invalid': relativeSubmitted && relativeFrm['gender'].errors
+            }"
+          >
+            <option value="null" disabled selected>Select your gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">other</option>
+          </select>
+          <div
+            *ngIf="profileSubmitted && relativeFrm['gender'].errors"
+            class="invalid-feedback"
+          >
+            <span *ngIf="relativeFrm['gender'].errors['required']"
+              >Gender can't be empty</span
+            >
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="mb-2">
+              <label for="dateOfBirth" class="form-fields-label"
+                >Birth Date</label
+              >
+              <div class="input-group clockpicker mt-1">
+                <input
+                  ngbDatepicker
+                  readonly
+                  class="form-control"
+                  id="dateOfBirth"
+                  formControlName="dateOfBirth"
+                  #dateOfBirth="ngbDatepicker"
+                  style="font-size: 0.7rem"
+                  [ngClass]="{
+                    'is-invalid':
+                      profileSubmitted && profileFrm['dateOfBirth'].errors
+                  }"
+                />
+
+                <div class="input-group-append" (click)="dateOfBirth.toggle()">
+                  <span class="input-group-text">
+                    <img src="../assets/images/calendar.png" />
+                  </span>
+                </div>
+
+                <div
+                  *ngIf="profileSubmitted && profileFrm['dateOfBirth'].errors"
+                  class="invalid-feedback"
+                >
+                  <span *ngIf="profileFrm['dateOfBirth'].errors['required']"
+                    >Date of Birth can't be empty</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="mb-2">
+              <label for="dateOfBirth" class="form-fields-label"
+                >Birth Time</label
+              >
+              <div class="mb-3">
+                <app-custome-time-picker
+                  [time]="relativeForm.get('birthTime').value"
+                  (timeChange)="relativeForm.get('birthTime').setValue($event)"
+                ></app-custome-time-picker>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- birth place -->
+        <div class="mb-2">
+          <label for="birthPlace" class="form-fields-label">Birth Place</label>
+          <input
+            type="text"
+            id="birthPlace"
+            formControlName="birthPlace"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid':
+                relativeSubmitted && relativeFrm['birthPlace'].errors
+            }"
+            placeholder="Enter Birth Place"
+          />
+          <div
+            *ngIf="profileSubmitted && relativeFrm['birthPlace'].errors"
+            class="invalid-feedback"
+          >
+            <span *ngIf="relativeFrm['birthPlace'].errors['required']"
+              >Birth Place can't be empty</span
+            >
+          </div>
+        </div>
+
+        <div class="mb-2">
+          <label for="maritialStatus" class="form-fields-label"
+            >Maritial Status</label
+          >
+          <select
+            id="maritialStatus"
+            formControlName="maritialStatus"
+            class="form-control-select-box select-box"
+            [ngClass]="{
+              'is-invalid':
+                relativeSubmitted && relativeFrm['maritialStatus'].errors
+            }"
+          >
+            <option value="null" disabled selected>Select your status</option>
+            <option value="married">Married</option>
+            <option value="bachlore">Bachlore</option>
+            <option value="bachelorette">Bachelorette</option>
+          </select>
+          <div
+            *ngIf="profileSubmitted && relativeFrm['maritialStatus'].errors"
+            class="invalid-feedback"
+          >
+            <span *ngIf="relativeFrm['maritialStatus'].errors['required']"
+              >Gender can't be empty</span
+            >
+          </div>
+        </div>
+        <div class="d-flex gap-1">
+          <input
+            type="checkbox"
+            name="add partner"
+            id="partnerDetailsCheckBox"
+            (change)="onCheckboxChange($event)"
+          />
+          <label for="partnerDetailsCheckBox" class="form-fields-label"
+            >Add Partner Details</label
+          >
+        </div>
+        <!-- partner details -->
+        <div *ngIf="partnerForm">
+          <div class="mb-2">
+            <label for="partnerName" class="form-fields-label"
+              >Partner Name</label
+            >
+            <input
+              type="text"
+              id="partnerName"
+              formControlName="partnerName"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid':
+                  relativeSubmitted && relativeFrm['partnerName'].errors
+              }"
+              placeholder="Enter your first name"
+            />
+          </div>
+          <div class="mb-2">
+            <label for="partnerGender" class="form-fields-label"
+              >Partner Gender</label
+            >
+            <select
+              id="partnerGender"
+              formControlName="partnerGender"
+              class="form-control-select-box select-box"
+              [ngClass]="{
+                'is-invalid':
+                  relativeSubmitted && relativeFrm['partnerGender'].errors
+              }"
+            >
+              <option value="null" disabled selected>Select your gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">other</option>
+            </select>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-2">
+                <label for="partnerDateOfBirth" class="form-fields-label"
+                  >Partner Birth Date</label
+                >
+                <div class="input-group clockpicker mt-1">
+                  <input
+                    ngbDatepicker
+                    readonly
+                    class="form-control"
+                    id="partnerDateOfBirth"
+                    formControlName="partnerDateOfBirth"
+                    #partnerDateOfBirth="ngbDatepicker"
+                    style="font-size: 0.7rem"
+                    [ngClass]="{
+                      'is-invalid':
+                        profileSubmitted &&
+                        profileFrm['partnerDateOfBirth'].errors
+                    }"
+                  />
+
+                  <div
+                    class="input-group-append"
+                    (click)="partnerDateOfBirth.toggle()"
+                  >
+                    <span class="input-group-text">
+                      <img src="../assets/images/calendar.png" />
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="mb-2">
+                <label for="partnerTimeOfBirth" class="form-fields-label"
+                  >Partner Birth Time</label
+                >
+                <div class="mb-3">
+                  <app-custome-time-picker
+                    [time]="relativeForm.get('partnerTimeOfBirth').value"
+                    (timeChange)="
+                      relativeForm.get('partnerTimeOfBirth').setValue($event)
+                    "
+                  ></app-custome-time-picker>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- birth place -->
+          <div class="mb-2">
+            <label for="partnerPlaceOfBirth" class="form-fields-label"
+              >Partner Birth Place</label
+            >
+            <input
+              type="text"
+              id="partnerPlaceOfBirth"
+              formControlName="partnerPlaceOfBirth"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid':
+                  relativeSubmitted && relativeFrm['partnerPlaceOfBirth'].errors
+              }"
+              placeholder="Enter Birth Place"
+            />
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between p-3">
+          <button
+            type="button"
+            class="btn btn-outline-light"
+            (click)="cancelModal()"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            id="sign-in-button"
+            class="btn gradient-button"
+            [disabled]="relativeForm.invalid"
+          >
+            <span
+              >Chat With
+              {{ astrologer?.firstName + " " + astrologer?.lastName }}</span
+            >
+            <i
+              *ngIf="!relativeSubmitted"
+              class="bx bx-right-arrow-alt align-middle ms-1"
+            ></i>
+            <i
+              *ngIf="relativeSubmitted"
+              class="bx bx-loader bx-spin align-middle ms-1"
+            ></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>

@@ -71,6 +71,7 @@ export class UserService {
     } else {
       this.userData = { ...data, phoneNumber: authData };
     }
+    return this.userData;
   }
   async CreateUser(userData: any): Promise<any> {
     const userRef = doc(this.firestore, 'users', userData.uid);
@@ -163,7 +164,7 @@ export class UserService {
     const data = await getDocs(q);
     return data;
   }
-  async NotifyAstrologerForChat(astrologerData, userData, type) {
+  async NotifyAstrologerForChat(astrologerData, userData, type, message?) {
     const alreadyNotificationPresent = await this.checkNotificationIsThere(
       astrologerData['uid'],
       userData['uid'],
@@ -171,7 +172,7 @@ export class UserService {
     );
     if (alreadyNotificationPresent?.size) {
       // notification present
-      return true;
+      return { notified: true, message: 'Already Notified !!!' };
     } else {
       const notificationsRef = collection(
         this.firestore,
@@ -179,21 +180,24 @@ export class UserService {
         astrologerData['uid'],
         'notifications'
       );
+      let title =
+        `hey greetings ${userData['firstName']}, wants to have ${type} with you` +
+        '\n';
+
       addDoc(notificationsRef, {
         type,
         isRead: false,
         body: `Want to ${type}`,
         date: new Date(),
-        title: `hey ${
-          userData['firstName'] + ' ' + userData['lastName']
-        } wants to have ${type} with you`,
+        title: title,
         senderId: userData['uid'],
         senderName: userData['firstName'],
         profilePicUrl: userData['profilePicUrl']
           ? userData['profilePicUrl']
           : '',
+        message: message || '',
       });
-      return true;
+      return { notified: true, message: 'Notified !!!' };
     }
   }
   async NotifyUserForChat(
@@ -363,11 +367,8 @@ export class UserService {
     callDuration,
     callerId,
     sessionType,
+    sessionId,
   }) {
-    const min = 1000000000;
-    const max = 9999999999;
-    const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
-    let sessionId = `session_${randomNum}`;
     const sessionRef = doc(this.firestore, 'sessions', sessionId);
 
     return setDoc(sessionRef, {
@@ -379,5 +380,9 @@ export class UserService {
       id: sessionId,
       date: new Date(),
     });
+  }
+  async createEntryReview(data) {
+    const reviewRef = collection(this.firestore, 'reviews');
+    addDoc(reviewRef, { ...data, reviewDate: new Date() });
   }
 }

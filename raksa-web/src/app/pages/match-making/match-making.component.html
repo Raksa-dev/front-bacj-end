@@ -2,12 +2,18 @@
   <div class="form-section">
     <h2>Kundali Matching Form</h2>
 
-    <form action="/submit-kundali-details" method="post">
+    <form (ngSubmit)="submitForm()" [formGroup]="form" autocomplete="off">
       <fieldset>
         <legend>Details of the Boy:</legend>
 
         <label for="boyName">Full Name:</label>
-        <input type="text" id="boyName" name="boyName" required />
+        <input
+          type="text"
+          id="boyName"
+          name="boyName"
+          formControlName="boyName"
+          required
+        />
 
         <label for="boyDob">Date of Birth:</label>
         <input
@@ -16,6 +22,7 @@
           name="boyDob"
           placeholder="DD/MM/YYYY"
           required
+          formControlName="boyDob"
         />
 
         <label for="boyTob">Time of Birth:</label>
@@ -25,17 +32,30 @@
           name="boyTob"
           placeholder="HH:MM (24-hour format)"
           required
+          formControlName="boyTob"
         />
 
         <label for="boyPob">Place of Birth:</label>
-        <input type="text" id="boyPob" name="boyPob" required />
+        <input
+          type="text"
+          id="boyPob"
+          name="boyPob"
+          formControlName="boyPob"
+          required
+        />
       </fieldset>
 
       <fieldset>
         <legend>Details of the Girl:</legend>
 
         <label for="girlName">Full Name:</label>
-        <input type="text" id="girlName" name="girlName" required />
+        <input
+          type="text"
+          id="girlName"
+          name="girlName"
+          formControlName="girlName"
+          required
+        />
 
         <label for="girlDob">Date of Birth:</label>
         <input
@@ -43,6 +63,7 @@
           id="girlDob"
           name="girlDob"
           placeholder="DD/MM/YYYY"
+          formControlName="girlDob"
           required
         />
 
@@ -52,14 +73,43 @@
           id="girlTob"
           name="girlTob"
           placeholder="HH:MM (24-hour format)"
+          formControlName="girlTob"
           required
         />
 
         <label for="girlPob">Place of Birth:</label>
-        <input type="text" id="girlPob" name="girlPob" required />
+        <input
+          type="text"
+          id="girlPob"
+          name="girlPob"
+          formControlName="girlPob"
+          required
+        />
       </fieldset>
 
-      <input type="submit" value="Submit" class="submit-btn" />
+      <input
+        type="submit"
+        value="Submit"
+        class="submit-btn"
+        (click)="open(content)"
+        [class.submit-btn-check-valid]="form.invalid"
+        [disabled]="form.invalid"
+      />
     </form>
   </div>
 </div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Your Score</h4>
+    <button
+      type="button"
+      class="btn-close btn-close-white"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div id="ashtakootScore"></div>
+  </div>
+</ng-template>

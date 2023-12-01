@@ -9,10 +9,11 @@ import {
   selectIsConnectedToRoom,
   HMSNotificationTypes,
 } from '@100mslive/hms-video-store';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription, interval } from 'rxjs';
 import { AuthService, UserService } from 'src/app/core/services';
 import { increment } from 'firebase/firestore';
+import { WalletComponent } from '../wallet/wallet.component';
 
 @Component({
   selector: 'app-callui',
@@ -45,11 +46,21 @@ export class CalluiComponent implements OnInit, OnDestroy {
   timer: number = 0;
   timerSubscription: Subscription;
 
+  messages;
+  message = '';
+
+  selectedStars = 0;
+  maxStars = 5;
+  textArea = '';
+  reviewSubmitted = false;
+  rechargeWallet = false;
+
   constructor(
     public activeModal: NgbActiveModal,
     private ngZone: NgZone,
     public userService: UserService,
-    public authService: AuthService
+    public authService: AuthService,
+    private modalService: NgbModal
   ) {
     // Initialize HMS Store
     this.hmsManager = new HMSReactiveStore();
@@ -64,10 +75,57 @@ export class CalluiComponent implements OnInit, OnDestroy {
       this.timerSubscription = interval(1000).subscribe(() => {
         this.ngZone.run(() => {
           this.timer++;
-          // this.checkTheBalance();
+          this.checkTheBalance();
         });
       });
     });
+  }
+
+  refreshScreen() {
+    this.userService.fetchUserData(this.currentUser['uid']).then((data) => {
+      this.currentUser = data;
+      let trackBalance =
+        this.currentUser['walletBalance'] -
+        this.calculateRate(
+          this.astrologerData['chatChargePerMinute'],
+          this.timer
+        );
+      let checkBalance = this.astrologerData['chatChargePerMinute'] * 5;
+      if (
+        trackBalance - checkBalance >=
+        this.astrologerData['chatChargePerMinute']
+      ) {
+        // end the call top up the wallet to continue
+        this.message = ``;
+        this.rechargeWallet = false;
+      }
+    });
+  }
+
+  closeRechargeWalletOverlay() {
+    this.rechargeWallet = false;
+    this.leaveRoom();
+  }
+
+  checkTheBalance() {
+    if (this.currentUser && this.currentUser['walletBalance']) {
+      let trackBalance =
+        this.currentUser['walletBalance'] -
+        this.calculateRate(
+          this.astrologerData['callChargePerMinute'],
+          this.timer
+        );
+      let checkBalance = this.astrologerData['callChargePerMinute'] * 5;
+
+      if (
+        trackBalance - checkBalance <=
+        this.astrologerData['callChargePerMinute']
+      ) {
+        // end the call top up the wallet to continue
+        this.message = `Minimum balance of 5 minutes (${checkBalance} INR) is required to start call.`;
+        this.rechargeWallet = true;
+      }
+    }
   }
 
   formatTime(seconds: number): string {
@@ -123,6 +181,10 @@ export class CalluiComponent implements OnInit, OnDestroy {
     return astrologerData;
   }
 
+  getStarColor(index: number): string {
+    return index <= this.selectedStars ? 'white' : 'gold'; // Change this to the desired colors
+  }
+
   openConfirmation(): void {
     this.confirmationOverlay = true;
   }
@@ -151,7 +213,12 @@ export class CalluiComponent implements OnInit, OnDestroy {
   async leavehmsStore() {
     await this.hmsActions.leave();
   }
-
+  onTextareaChange(event: Event): void {
+    // Handle the change event here
+    const value = (event.target as HTMLTextAreaElement).value;
+    this.textArea = value?.trim();
+    // You can perform further actions with the value as needed
+  }
   calculateRate(rate, sec) {
     const ratePerMinute = rate; // Rs per minute
     const seconds = sec;
@@ -186,7 +253,85 @@ export class CalluiComponent implements OnInit, OnDestroy {
       return data;
     }
   }
-  async leaveRoom() {
+
+  async onClickReivewSubmitButton() {
+    this.leaveRoom('review');
+  }
+  async submitReview() {
+    if (this.parentData?.userIsAstrologer) {
+      this.leaveRoom();
+      return;
+    }
+    this.confirmationOverlay = false;
+    this.reviewSubmitted = true;
+    // this.reviewSubmissionAndCalculation('helllo');
+  }
+
+  calculateOverAllRating(astrologerData) {
+    if (astrologerData?.ratings && astrologerData?.totalReview) {
+      let data: { [key: number]: number } = astrologerData?.ratings;
+      const total = Object.entries(data).reduce(
+        (acc, [key, value]) => acc + Number(key) * value,
+        0
+      );
+      return Math.round(total / astrologerData?.totalReview);
+    }
+    return Math.round(this.selectedStars);
+  }
+  calculateRating(astrologerData) {
+    if (
+      astrologerData?.ratings &&
+      Object.entries(astrologerData?.ratings).length
+    ) {
+      let ratings = astrologerData?.ratings;
+      ratings[this.selectedStars] = ratings[this.selectedStars] + 1;
+      return ratings;
+    }
+    let ratings = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+    ratings[this.selectedStars] = ratings[this.selectedStars] + 1;
+    return ratings;
+  }
+
+  async reviewSubmissionAndCalculation(sessionId) {
+    let astrologerData = this.astrologerData;
+
+    //create a entry in review and update review and overall rating in astrolger entry
+    this.userService
+      .UpdateAstroUser(this.parentData.notificationData['senderId'], {
+        totalReview: astrologerData?.totalReview
+          ? astrologerData?.totalReview + 1
+          : 1,
+        overallRating: astrologerData?.overallRating
+          ? this.calculateOverAllRating(astrologerData)
+          : this.selectedStars,
+        ratings: this.calculateRating(astrologerData),
+      })
+      .then((data) => {});
+    this.userService.createEntryReview({
+      astrolgerId: astrologerData['uid'],
+      userId: this.currentUser.uid,
+      userName:
+        this.currentUser['firstName'] + ' ' + this.currentUser['lastName'],
+      userProfilePic: this.currentUser['profilePicUrl'],
+      rating: this.selectedStars,
+      reviewText: this.textArea,
+      sessionType: 'call',
+      sessionId,
+    });
+  }
+
+  openWallet() {
+    // top up balance
+    const modalRef = this.modalService.open(WalletComponent, {
+      backdrop: 'static',
+      keyboard: false,
+      centered: true,
+      size: 'lg',
+      scrollable: true,
+    });
+  }
+
+  async leaveRoom(eventType?) {
     if (!this.parentData.userIsAstrologer) {
       let astrologerData = this.astrologerData;
 
@@ -194,6 +339,10 @@ export class CalluiComponent implements OnInit, OnDestroy {
         astrologerData['callChargePerMinute'],
         this.timer
       );
+      const min = 1000000000;
+      const max = 9999999999;
+      const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+      let sessionId = `session_${randomNum}`;
 
       // save in session data base
       this.deductBalanceFromUserAccount(this.currentUser.uid, charge).then(
@@ -204,12 +353,16 @@ export class CalluiComponent implements OnInit, OnDestroy {
             callDuration: this.timer,
             callerId: this.currentUser.uid,
             sessionType: 'call',
+            sessionId,
           });
 
           await this.addBalanceToAstrolgerAccount(
             this.parentData.notificationData['senderId'],
             Math.round(charge * 100) / 100
           );
+          if (eventType && eventType == 'review') {
+            await this.reviewSubmissionAndCalculation(sessionId);
+          }
         }
       );
     }

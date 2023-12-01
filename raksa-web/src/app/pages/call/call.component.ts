@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Astrologer } from 'src/app/core/models';
@@ -50,7 +51,8 @@ export class CallComponent implements OnInit {
     private modalService: NgbModal,
     public authService: AuthService,
     public astroServices: AstrologerService,
-    public userService: UserService
+    public userService: UserService,
+    public router: Router
   ) {}
 
   public astrologersData = [];
@@ -207,19 +209,14 @@ export class CallComponent implements OnInit {
       })
       .result.then();
   }
-  sendChatNotificationToAstrologer(astroData, content) {
+  sendChatNotificationToAstrologer(e: MouseEvent, astroData, content) {
+    e.stopPropagation();
     if (this.authService.activeUserValue) {
-      let checkBalance = astroData['chatChargePerMinute'] * 5;
+      let checkBalance = astroData['callChargePerMinute'] * 5;
 
       if (this.userData.walletBalance > checkBalance) {
-        this.toast = true;
-        this.userService
-          .NotifyAstrologerForChat(
-            astroData,
-            this.userService.getUserData,
-            'call'
-          )
-          .then((data) => {});
+        this.astroServices.setAstrologerBriefDataStore(astroData);
+        this.router.navigate([`call/about/${astroData?.uid}`]);
       } else {
         this.message = `Minimum balance of 5 minutes (${checkBalance} INR) is required to start call.`;
         this.openConfirmation(content);
