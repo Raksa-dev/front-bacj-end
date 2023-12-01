@@ -259,11 +259,10 @@ export class ChatuiComponent implements OnInit, OnDestroy {
           : this.selectedStars,
         ratings: this.calculateRating(astrologerData),
       })
-      .then((data) => {
-      });
+      .then((data) => {});
     this.userService.createEntryReview({
       astrolgerId: astrologerData['uid'],
-      userId: this.currentUser.uid,
+      userId: this.currentUser?.uid,
       userName:
         this.currentUser['firstName'] + ' ' + this.currentUser['lastName'],
       userProfilePic: this.currentUser['profilePicUrl'],
