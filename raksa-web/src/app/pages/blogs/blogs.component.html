@@ -1,0 +1,99 @@
+<section class="section">
+  <div class="container">
+    <div class="d-flex align-items-center justify-content-between mb-5">
+      <div class="d-block">
+        <h2 class="fw-semi-bold mb-2">Blogs</h2>
+        <p>1000+ Blogs Available</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <ng-container *ngFor="let astrologer of astrologersData; let i = index">
+        <div class="col-xl-3 col-lg-6">
+          <div class="card astrologer text-center">
+            <div class="card-body">
+              <h4 class="fw-semi-bold mb-2">
+                {{ astrologer["title"] }}
+              </h4>
+              <div class="tags">
+                <h5 class="text-muted mb-2">
+                  {{ astrologer["specialties"]?.join(",") }}
+                </h5>
+              </div>
+              <div class="d-flex justify-content-center align-item-center">
+                <div class="his-discription">
+                  <p
+                    class="text-p"
+                    [class.scrollable-text]="readMore && indexOf == i"
+                    [class.cliped-text]="!readMore || indexOf != i"
+                  >
+                    {{ astrologer?.summary }}
+                  </p>
+                  <p
+                    class="read-button"
+                    *ngIf="
+                      (!readMore && astrologer['summary'].length > 25) ||
+                      indexOf != i
+                    "
+                    (click)="readMoreText(i, 'open')"
+                  >
+                    Read Summary >
+                  </p>
+                  <p
+                    class="read-button"
+                    *ngIf="
+                      readMore &&
+                      astrologer['summary'].length > 25 &&
+                      indexOf == i
+                    "
+                    (click)="readMoreText(i, 'close')"
+                  >
+                    Read less >
+                  </p>
+                </div>
+              </div>
+
+              <div class="session mt-1">
+                <button
+                  (click)="
+                    sendChatNotificationToAstrologer(
+                      $event,
+                      astrologer,
+                      content
+                    )
+                  "
+                  class="btn btn-white"
+                >
+                  Read Blog
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</section>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <div class="d-flex justify-content-center align-content-center w-100">
+      <div class="btn btn-outline-light btn-success">{{ blogData?.title }}</div>
+    </div>
+    <button
+      type="button"
+      class="btn-close btn-close-white"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body d-flex flex-column p-5">
+    <div class="mb-5">
+      <div class="fw-bold btn btn-outline-light btn-success">Summary</div>
+      <div for="dateOfBirth">{{ blogData?.summary }}</div>
+    </div>
+    <div class="mb-3">
+      <div for="dateOfBirth">{{ blogData?.text }}</div>
+    </div>
+  </div>
+</ng-template>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -12,11 +12,11 @@ import { ProfileComponent } from 'src/app/shared/profile/profile.component';
 import { WalletComponent } from 'src/app/shared/wallet/wallet.component';
 
 @Component({
-  selector: 'app-call',
-  templateUrl: './call.component.html',
-  styleUrls: ['./call.component.scss'],
+  selector: 'app-blogs',
+  templateUrl: './blogs.component.html',
+  styleUrls: ['./blogs.component.scss'],
 })
-export class CallComponent implements OnInit {
+export class BlogsComponent implements OnInit {
   specialtiesArray = [
     { name: 'Vedic', checked: false },
     { name: 'Numerology', checked: false },
@@ -47,26 +47,59 @@ export class CallComponent implements OnInit {
   message = '';
   genderOption = '';
   yearOption = '';
+  lastEntry = {};
+  readMore = false;
+  indexOf = null;
+  blogData = null;
+
   constructor(
     private modalService: NgbModal,
     public authService: AuthService,
     public astroServices: AstrologerService,
     public userService: UserService,
-    public router: Router
+    public router: Router,
+    private el: ElementRef
   ) {}
 
   public astrologersData = [];
-  ngOnInit(): void {
-    this.astroServices.getAllAstrologersData().then((data) => {
+  getAllblogs() {
+    this.lastEntry = this.astrologersData.length
+      ? this.astrologersData[this.astrologersData.length - 1]
+      : {};
+    this.userService.getAllBlogsData(this.lastEntry).then((data) => {
       data.forEach((doc) => {
-        this.astrologersData.push(doc.data());
+        this.astrologersData = this.astrologersData.concat(doc.data());
       });
     });
+  }
+  ngOnInit(): void {
+    this.getAllblogs();
+
     this.userService
       .getUserDataInfo(this.authService.activeUserValue.uid)
       .then((userVal) => {
         this.userData = userVal;
       });
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  onScroll() {
+    const scrollPosition = window.innerHeight + window.scrollY;
+    const elementOffset = this.el.nativeElement.offsetHeight;
+
+    if (scrollPosition >= elementOffset) {
+      this.getAllblogs();
+    }
+  }
+
+  readMoreText(index, type) {
+    if (type == 'open') {
+      this.indexOf = index;
+      this.readMore = true;
+    } else {
+      this.indexOf = null;
+      this.readMore = false;
+    }
   }
 
   navigateToAboutPage(astrologer) {
@@ -216,24 +249,14 @@ export class CallComponent implements OnInit {
   }
   sendChatNotificationToAstrologer(e: MouseEvent, astroData, content) {
     e.stopPropagation();
-    if (this.authService.activeUserValue) {
-      let checkBalance = astroData['callChargePerMinute'] * 5;
-
-      if (this.userData.walletBalance > checkBalance) {
-        this.astroServices.setAstrologerBriefDataStore(astroData);
-        this.router.navigate([`call/about/${astroData?.uid}`]);
-      } else {
-        this.message = `Minimum balance of 5 minutes (${checkBalance} INR) is required to start call.`;
-        this.openConfirmation(content);
-      }
-    } else {
-      const modalRef = this.modalService.open(LoginComponent, {
-        backdrop: 'static',
-        keyboard: false,
-        centered: true,
-        size: 'lg',
-        modalDialogClass: 'login',
-      });
-    }
+    this.blogData = astroData;
+    const modalRef = this.modalService.open(content, {
+      backdrop: 'static',
+      keyboard: false,
+      centered: true,
+      size: 'lg',
+      modalDialogClass: 'login',
+      fullscreen: true,
+    });
   }
 }

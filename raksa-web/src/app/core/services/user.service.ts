@@ -14,8 +14,10 @@ import {
   collection,
   where,
   query,
+  orderBy,
   increment,
 } from '@angular/fire/firestore';
+import { limit, startAfter } from 'firebase/firestore';
 import { encodeRequest, signRequest } from 'src/app/helpers';
 
 @Injectable({
@@ -388,5 +390,25 @@ export class UserService {
   async createEntryPayment(data, paymentId) {
     const reviewRef = doc(this.firestore, 'paymentLogs', paymentId);
     setDoc(reviewRef, { id: paymentId, date: new Date(), ...data });
+  }
+  async getAllBlogsData(entry) {
+    let q;
+    if (Object.entries(entry).length) {
+      q = query(
+        collection(this.firestore, 'blogs'),
+        orderBy('title'),
+        startAfter(entry?.title),
+        limit(8)
+      );
+    } else {
+      q = query(
+        collection(this.firestore, 'blogs'),
+        orderBy('title'),
+        limit(8)
+      );
+    }
+
+    const data = await getDocs(q);
+    return data;
   }
 }

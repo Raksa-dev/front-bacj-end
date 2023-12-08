@@ -17,7 +17,10 @@
 
     <div class="row">
       <ng-container *ngFor="let astrologer of astrologersData">
-        <div class="col-xl-3 col-lg-6">
+        <div
+          class="col-xl-3 col-lg-6"
+          (click)="navigateToAboutPage(astrologer)"
+        >
           <div class="card astrologer text-center">
             <div class="card-body">
               <div

@@ -28,6 +28,7 @@ import { MatchMakingComponent } from './match-making/match-making.component';
 import { AboutAstrolgerComponent } from './chat/about/about.component';
 import { CustomeTimePickerComponent } from '../custome-time-picker/custome-time-picker.component';
 import { AboutCallComponent } from './call/about/about.component';
+import { BlogsComponent } from './blogs/blogs.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { AboutCallComponent } from './call/about/about.component';
     MatchMakingComponent,
     AboutAstrolgerComponent,
     AboutCallComponent,
+    BlogsComponent,
   ],
   imports: [
     CommonModule,

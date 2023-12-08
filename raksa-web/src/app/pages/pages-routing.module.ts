@@ -19,6 +19,7 @@ import { FlamesComponent } from './flames/flames.component';
 import { MatchMakingComponent } from './match-making/match-making.component';
 import { AboutAstrolgerComponent } from './chat/about/about.component';
 import { AboutCallComponent } from './call/about/about.component';
+import { BlogsComponent } from './blogs/blogs.component';
 
 const routes: Routes = [
   {
@@ -54,6 +55,10 @@ const routes: Routes = [
         component: AboutCallComponent,
       },
     ],
+  },
+  {
+    path: 'blogs',
+    children: [{ path: '', component: BlogsComponent }],
   },
   {
     path: 'admin',
