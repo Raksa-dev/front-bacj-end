@@ -30,6 +30,7 @@ import { CustomeTimePickerComponent } from '../custome-time-picker/custome-time-
 import { AboutCallComponent } from './call/about/about.component';
 import { BlogsComponent } from './blogs/blogs.component';
 import { BlogComponent } from './blogs/blog/blog.component';
+import { BlogCreationComponent } from './admin/blog-creation/blog-creation.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { BlogComponent } from './blogs/blog/blog.component';
     AboutCallComponent,
     BlogsComponent,
     BlogComponent,
+    BlogCreationComponent,
   ],
   imports: [
     CommonModule,

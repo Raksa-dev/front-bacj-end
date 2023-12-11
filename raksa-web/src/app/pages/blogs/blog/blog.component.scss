@@ -22,6 +22,9 @@
   }
 }
 
+.active-section {
+  background-color: #d700ff;
+}
 .sections-index::before {
   content: "";
   position: absolute;
@@ -46,8 +49,8 @@
 .title-data {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  // justify-content: center;
+  // align-items: center;
   gap: 1rem;
 
   .blog-title {
@@ -60,12 +63,16 @@
     line-height: 3rem;
   }
   img {
-    height: 50%;
-    width: 50%;
-    object-fit: fill;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
   }
 }
-
+.image-continer {
+  display: flex;
+  height: 30%;
+  background-color: #d700ff;
+}
 .section-data {
   display: flex;
   flex-direction: column;

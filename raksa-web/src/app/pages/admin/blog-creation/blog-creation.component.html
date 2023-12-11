@@ -1,0 +1,296 @@
+<div class="modal-header mb-5">
+  <h4 class="modal-title" id="modal-basic-title">Blog Creation</h4>
+  <button
+    type="button"
+    class="btn-close bg-white"
+    (click)="onCancel()"
+    aria-label="Close"
+  ></button>
+</div>
+<div class="modal-body mb-5">
+  <div class="container-fluid">
+    <div class="row d-flex align-content-center justify-content-center">
+      <div>
+        <div class="position-relative">
+          <div class="position-relative">
+            <div ngbAccordion [closeOthers]="true">
+              <!--Generate Link -->
+              <div ngbAccordionItem>
+                <h6 ngbAccordionHeader>
+                  <button ngbAccordionButton>Create Blog</button>
+                </h6>
+                <div ngbAccordionCollapse>
+                  <div ngbAccordionBody>
+                    <ng-template>
+                      <!-- content-form.component.html -->
+
+                      <!-- content-form.component.html -->
+
+                      <form
+                        [formGroup]="contentForm"
+                        (ngSubmit)="onSubmit()"
+                        class="form-container"
+                      >
+                        <div class="form-group">
+                          <label for="type">Type:</label>
+                          <select
+                            [formControl]="contentForm.get('type')"
+                            id="type"
+                          >
+                            <option value="text">Text</option>
+                            <option value="html">HTML</option>
+                          </select>
+                          <div
+                            *ngIf="
+                              contentForm.get('type').hasError('required') &&
+                              contentForm.get('type').touched
+                            "
+                            class="error-message"
+                          >
+                            Type is required
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group">
+                            <label for="title">Title:</label>
+                            <input
+                              [formControl]="contentForm.get('title')"
+                              id="title"
+                            />
+                            <div
+                              *ngIf="
+                                contentForm.get('title').hasError('required') &&
+                                contentForm.get('title').touched
+                              "
+                              class="error-message"
+                            >
+                              Title is required
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label for="summary">Summary:</label>
+
+                            <textarea
+                              [formControl]="contentForm.get('summary')"
+                              id="summary"
+                            ></textarea>
+                            <div
+                              *ngIf="
+                                contentForm
+                                  .get('summary')
+                                  .hasError('required') &&
+                                contentForm.get('summary').touched
+                              "
+                              class="error-message"
+                            >
+                              Summary is required
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label for="hero_image">Hero Image:</label>
+                            <input
+                              [formControl]="contentForm.get('hero_image')"
+                              id="hero_image"
+                            />
+                            <div
+                              *ngIf="
+                                contentForm
+                                  .get('hero_image')
+                                  .hasError('required') &&
+                                contentForm.get('hero_image').touched
+                              "
+                              class="error-message"
+                            >
+                              Hero Image is required
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="content">Content:</label>
+                            <textarea
+                              [formControl]="contentForm.get('content')"
+                              id="content"
+                            ></textarea>
+                            <div
+                              *ngIf="
+                                contentForm
+                                  .get('content')
+                                  .hasError('required') &&
+                                contentForm.get('content').touched
+                              "
+                              class="error-message"
+                            >
+                              Content is required
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Repeat similar code for other fields -->
+
+                        <div formArrayName="sections">
+                          <div
+                            *ngFor="
+                              let section of contentForm.get('sections')
+                                .controls;
+                              let i = index
+                            "
+                            class="section"
+                          >
+                            <h4>Section {{ i + 1 }}</h4>
+                            <div class="form-row">
+                              <div class="form-group">
+                                <label [for]="'section_title' + i"
+                                  >Section Title:</label
+                                >
+                                <input
+                                  [formControl]="section.get('section_title')"
+                                  [id]="'section_title' + i"
+                                />
+                                <div
+                                  *ngIf="
+                                    section
+                                      .get('section_title')
+                                      .hasError('required') &&
+                                    section.get('section_title').touched
+                                  "
+                                  class="error-message"
+                                >
+                                  Section Title is required
+                                </div>
+                              </div>
+
+                              <div class="form-group">
+                                <label [for]="'section_image' + i"
+                                  >Section Image:</label
+                                >
+                                <input
+                                  [formControl]="section.get('section_image')"
+                                  [id]="'section_image' + i"
+                                />
+                                <div
+                                  *ngIf="
+                                    section
+                                      .get('section_image')
+                                      .hasError('required') &&
+                                    section.get('section_image').touched
+                                  "
+                                  class="error-message"
+                                >
+                                  Section Image is required
+                                </div>
+                              </div>
+
+                              <div class="form-group">
+                                <label [for]="'section_content' + i"
+                                  >Section Content:</label
+                                >
+                                <textarea
+                                  [formControl]="section.get('section_content')"
+                                  [id]="'section_content' + i"
+                                ></textarea>
+                                <div
+                                  *ngIf="
+                                    section
+                                      .get('section_content')
+                                      .hasError('required') &&
+                                    section.get('section_content').touched
+                                  "
+                                  class="error-message"
+                                >
+                                  Section Content is required
+                                </div>
+                              </div>
+                            </div>
+                            <button
+                              type="button"
+                              class="gradient-button"
+                              (click)="removeSection(i)"
+                            >
+                              Remove Section
+                            </button>
+                          </div>
+                        </div>
+
+                        <button
+                          type="button"
+                          (click)="addSection()"
+                          class="gradient-button add-relative-btn"
+                        >
+                          Add Section
+                        </button>
+
+                        <div class="form-row">
+                          <div class="form-group">
+                            <label for="author">Author:</label>
+                            <input
+                              [formControl]="contentForm.get('author')"
+                              id="author"
+                            />
+                            <div
+                              *ngIf="
+                                contentForm
+                                  .get('author')
+                                  .hasError('required') &&
+                                contentForm.get('author').touched
+                              "
+                              class="error-message"
+                            >
+                              Author is required
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label for="authored_on">Authored On:</label>
+                            <input
+                              [formControl]="contentForm.get('authored_on')"
+                              id="authored_on"
+                            />
+                            <div
+                              *ngIf="
+                                contentForm
+                                  .get('authored_on')
+                                  .hasError('required') &&
+                                contentForm.get('authored_on').touched
+                              "
+                              class="error-message"
+                            >
+                              Authored On is required
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="slug">Slug:</label>
+                            <input
+                              [formControl]="contentForm.get('slug')"
+                              id="slug"
+                            />
+                            <div
+                              *ngIf="
+                                contentForm.get('slug').hasError('required') &&
+                                contentForm.get('slug').touched
+                              "
+                              class="error-message"
+                            >
+                              Slug is required
+                            </div>
+                          </div>
+                        </div>
+
+                        <button
+                          type="submit"
+                          class="gradient-button add-relative-btn"
+                        >
+                          Submit
+                        </button>
+                      </form>
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

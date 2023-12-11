@@ -5,7 +5,11 @@
   <div class="sections-index" *ngIf="isSidebarVisible && data?.sections.length">
     <div class="section-header">Sections</div>
     <div class="mt-3" *ngFor="let section of data?.sections; let i = index">
-      <div class="sections-title" (click)="scrollToSection(i)">
+      <div
+        class="sections-title"
+        [class.active-section]="activeSection == i"
+        (click)="scrollToSection(i)"
+      >
         {{ section?.section_title }}
       </div>
     </div>
@@ -14,11 +18,20 @@
   <div class="d-flex justify-content-center p-5 flex-column">
     <div class="title-data">
       <div class="blog-title">{{ data?.title }}</div>
-      <img *ngIf="data?.hero_image" src="{{ data['hero_image'] }}" alt="img" />
+      <div class="image-continer">
+        <img
+          *ngIf="data?.hero_image"
+          src="{{ data['hero_image'] }}"
+          alt="img"
+        />
+      </div>
       <div class="title-content">{{ data?.content }}</div>
     </div>
     <div *ngIf="data?.sections && data?.sections.length">
-      <div class="mt-3" *ngFor="let section of data?.sections; let i = index">
+      <div
+        class="mt-3 sections"
+        *ngFor="let section of data?.sections; let i = index"
+      >
         <div id="section-{{ i }}" class="section-data">
           <div class="section-title">{{ section?.section_title }}</div>
           <img

@@ -417,4 +417,9 @@ export class UserService {
     const data = await getDocs(q);
     return data;
   }
+  async addBlogDataFromSlug(data) {
+    const reviewRef = collection(this.firestore, 'cutomeblogs');
+    let add = await addDoc(reviewRef, data);
+    return add;
+  }
 }

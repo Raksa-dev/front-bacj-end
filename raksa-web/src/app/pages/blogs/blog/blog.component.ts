@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/core/services';
 
@@ -10,41 +10,43 @@ import { UserService } from 'src/app/core/services';
 export class BlogComponent implements OnInit {
   isSidebarVisible = true;
   stoppingPoint: number;
+  activeSection;
   constructor(
     public activateRoute: ActivatedRoute,
-    public userService: UserService
+    public userService: UserService,
+    private el: ElementRef
   ) {}
   data;
-  // data = {
-  //   type: 'text',
-  //   title: 'hellot hissis title cool',
-  //   summary: 'cooolol',
-  //   hero_image: '../../../assets/images/message.png',
-  //   content:
-  //     'In the boundless realm of artistic expression, astrology serves as a guiding star, illuminating the unique ways each zodiac sign ignites the creative spark withinEmbarking on a transformative odyssey, we delve into the enchanting world of astrology and creativity, unveiling how celestial energies inspire and shape your artistic endeavors.Explore how Aries individuals infuse their artistic pursuits with audaciousness and fearlessness, resulting in creations that reflect their dynamic energy.Discover how Leo individuals infuse their creative works with theatrical flair, basking in the spotlight and using their artistic endeavors to captivate and inspire.Scorpio zodiac : Intense Depth and Transformative Art“The Lunar Phases and Your Zodiac Sign: Harnessing Lunar Energies”As we conclude, delve into Scorpio’s intense depth and transformative art',
-  //   sections: [
-  //     {
-  //       section_title: 'hello cool',
-  //       section_image: '../../../assets/images/google.png',
-  //       section_content:
-  //         'In the boundless realm of artistic expression, astrology serves as a guiding star, illuminating the unique ways each zodiac sign ignites the creative spark withinEmbarking on a transformative odyssey, we delve into the enchanting world of astrology and creativity, unveiling how celestial energies inspire and shape your artistic endeavors.Explore how Aries individuals infuse their artistic pursuits with audaciousness and fearlessness, resulting in creations that reflect their dynamic energy.Discover how Leo individuals infuse their creative works with theatrical flair, basking in the spotlight and using their artistic endeavors to captivate and inspire.Scorpio zodiac : Intense Depth and Transformative Art“The Lunar Phases and Your Zodiac Sign: Harnessing Lunar Energies”As we conclude, delve into Scorpio’s intense depth and transformative art',
-  //     },
-  //     {
-  //       section_title: 'hello nice',
-  //       section_image: '../../../assets/images/google.png',
-  //       section_content:
-  //         'In the boundless realm of artistic expression, astrology serves as a guiding star, illuminating the unique ways each zodiac sign ignites the creative spark withinEmbarking on a transformative odyssey, we delve into the enchanting world of astrology and creativity, unveiling how celestial energies inspire and shape your artistic endeavors.Explore how Aries individuals infuse their artistic pursuits with audaciousness and fearlessness, resulting in creations that reflect their dynamic energy.Discover how Leo individuals infuse their creative works with theatrical flair, basking in the spotlight and using their artistic endeavors to captivate and inspire.Scorpio zodiac : Intense Depth and Transformative Art“The Lunar Phases and Your Zodiac Sign: Harnessing Lunar Energies”As we conclude, delve into Scorpio’s intense depth and transformative art',
-  //     },
-  //     {
-  //       section_title: 'hello ok how are you',
-  //       section_image: '../../../assets/images/google.png',
-  //       section_content:
-  //         'In the boundless realm of artistic expression, astrology serves as a guiding star, illuminating the unique ways each zodiac sign ignites the creative spark withinEmbarking on a transformative odyssey, we delve into the enchanting world of astrology and creativity, unveiling how celestial energies inspire and shape your artistic endeavors.Explore how Aries individuals infuse their artistic pursuits with audaciousness and fearlessness, resulting in creations that reflect their dynamic energy.Discover how Leo individuals infuse their creative works with theatrical flair, basking in the spotlight and using their artistic endeavors to captivate and inspire.Scorpio zodiac : Intense Depth and Transformative Art“The Lunar Phases and Your Zodiac Sign: Harnessing Lunar Energies”As we conclude, delve into Scorpio’s intense depth and transformative art',
-  //     },
-  //   ],
-  //   author: 'cool',
-  //   authored_on: '10/10/2023',
-  // };
+  //  {
+  //     type: 'text',
+  //     title: 'hellot hissis title cool',
+  //     summary: 'cooolol',
+  //     hero_image: '../../../assets/images/message.png',
+  //     content:
+  //       'In the boundless realm of artistic expression, astrology serves as a guiding star, illuminating the unique ways each zodiac sign ignites the creative spark withinEmbarking on a transformative odyssey, we delve into the enchanting world of astrology and creativity, unveiling how celestial energies inspire and shape your artistic endeavors.Explore how Aries individuals infuse their artistic pursuits with audaciousness and fearlessness, resulting in creations that reflect their dynamic energy.Discover how Leo individuals infuse their creative works with theatrical flair, basking in the spotlight and using their artistic endeavors to captivate and inspire.Scorpio zodiac : Intense Depth and Transformative Art“The Lunar Phases and Your Zodiac Sign: Harnessing Lunar Energies”As we conclude, delve into Scorpio’s intense depth and transformative art',
+  //     sections: [
+  //       {
+  //         section_title: 'hello cool',
+  //         section_image: '../../../assets/images/google.png',
+  //         section_content:
+  //           'In the boundless realm of artistic expression, astrology serves as a guiding star, illuminating the unique ways each zodiac sign ignites the creative spark withinEmbarking on a transformative odyssey, we delve into the enchanting world of astrology and creativity, unveiling how celestial energies inspire and shape your artistic endeavors.Explore how Aries individuals infuse their artistic pursuits with audaciousness and fearlessness, resulting in creations that reflect their dynamic energy.Discover how Leo individuals infuse their creative works with theatrical flair, basking in the spotlight and using their artistic endeavors to captivate and inspire.Scorpio zodiac : Intense Depth and Transformative Art“The Lunar Phases and Your Zodiac Sign: Harnessing Lunar Energies”As we conclude, delve into Scorpio’s intense depth and transformative art',
+  //       },
+  //       {
+  //         section_title: 'hello nice',
+  //         section_image: '../../../assets/images/google.png',
+  //         section_content:
+  //           'In the boundless realm of artistic expression, astrology serves as a guiding star, illuminating the unique ways each zodiac sign ignites the creative spark withinEmbarking on a transformative odyssey, we delve into the enchanting world of astrology and creativity, unveiling how celestial energies inspire and shape your artistic endeavors.Explore how Aries individuals infuse their artistic pursuits with audaciousness and fearlessness, resulting in creations that reflect their dynamic energy.Discover how Leo individuals infuse their creative works with theatrical flair, basking in the spotlight and using their artistic endeavors to captivate and inspire.Scorpio zodiac : Intense Depth and Transformative Art“The Lunar Phases and Your Zodiac Sign: Harnessing Lunar Energies”As we conclude, delve into Scorpio’s intense depth and transformative art',
+  //       },
+  //       {
+  //         section_title: 'hello ok how are you',
+  //         section_image: '../../../assets/images/google.png',
+  //         section_content:
+  //           'In the boundless realm of artistic expression, astrology serves as a guiding star, illuminating the unique ways each zodiac sign ignites the creative spark withinEmbarking on a transformative odyssey, we delve into the enchanting world of astrology and creativity, unveiling how celestial energies inspire and shape your artistic endeavors.Explore how Aries individuals infuse their artistic pursuits with audaciousness and fearlessness, resulting in creations that reflect their dynamic energy.Discover how Leo individuals infuse their creative works with theatrical flair, basking in the spotlight and using their artistic endeavors to captivate and inspire.Scorpio zodiac : Intense Depth and Transformative Art“The Lunar Phases and Your Zodiac Sign: Harnessing Lunar Energies”As we conclude, delve into Scorpio’s intense depth and transformative art',
+  //       },
+  //     ],
+  //     author: 'cool',
+  //     authored_on: '10/10/2023',
+  //   };
   ngOnInit() {
     this.activateRoute.params.subscribe((params) => {
       this.userService.getBlogDataFromSlug(params.slug).then((data) => {
@@ -73,10 +75,32 @@ export class BlogComponent implements OnInit {
       this.isSidebarVisible = false;
     } else {
       this.isSidebarVisible = true;
+      // console.log('thisis section');
+      this.highlightActiveSection();
+    }
+  }
+
+  highlightActiveSection() {
+    const sections = this.el.nativeElement.getElementsByClassName('sections');
+    // console.log(sections);
+
+    if (sections) {
+      for (let i = 0; i < sections.length; i++) {
+        const section = sections[i];
+        const rect = section.getBoundingClientRect();
+
+        if (
+          rect.top <= window.innerHeight / 2 &&
+          rect.bottom >= window.innerHeight / 2
+        ) {
+          this.activeSection = i;
+        }
+      }
     }
   }
 
   scrollToSection(sectionId) {
+    console.log('this is section:', sectionId);
     var section = document.getElementById('section-' + sectionId);
     if (section) {
       window.scrollTo({

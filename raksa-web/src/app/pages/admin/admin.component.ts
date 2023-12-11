@@ -5,6 +5,7 @@ import { ProfileComponent } from 'src/app/shared/profile/profile.component';
 import { LinkcreationComponent } from './linkcreation/linkcreation.component';
 import { AuthService, UserService } from 'src/app/core/services';
 import { Router } from '@angular/router';
+import { BlogCreationComponent } from './blog-creation/blog-creation.component';
 
 @Component({
   selector: 'app-admin',
@@ -42,13 +43,23 @@ export class AdminComponent implements OnInit {
     },
   ];
 
-  showlinkgenerationModal() {
-    const modalRef = this.modalService.open(LinkcreationComponent, {
-      backdrop: 'static',
-      keyboard: false,
-      centered: true,
-      size: 'lg',
-      scrollable: true,
-    });
+  showlinkgenerationModal(item: string) {
+    if (item == 'Blogs') {
+      const modalRef = this.modalService.open(BlogCreationComponent, {
+        backdrop: 'static',
+        keyboard: false,
+        centered: true,
+        size: 'lg',
+        scrollable: true,
+      });
+    } else {
+      const modalRef = this.modalService.open(LinkcreationComponent, {
+        backdrop: 'static',
+        keyboard: false,
+        centered: true,
+        size: 'lg',
+        scrollable: true,
+      });
+    }
   }
 }

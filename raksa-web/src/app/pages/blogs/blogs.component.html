@@ -30,7 +30,8 @@
                   <p
                     class="read-button"
                     *ngIf="
-                      (!readMore && astrologer['summary'].length > 25) ||
+                      !readMore &&
+                      astrologer['summary'].length > 25 &&
                       indexOf != i
                     "
                     (click)="readMoreText(i, 'open')"
@@ -49,6 +50,11 @@
                     Read less >
                   </p>
                 </div>
+              </div>
+
+              <div class="author">
+                <div>{{ astrologer["author"] }}</div>
+                <div>{{ astrologer["authored_on"] }}</div>
               </div>
 
               <div class="session mt-1">
