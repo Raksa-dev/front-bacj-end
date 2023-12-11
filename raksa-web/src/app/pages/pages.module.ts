@@ -29,6 +29,7 @@ import { AboutAstrolgerComponent } from './chat/about/about.component';
 import { CustomeTimePickerComponent } from '../custome-time-picker/custome-time-picker.component';
 import { AboutCallComponent } from './call/about/about.component';
 import { BlogsComponent } from './blogs/blogs.component';
+import { BlogComponent } from './blogs/blog/blog.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { BlogsComponent } from './blogs/blogs.component';
     AboutAstrolgerComponent,
     AboutCallComponent,
     BlogsComponent,
+    BlogComponent,
   ],
   imports: [
     CommonModule,

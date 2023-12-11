@@ -45,6 +45,15 @@
     cursor: pointer;
   }
 }
+.tags {
+  display: flex;
+  justify-content: center;
+  img {
+    height: 100px;
+    width: 300px;
+  }
+}
+
 ::-webkit-scrollbar {
   width: 1px; /* Width of the scrollbar */
 }

@@ -395,19 +395,25 @@ export class UserService {
     let q;
     if (Object.entries(entry).length) {
       q = query(
-        collection(this.firestore, 'blogs'),
+        collection(this.firestore, 'cutomeblogs'),
         orderBy('title'),
         startAfter(entry?.title),
         limit(8)
       );
     } else {
       q = query(
-        collection(this.firestore, 'blogs'),
+        collection(this.firestore, 'cutomeblogs'),
         orderBy('title'),
         limit(8)
       );
     }
 
+    const data = await getDocs(q);
+    return data;
+  }
+  async getBlogDataFromSlug(slug) {
+    const blogsRef = collection(this.firestore, 'cutomeblogs');
+    const q = query(blogsRef, where('slug', '==', slug));
     const data = await getDocs(q);
     return data;
   }

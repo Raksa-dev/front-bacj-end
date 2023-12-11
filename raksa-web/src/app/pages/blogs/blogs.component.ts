@@ -68,18 +68,24 @@ export class BlogsComponent implements OnInit {
       : {};
     this.userService.getAllBlogsData(this.lastEntry).then((data) => {
       data.forEach((doc) => {
-        this.astrologersData = this.astrologersData.concat(doc.data());
+        let data = doc.data() as Object;
+        this.astrologersData = this.astrologersData.concat({
+          id: doc?.id,
+          ...data,
+        });
       });
     });
   }
   ngOnInit(): void {
     this.getAllblogs();
 
-    this.userService
-      .getUserDataInfo(this.authService.activeUserValue.uid)
-      .then((userVal) => {
-        this.userData = userVal;
-      });
+    if (this.authService?.activeUserValue) {
+      this.userService
+        .getUserDataInfo(this.authService?.activeUserValue?.uid)
+        .then((userVal) => {
+          this.userData = userVal;
+        });
+    }
   }
 
   @HostListener('window:scroll', ['$event'])
@@ -100,11 +106,6 @@ export class BlogsComponent implements OnInit {
       this.indexOf = null;
       this.readMore = false;
     }
-  }
-
-  navigateToAboutPage(astrologer) {
-    this.astroServices.setAstrologerBriefDataStore(astrologer);
-    this.router.navigate([`/chat/about/${astrologer?.uid}`]);
   }
 
   async specialtiesArrayChecked(e, index) {
@@ -249,14 +250,6 @@ export class BlogsComponent implements OnInit {
   }
   sendChatNotificationToAstrologer(e: MouseEvent, astroData, content) {
     e.stopPropagation();
-    this.blogData = astroData;
-    const modalRef = this.modalService.open(content, {
-      backdrop: 'static',
-      keyboard: false,
-      centered: true,
-      size: 'lg',
-      modalDialogClass: 'login',
-      fullscreen: true,
-    });
+    this.router.navigate([`blogs/blog/${astroData?.slug}`]);
   }
 }
