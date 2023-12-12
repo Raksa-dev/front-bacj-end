@@ -1,0 +1,87 @@
+<div class="modal-header mb-5">
+  <h4 class="modal-title" id="modal-basic-title">All Sessions</h4>
+  <button
+    type="button"
+    (click)="onCancel()"
+    class="btn-close bg-white"
+    aria-label="Close"
+  ></button>
+</div>
+<div class="modal-body mb-5">
+  <div class="container-fluid">
+    <div class="row d-flex align-content-center justify-content-center">
+      <div class="col-md-7 login-form">
+        <div class="d-flex login-signup"></div>
+        <div class="position-relative">
+          <div>
+            <div *ngIf="!allTrasactions.length">No Sessions</div>
+            <div *ngIf="allTrasactions.length">
+              <table class="table table-striped">
+                <thead style="position: sticky; top: 0; z-index: 1">
+                  <tr>
+                    <th
+                      style="background-color: #d700ff; color: white"
+                      scope="col"
+                    >
+                      sr no.
+                    </th>
+                    <th
+                      scope="col"
+                      style="background-color: #d700ff; color: white"
+                    >
+                      Session Id
+                    </th>
+                    <th
+                      scope="col"
+                      style="background-color: #d700ff; color: white"
+                    >
+                      Session type
+                    </th>
+
+                    <th
+                      scope="col"
+                      style="background-color: #d700ff; color: white"
+                    >
+                      Duration(In min)
+                    </th>
+                    <th
+                      scope="col"
+                      style="background-color: #d700ff; color: white"
+                    >
+                      Amount Charged
+                    </th>
+                    <th
+                      scope="col"
+                      style="background-color: #d700ff; color: white"
+                    >
+                      Session Date
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let trsx of allTrasactions; let i = index">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>{{ trsx?.id }}</td>
+                    <td>{{ trsx?.sessionType }}</td>
+
+                    <td>{{ trsx?.callDuration }}</td>
+                    <td>
+                      {{ trsx?.amount }}
+                    </td>
+                    <td>
+                      {{
+                        trsx?.date.seconds * 1000 +
+                          trsx?.date.nanoseconds / 1000000
+                          | date : "yyyy-MM-dd HH:mm:ss"
+                      }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

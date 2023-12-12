@@ -17,6 +17,8 @@ import {
   query,
 } from '@angular/fire/firestore';
 import { WalletComponent } from './shared/wallet/wallet.component';
+import { TransactionComponent } from './shared/transaction/transaction.component';
+import { SessionsComponent } from './shared/sessions/sessions.component';
 
 @Component({
   selector: 'app-root',
@@ -174,6 +176,27 @@ export class AppComponent implements OnInit {
       centered: true,
       size: 'lg',
       scrollable: true,
+    });
+  }
+
+  openTransactionModal(): void {
+    const modalRef = this.modalService.open(TransactionComponent, {
+      backdrop: 'static',
+      keyboard: false,
+      centered: true,
+      size: 'lg',
+      scrollable: true,
+      fullscreen: true,
+    });
+  }
+  openSessionModal() {
+    const modalRef = this.modalService.open(SessionsComponent, {
+      backdrop: 'static',
+      keyboard: false,
+      centered: true,
+      size: 'lg',
+      scrollable: true,
+      fullscreen: true,
     });
   }
 

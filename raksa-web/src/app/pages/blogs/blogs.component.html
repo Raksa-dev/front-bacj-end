@@ -30,8 +30,8 @@
                   <p
                     class="read-button"
                     *ngIf="
-                      (!readMore && astrologer['summary'].length > 25) ||
-                      indexOf != i
+                      (!readMore || indexOf != i) &&
+                      astrologer['summary'].length > 25
                     "
                     (click)="readMoreText(i, 'open')"
                   >

@@ -422,4 +422,17 @@ export class UserService {
     let add = await addDoc(reviewRef, data);
     return add;
   }
+  async getAllTransactions(userId) {
+    const blogsRef = collection(this.firestore, 'transactions');
+    const q = query(blogsRef, where('userId', '==', userId));
+    const data = await getDocs(q);
+    return data;
+  }
+
+  async getAllSessions(userId) {
+    const blogsRef = collection(this.firestore, 'sessions');
+    const q = query(blogsRef, where('callerId', '==', userId));
+    const data = await getDocs(q);
+    return data;
+  }
 }

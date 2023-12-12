@@ -75,7 +75,6 @@ export class BlogComponent implements OnInit {
       this.isSidebarVisible = false;
     } else {
       this.isSidebarVisible = true;
-      // console.log('thisis section');
       this.highlightActiveSection();
     }
   }
@@ -100,7 +99,6 @@ export class BlogComponent implements OnInit {
   }
 
   scrollToSection(sectionId) {
-    console.log('this is section:', sectionId);
     var section = document.getElementById('section-' + sectionId);
     if (section) {
       window.scrollTo({

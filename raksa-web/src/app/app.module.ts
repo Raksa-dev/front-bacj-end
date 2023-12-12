@@ -43,6 +43,8 @@ import { CallnotificationsComponent } from './shared/callnotifications/callnotif
 import { WalletComponent } from './shared/wallet/wallet.component';
 import { CalluiComponent } from './shared/callui/callui.component';
 import { TruncatePipe } from './pipes/truncate.pipe';
+import { TransactionComponent } from './shared/transaction/transaction.component';
+import { SessionsComponent } from './shared/sessions/sessions.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +57,8 @@ import { TruncatePipe } from './pipes/truncate.pipe';
     WalletComponent,
     CalluiComponent,
     TruncatePipe,
+    TransactionComponent,
+    SessionsComponent,
   ],
   imports: [
     BrowserModule,
