@@ -18,13 +18,7 @@
   <div class="d-flex justify-content-center p-5 flex-column">
     <div class="title-data">
       <div class="blog-title">{{ data?.title }}</div>
-      <div class="image-continer">
-        <img
-          *ngIf="data?.hero_image"
-          src="{{ data['hero_image'] }}"
-          alt="img"
-        />
-      </div>
+      <img *ngIf="data?.hero_image" src="{{ data['hero_image'] }}" alt="img" />
       <div class="title-content">{{ data?.content }}</div>
     </div>
     <div *ngIf="data?.sections && data?.sections.length">
