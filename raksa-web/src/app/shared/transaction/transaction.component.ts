@@ -23,6 +23,9 @@ export class TransactionComponent implements OnInit {
           let data1 = doc.data() as Object;
           this.allTrasactions.push(data1);
         });
+      })
+      .catch((err) => {
+        console.log('erreo:', err);
       });
   }
 

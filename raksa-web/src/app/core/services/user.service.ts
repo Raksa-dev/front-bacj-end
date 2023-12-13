@@ -424,14 +424,22 @@ export class UserService {
   }
   async getAllTransactions(userId) {
     const blogsRef = collection(this.firestore, 'transactions');
-    const q = query(blogsRef, where('userId', '==', userId));
+    const q = query(
+      blogsRef,
+      where('userId', '==', userId),
+      orderBy('date', 'desc')
+    );
     const data = await getDocs(q);
     return data;
   }
 
   async getAllSessions(userId) {
     const blogsRef = collection(this.firestore, 'sessions');
-    const q = query(blogsRef, where('callerId', '==', userId));
+    const q = query(
+      blogsRef,
+      where('callerId', '==', userId),
+      orderBy('date', 'desc')
+    );
     const data = await getDocs(q);
     return data;
   }
