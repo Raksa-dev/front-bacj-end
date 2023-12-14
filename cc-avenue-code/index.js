@@ -4,8 +4,10 @@ var cors = require("cors");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const path = require("path");
+const fileUpload = require("express-fileupload");
 app.use(cors());
 app.use(express.json());
+app.use(fileUpload());
 dotenv.config();
 
 app.use(express.static(path.join(__dirname, "../raksa-web/dist/raksa")));

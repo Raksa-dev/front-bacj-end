@@ -28,4 +28,5 @@ paymentRouter.get(
   PhonePePaymentController.handlePaymentControllerPhonePayHealthCheck
 );
 paymentRouter.post("/roomcode", msController.handleRoomCode);
+paymentRouter.post("/upload", msController.uploadToS3);
 module.exports = paymentRouter;
