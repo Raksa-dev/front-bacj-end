@@ -52,6 +52,50 @@ export class BlogCreationComponent implements OnInit {
     this.setValidatorsForSection(newSectionIndex);
   }
 
+  onFileSelected(event: any) {
+    const fileInput = event.target;
+
+    if (fileInput.files && fileInput.files[0]) {
+      const file = fileInput.files[0];
+      // Call the API to upload the file
+      this.uploadFile(file);
+    }
+  }
+  private uploadFile(file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    // Make an HTTP request using HttpClient
+    this.userServices.GetUploadPicLink(formData).then((data) => {
+      data.subscribe((urldata) => {
+        this.contentForm.patchValue({ hero_image: urldata['url'] });
+      });
+    });
+  }
+
+  onFileSelected1(event: any, index) {
+    const fileInput = event.target;
+
+    if (fileInput.files && fileInput.files[0]) {
+      const file = fileInput.files[0];
+      // Call the API to upload the file
+      this.uploadFile1(file, index);
+    }
+  }
+  private uploadFile1(file: File, index) {
+    const sectionsArray = this.contentForm.get('sections') as FormArray;
+    const formData = new FormData();
+    formData.append('file', file);
+    // Make an HTTP request using HttpClient
+    this.userServices.GetUploadPicLink(formData).then((data) => {
+      data.subscribe((urldata) => {
+        sectionsArray.at(index).patchValue({
+          section_image: urldata['url'],
+        });
+      });
+    });
+  }
+
   setValidatorsForSection(index: number) {
     const sectionsArray = this.contentForm.get('sections') as FormArray;
 
@@ -59,10 +103,7 @@ export class BlogCreationComponent implements OnInit {
       .at(index)
       .get('section_title')
       ?.setValidators([Validators.required]);
-    sectionsArray
-      .at(index)
-      .get('section_image')
-      ?.setValidators([Validators.required]);
+
     sectionsArray
       .at(index)
       .get('section_content')
@@ -82,7 +123,6 @@ export class BlogCreationComponent implements OnInit {
   onSubmit() {
     if (this.contentForm.valid) {
       // The form is valid, proceed with your submission logic
-      console.log(this.contentForm.value);
       this.userServices
         .addBlogDataFromSlug(this.contentForm.value)
         .then((data) => {

@@ -291,6 +291,9 @@ export class UserService {
       }
     );
   }
+  async GetUploadPicLink(formData) {
+    return this.http.post(`${this.BASE_URL}/api/upload`, formData);
+  }
   async updateUserWalletAmount(
     amount,
     userId,

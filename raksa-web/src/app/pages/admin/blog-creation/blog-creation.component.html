@@ -91,8 +91,10 @@
                           <div class="form-group">
                             <label for="hero_image">Hero Image:</label>
                             <input
+                              type="file"
                               [formControl]="contentForm.get('hero_image')"
                               id="hero_image"
+                              (change)="onFileSelected($event)"
                             />
                             <div
                               *ngIf="
@@ -165,8 +167,10 @@
                                   >Section Image:</label
                                 >
                                 <input
+                                  type="file"
                                   [formControl]="section.get('section_image')"
                                   [id]="'section_image' + i"
+                                  (change)="onFileSelected1($event, i)"
                                 />
                                 <div
                                   *ngIf="
