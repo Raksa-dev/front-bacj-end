@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService, UserService } from 'src/app/core/services';
 
@@ -12,7 +13,8 @@ export class TransactionComponent implements OnInit {
   constructor(
     public authService: AuthService,
     public userService: UserService,
-    public activeModal: NgbActiveModal
+    public activeModal: NgbActiveModal,
+    public router: Router
   ) {}
 
   getAllTransaction() {
@@ -34,5 +36,10 @@ export class TransactionComponent implements OnInit {
   }
   onCancel(): void {
     this.activeModal.close({ response: false });
+  }
+
+  navigateToInvoice(trsx) {
+    this.onCancel();
+    this.router.navigate([`invoice/${trsx?.id}`]);
   }
 }

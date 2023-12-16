@@ -1,0 +1,148 @@
+<div class="pdf">
+  <button (click)="printAsPDF()">Print as PDF</button>
+  <!DOCTYPE html>
+  <html #contentToPrint>
+    <head>
+      <title>Invoice Template Design</title>
+    </head>
+    <body>
+      <div class="wrapper">
+        <div class="invoice_wrapper">
+          <div class="header">
+            <div class="logo_invoice_wrap">
+              <div class="logo_sec">
+                <img src="../assets/images/logo.png" alt="Astroraksa logo" />
+              </div>
+              <div class="invoice_sec">
+                <p class="invoice bold">INVOICE VOUCHER</p>
+                <p class="invoice_no">
+                  <span class="bold">Invoice</span>
+                  <span>#3488</span>
+                </p>
+                <p class="date">
+                  <span class="bold">Date</span>
+                  <span>
+                    {{
+                      transactionData?.date.seconds * 1000 +
+                        transactionData?.date.nanoseconds / 1000000
+                        | date : "yyyy-MM-dd"
+                    }}</span
+                  >
+                </p>
+              </div>
+            </div>
+            <div class="bill_total_wrap">
+              <div class="bill_sec">
+                <p>Bill To</p>
+                <p class="bold name">
+                  {{ userData?.firstName + " " + userData?.lastName }}
+                </p>
+                <span>
+                  {{ userData?.birthPlace }}<br />
+                  {{ userData?.authData?.phoneNumber }}
+                </span>
+              </div>
+              <div class="total_wrap">
+                <p>Billed By</p>
+                <p class="bold price">META TIGER Tech Services Pvt Ltd</p>
+                <p>476, Jasmine, Gaur Saundaryam, Greater Noida West</p>
+                <p>Noida, Gautam Buddha Nagar, Uttar Pradesh, India - 201318</p>
+                <span class="bold name">GSTIN : </span>
+                <span> 09AARCM1852G1Z5 </span>
+                <!-- </br> -->
+                <span class="bold name">PAN : </span>
+                <span> AARCM1852G </span>
+                <!-- </br> -->
+                <span class="bold name">Contact : </span>
+                <span> admin@astroraksa.com / +91 81302 40459 </span>
+              </div>
+            </div>
+          </div>
+          <div class="body">
+            <div class="main_table">
+              <div class="table_header">
+                <div class="row">
+                  <div class="col col_no">NO.</div>
+                  <div class="col col_des">ITEM DESCRIPTION</div>
+                  <div class="col col_price">PRICE</div>
+                  <div class="col col_qty">QTY</div>
+                  <div class="col col_total">TOTAL</div>
+                </div>
+              </div>
+              <div class="table_body">
+                <div class="row">
+                  <div class="col col_no">
+                    <p>01</p>
+                  </div>
+                  <div class="col col_des">
+                    <p class="bold">
+                      Purchase of Raksa Money via
+                      {{ paymentMode == "pe" ? "Phonepe" : "ccAvenue" }}
+                    </p>
+                    <p>(Transaction no.{{ transactionData?.id }})</p>
+                  </div>
+                  <div class="col col_price">
+                    <p>₹{{ transactionData?.rechargeAmount }}</p>
+                  </div>
+                  <div class="col col_qty">
+                    <p>1</p>
+                  </div>
+                  <div class="col col_total">
+                    <p>₹{{ transactionData?.rechargeAmount }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="paymethod_grandtotal_wrap">
+              <div class="paymethod_sec">
+                <p class="bold">Payment Method</p>
+                <p>Visa, master Card and We accept Cheque</p>
+              </div>
+              <div class="grandtotal_sec">
+                <p class="bold">
+                  <span>SUB TOTAL</span>
+                  <span>₹{{ transactionData?.rechargeAmount }}</span>
+                </p>
+                <p>
+                  <span>GST 18%</span>
+                  <span>₹{{ transactionData?.gst || 0 }}</span>
+                </p>
+                <p>
+                  <span>Discount</span>
+                  <span>₹0</span>
+                </p>
+                <p class="bold">
+                  <span>Grand Total</span>
+                  <span
+                    >₹{{
+                      transactionData?.rechargeAmount +
+                        (transactionData?.gst || 0)
+                    }}</span
+                  >
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="footer">
+            <p>
+              This is a computer generated invoice voucher, no signatures
+              required
+            </p>
+            <div class="terms">
+              <p>
+                To view your transaction history, please visit:
+                https://www.astroraksa.com/my-wallet
+              </p>
+              <!-- </br> -->
+              <p>Whether tax is payable on reverse charge basis : No</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </body>
+  </html>
+</div>
+
+<div class="mobile-view-1">
+  Please open this in larger screen to download or to view
+</div>

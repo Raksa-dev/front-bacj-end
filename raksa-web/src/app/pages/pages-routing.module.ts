@@ -21,6 +21,7 @@ import { AboutAstrolgerComponent } from './chat/about/about.component';
 import { AboutCallComponent } from './call/about/about.component';
 import { BlogsComponent } from './blogs/blogs.component';
 import { BlogComponent } from './blogs/blog/blog.component';
+import { InvoiceComponent } from './invoice/invoice.component';
 
 const routes: Routes = [
   {
@@ -63,6 +64,10 @@ const routes: Routes = [
       { path: '', component: BlogsComponent },
       { path: 'blog/:slug', component: BlogComponent },
     ],
+  },
+  {
+    path: 'invoice',
+    children: [{ path: ':id', component: InvoiceComponent }],
   },
   {
     path: 'admin',

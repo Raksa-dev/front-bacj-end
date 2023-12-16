@@ -436,6 +436,12 @@ export class UserService {
     return data;
   }
 
+  async getTransaction(id) {
+    const blogsRef = doc(this.firestore, 'transactions', id);
+    const data = await getDoc(blogsRef);
+    return data.data();
+  }
+
   async getAllSessions(userId) {
     const blogsRef = collection(this.firestore, 'sessions');
     const q = query(

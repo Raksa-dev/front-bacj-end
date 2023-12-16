@@ -71,7 +71,9 @@
                     </td>
                     <td>{{ trsx?.status }}</td>
                     <td>
-                      <Button>download invoice</Button>
+                      <Button (click)="navigateToInvoice(trsx)"
+                        >View And Download Invoice</Button
+                      >
                     </td>
                   </tr>
                 </tbody>
