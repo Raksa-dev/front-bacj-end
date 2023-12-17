@@ -15,7 +15,77 @@
         <div class="position-relative">
           <div>
             <div *ngIf="!allTrasactions.length">No Sessions</div>
-            <div *ngIf="allTrasactions.length">
+            <div class="session-cards">
+              <div *ngFor="let trsx of allTrasactions; let i = index">
+                <div>
+                  <div class="card astrologer text-center">
+                    <div class="card-body">
+                      <div
+                        class="status d-flex align-items-center justify-content-between"
+                      >
+                        <p class="text-start mb-0">
+                          <img
+                            src="../../../assets/images/online.png"
+                            class="me-1"
+                          /><span>Completed</span>
+                        </p>
+                        <!-- <p class="text-end mb-0">
+                          <img
+                            src="../../../assets/images/view.png"
+                            class="me-1"
+                          /><span>1 INR / min</span>
+                        </p> -->
+                      </div>
+                      <div class="d-flex justify-content-center" *ngIf="true">
+                        <div
+                          class="avatar-md rounded-circle mb-2 bg-dark content-center"
+                        >
+                          q
+                        </div>
+                      </div>
+                      <img
+                        class="avatar-md rounded-circle mb-2"
+                        src="{{ astrologer['profilePicUrl'] }}"
+                        *ngIf="false"
+                      />
+                      <h4 class="fw-semi-bold mb-2">Astrolger name</h4>
+                      <p class="mb-2">{{ trsx?.id }}</p>
+
+                      <div class="tags">
+                        <h5 class="text-muted me-2">
+                          Session Type: {{ trsx?.sessionType }}
+                        </h5>
+                      </div>
+
+                      <div class="reviews">
+                        <h6 class="mb-2">
+                          <span>{{ trsx?.amount }} Rs</span>
+
+                          <span class="me-2"> |</span>
+                          <span>{{ trsx?.callDuration }} mins</span>
+                        </h6>
+                      </div>
+
+                      <!-- <div class="session mt-1">
+                        <button
+                          (click)="
+                            sendChatNotificationToAstrologer(
+                              $event,
+                              astrologer,
+                              content
+                            )
+                          "
+                          class="btn btn-white"
+                        >
+                          Request Call
+                        </button>
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <div *ngIf="allTrasactions.length">
               <table class="table table-striped">
                 <thead style="position: sticky; top: 0; z-index: 1">
                   <tr>
@@ -78,7 +148,7 @@
                   </tr>
                 </tbody>
               </table>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>

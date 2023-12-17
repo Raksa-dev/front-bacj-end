@@ -17,6 +17,13 @@
   gap: 3px;
   cursor: pointer;
 }
+.mobile-view-dropdown {
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    position: absolute;
+    top: -300px;
+    left: 0;
+  }
+}
 .notificaations {
   background-color: rgb(238, 98, 16);
   width: 1.5rem;

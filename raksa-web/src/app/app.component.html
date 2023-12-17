@@ -138,7 +138,10 @@
           <button type="button" class="btn" ngbDropdownToggle>
             <img class="rounded-circle" src="../assets/images/login-user.png" />
           </button>
-          <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+          <div
+            class="dropdown-menu dropdown-menu-end mobile-view-dropdown"
+            ngbDropdownMenu
+          >
             <a class="dropdown-item" (click)="openProfileModal()"> Profile </a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" (click)="openWalletModal()"> Wallet </a>
