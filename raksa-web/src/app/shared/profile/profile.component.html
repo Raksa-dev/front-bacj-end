@@ -374,10 +374,16 @@
                           >Birth Time</label
                         >
                         <label for="firstName" class="user-values">{{
-                          currentUser.birthTime
+                          currentUser.birthTime ||
+                            currentUser.dateOfBirth.seconds * 1000 +
+                              currentUser.dateOfBirth.nanoseconds / 1000000
+                            | date : "HH:mm:ss"
                         }}</label>
                       </div>
-                      <div class="user-data-col">
+                      <div
+                        *ngIf="currentUser?.birthPlace"
+                        class="user-data-col"
+                      >
                         <label for="firstName" class="form-sub-heading"
                           >Birth Place</label
                         >

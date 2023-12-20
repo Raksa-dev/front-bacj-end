@@ -51,6 +51,7 @@ export class BlogsComponent implements OnInit {
   readMore = false;
   indexOf = null;
   blogData = null;
+  scrolled = false;
 
   constructor(
     private modalService: NgbModal,
@@ -66,14 +67,19 @@ export class BlogsComponent implements OnInit {
     this.lastEntry = this.astrologersData.length
       ? this.astrologersData[this.astrologersData.length - 1]
       : {};
+ 
     this.userService.getAllBlogsData(this.lastEntry).then((data) => {
-      data.forEach((doc) => {
-        let data = doc.data() as Object;
-        this.astrologersData = this.astrologersData.concat({
-          id: doc?.id,
-          ...data,
+
+      if (!data?.empty) {
+        data.forEach((doc) => {
+          let data = doc.data() as Object;
+          this.astrologersData = this.astrologersData.concat({
+            id: doc?.id,
+            ...data,
+          });
         });
-      });
+        this.scrolled = false;
+      }
     });
   }
   ngOnInit(): void {
@@ -90,11 +96,15 @@ export class BlogsComponent implements OnInit {
 
   @HostListener('window:scroll', ['$event'])
   onScroll() {
-    const scrollPosition = window.innerHeight + window.scrollY;
-    const elementOffset = this.el.nativeElement.offsetHeight;
+    const scrollPosition = window.scrollY || document.documentElement.scrollTop;
+    const windowHeight = window.innerHeight;
 
-    if (scrollPosition >= elementOffset) {
-      this.getAllblogs();
+    const blogEndElement = document.getElementById('line-coool');
+    if (scrollPosition + windowHeight >= blogEndElement.offsetTop) {
+      if (!this.scrolled) {
+        this.scrolled = true;
+        this.getAllblogs();
+      }
     }
   }
 

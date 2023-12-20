@@ -1,1 +1,52 @@
-<div class="astro-container">hi cool</div>
+<div class="astro-container">
+  <div class="astro-info">
+    <div class="card astrologer text-center w-100">
+      <div class="card-body">
+        <h4 class="fw-semi-bold">
+          Hello!!, {{ userData?.firstName + " " + userData?.lastName }}
+        </h4>
+        <div
+          class="d-flex justify-content-center align-items-center flex-column"
+        >
+          <h5 class="">You Have {{ userData?.chatCount }} New Chats</h5>
+          <h5 class="">You Have {{ userData?.callCount }} New Calls</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="astro-seciton-tabs">
+    <div class="card astrologer card-section" (click)="openChatNotiifcations()">
+      <div>
+        <p class="">Chat Requests</p>
+      </div>
+    </div>
+    <div class="card astrologer card-section" (click)="openCallNotiifcations()">
+      <div>
+        <p class="">Call Requests</p>
+      </div>
+    </div>
+    <div class="card astrologer card-section">
+      <div>
+        <p class="">Earnings</p>
+      </div>
+      <div class="coming-soon">Coming Soon</div>
+    </div>
+    <div class="card astrologer card-section" (click)="openProfileModal()">
+      <div>
+        <p class="">Profile</p>
+      </div>
+    </div>
+    <div class="card astrologer card-section">
+      <div>
+        <p>Community</p>
+      </div>
+      <div class="coming-soon">Coming Soon</div>
+    </div>
+    <div class="card astrologer card-section">
+      <div>
+        <p class="">Support</p>
+      </div>
+      <div class="coming-soon">Coming Soon</div>
+    </div>
+  </div>
+</div>

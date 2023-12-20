@@ -392,7 +392,7 @@ export class LoginComponent implements OnInit {
           // if user is logined and check the User Collection Data  then show the creation forms
           this.userService
             .getDataFromUserCollection(user?.user?.uid)
-            .then((data) => {
+            .then(async (data) => {
               if (Object.keys(data).length <= 1 || !data) {
                 // if by mistake they closed or they refreshed the page
                 this.activatedRoute.queryParams.subscribe((params) => {
@@ -408,6 +408,9 @@ export class LoginComponent implements OnInit {
                 // real login happens here
                 if (data['isAstrologer']) {
                   localStorage.setItem('astrologerScreen', 'true');
+                  await this.userService.UpdateAstroUser(user?.user?.uid, {
+                    isOnline: true,
+                  });
                   this.router.navigateByUrl('/astrologer');
                   // if astrologer vavigate astrologer screen
                 }
@@ -528,7 +531,7 @@ export class LoginComponent implements OnInit {
     if (relativeDataArray.length) {
       formValues['relatives'] = relativeDataArray;
     }
-    formValues['walletBalance']=0;
+    formValues['walletBalance'] = 0;
     this.userService
       .CreateUser(formValues)
       .then((data) => {
@@ -585,6 +588,7 @@ export class LoginComponent implements OnInit {
       ...astrologer_professioal_form,
       ...formBankValues,
       uid: this.authService.activeUserValue['uid'],
+      isOnline: false,
     };
     this.userService
       .CreateAstrologer(

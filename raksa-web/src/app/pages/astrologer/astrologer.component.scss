@@ -1,10 +1,62 @@
 .astro-container {
-  position: absolute;
-  top: 0;
   width: 100%;
-  height: 100%;
-  z-index: 1;
+  height: 90vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  margin-top: 10px;
+  // background-color: aqua;
+}
+
+.astro-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+}
+
+.astro-seciton-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 250px 100px;
+  width: 80%;
+  gap: 30px;
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    gap: 3px;
+    grid-template-rows: 100px;
+    grid-template-columns: 1fr;
+  }
+}
+.card-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+.coming-soon {
+  position: absolute;
+  bottom: 0;
+  right: 0px;
+  background-color: yellow;
+  color: black;
+  width: 150px;
+  text-align: center;
+  // rotate: 330deg;
+  font-size: 0.85rem;
+  border-radius: 5px;
+  animation: rotateAnimation 4s ease-in-out infinite;
+}
+
+@keyframes rotateAnimation {
+  0% {
+    transform: rotate(330deg);
+  }
+  50% {
+    transform: rotate(340deg);
+  }
+  100% {
+    transform: rotate(330deg);
+  }
 }

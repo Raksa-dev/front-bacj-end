@@ -29,7 +29,16 @@ export class AstrologerService {
   BASE_URL_LOCAL = 'http://localhost:3000';
   BASE_URL = this.BASE_URL_PROD;
   astrologerBriefDataStore;
+  public usernotificationsCount;
   constructor(private firestore: Firestore, private http: HttpClient) {}
+
+  setUserNotificationCount(data) {
+    this.usernotificationsCount = data;
+  }
+
+  getnotificationCount() {
+    return this.usernotificationsCount;
+  }
 
   async getAllAstrologersData() {
     const data = await getDocs(collection(this.firestore, 'astrologers'));

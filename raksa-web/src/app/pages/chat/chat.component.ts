@@ -226,6 +226,11 @@ export class ChatComponent implements OnInit {
   sendChatNotificationToAstrologer(e: MouseEvent, astroData, content) {
     e.stopPropagation();
     if (this.authService.activeUserValue) {
+      if (!astroData?.isOnline) {
+        this.message = `Astrologer is offline`;
+        this.openConfirmation(content);
+        return;
+      }
       let checkBalance = astroData['chatChargePerMinute'] * 5;
       if (this.userData.walletBalance > checkBalance) {
         // this.userService

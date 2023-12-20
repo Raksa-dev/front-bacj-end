@@ -80,9 +80,17 @@ export class AppComponent implements OnInit {
 
     realNotificationChat.subscribe((data) => {
       this.chatNotificaitionArray = data;
+      this.astroServices.setUserNotificationCount({
+        chatCount: this.chatNotificaitionArray,
+        callCount: this.callNotificaitionArray,
+      });
     });
     realNotificationCall.subscribe((data) => {
       this.callNotificaitionArray = data;
+      this.astroServices.setUserNotificationCount({
+        chatCount: this.chatNotificaitionArray,
+        callCount: this.callNotificaitionArray,
+      });
     });
   }
 
@@ -200,9 +208,15 @@ export class AppComponent implements OnInit {
     });
   }
 
-  logout(): void {
+  async logout() {
     this.showNotificationNavs = false;
     this.showThreeNavs = true;
+    await this.userServices.UpdateAstroUser(
+      this.authService.activeUserValue['uid'],
+      {
+        isOnline: false,
+      }
+    );
     this.authService.SignOut();
   }
 }

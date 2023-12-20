@@ -216,6 +216,11 @@ export class CallComponent implements OnInit {
   }
   sendChatNotificationToAstrologer(e: MouseEvent, astroData, content) {
     e.stopPropagation();
+    if (!astroData?.isOnline) {
+      this.message = `Astrologer is offline`;
+      this.openConfirmation(content);
+      return;
+    }
     if (this.authService.activeUserValue) {
       let checkBalance = astroData['callChargePerMinute'] * 5;
 

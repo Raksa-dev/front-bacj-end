@@ -304,10 +304,11 @@ export class UserService {
     status_message = ''
   ) {
     const userRef = doc(this.firestore, 'users', userId);
+    let newAmount = Number((amount / (1 + 18 / 100))?.toFixed(2));
     const updatedData = await setDoc(
       userRef,
       {
-        walletBalance: increment(amount),
+        walletBalance: increment(newAmount),
         transactions: arrayUnion(order_id),
       },
       {
