@@ -96,7 +96,7 @@ export class AppComponent implements OnInit {
   }
   fetchUserData() {
     this.userServices
-      .getUserDataInfo(this.authService.activeUserValue['uid'])
+      .fetchUserData(this.authService.activeUserValue['uid'])
       .then((data) => {
         this.userData = data;
       });
