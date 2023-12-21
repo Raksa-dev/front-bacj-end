@@ -45,6 +45,7 @@ export class AppComponent implements OnInit {
   public showFooter: boolean = true;
   public isAstrologerPage: boolean = false;
   public currentUser = this.userServices.getUserData;
+  public userData;
   public chatNotificaitionArray;
   public callNotificaitionArray;
   public showThreeNavs = true;
@@ -93,10 +94,18 @@ export class AppComponent implements OnInit {
       });
     });
   }
+  fetchUserData() {
+    this.userServices
+      .getUserDataInfo(this.authService.activeUserValue['uid'])
+      .then((data) => {
+        this.userData = data;
+      });
+  }
 
   ngOnInit() {
     if (this.authService.activeUserValue) {
       this.fetchNotificationData();
+      this.fetchUserData();
       this.showNotificationNavs = true;
     }
     localStorage.removeItem('user-sign-up-data');
@@ -211,12 +220,14 @@ export class AppComponent implements OnInit {
   async logout() {
     this.showNotificationNavs = false;
     this.showThreeNavs = true;
-    await this.userServices.UpdateAstroUser(
-      this.authService.activeUserValue['uid'],
-      {
-        isOnline: false,
-      }
-    );
+    if (this.userData?.isAstrologer) {
+      await this.userServices.UpdateAstroUser(
+        this.authService.activeUserValue['uid'],
+        {
+          isOnline: false,
+        }
+      );
+    }
     this.authService.SignOut();
   }
 }
