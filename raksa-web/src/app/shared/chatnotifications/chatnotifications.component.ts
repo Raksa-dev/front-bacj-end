@@ -18,7 +18,7 @@ export class ChatnotificationsComponent implements OnInit {
     public activeModal: NgbActiveModal,
     public authService: AuthService,
     public astroService: AstrologerService,
-    public userservice: UserService,
+    public userservice: UserService
   ) {}
 
   @Input() notificaitionData;
@@ -34,14 +34,14 @@ export class ChatnotificationsComponent implements OnInit {
     let roomCode;
     if (this.userservice.getUserData['isAstrologer']) {
       roomCode =
-        this.userservice.getUserData['uid'] +
+        this.authService.activeUserValue['uid'] +
         '+' +
         notificationData['senderId'];
     } else {
       roomCode =
         notificationData['senderId'] +
         '+' +
-        this.userservice.getUserData['uid'];
+        this.authService.activeUserValue['uid'];
     }
 
     const createRoomAndMessage =

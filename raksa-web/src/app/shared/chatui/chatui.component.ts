@@ -262,7 +262,7 @@ export class ChatuiComponent implements OnInit, OnDestroy {
       .then((data) => {});
     this.userService.createEntryReview({
       astrolgerId: astrologerData['uid'],
-      userId: this.currentUser?.uid,
+      userId: this.authService.activeUserValue?.uid,
       userName:
         this.currentUser['firstName'] + ' ' + this.currentUser['lastName'],
       userProfilePic: this.currentUser['profilePicUrl'],
@@ -290,39 +290,39 @@ export class ChatuiComponent implements OnInit, OnDestroy {
       const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
       let sessionId = `session_${randomNum}`;
       // save in session data base
-      this.deductBalanceFromUserAccount(this.currentUser.uid, charge).then(
-        async (data) => {
-          await this.userService.createEntryInSession({
-            amount: Math.round(charge * 100) / 100,
+      this.deductBalanceFromUserAccount(
+        this.authService?.activeUserValue?.uid,
+        charge
+      ).then(async (data) => {
+        await this.userService.createEntryInSession({
+          amount: Math.round(charge * 100) / 100,
+          astrologerId: this.parentData.notificationData['senderId'],
+          callDuration: this.timer,
+          callerId: this.authService?.activeUserValue?.uid,
+          sessionType: 'chat',
+          sessionId,
+        });
+
+        await this.addBalanceToAstrolgerAccount(
+          this.parentData.notificationData['senderId'],
+          charge
+        );
+        await this.userService.createEntryPayment(
+          {
+            amount: charge,
             astrologerId: this.parentData.notificationData['senderId'],
-            callDuration: this.timer,
-            callerId: this.currentUser.uid,
-            sessionType: 'chat',
-            sessionId,
-          });
+            type: 'chat',
+            userId: this.authService?.activeUserValue?.uid,
+          },
+          `payment_${randomNum}`
+        );
 
-          await this.addBalanceToAstrolgerAccount(
-            this.parentData.notificationData['senderId'],
-            charge
-          );
-          await this.userService.createEntryPayment(
-            {
-              amount: charge,
-              astrologerId: this.parentData.notificationData['senderId'],
-              type: 'chat',
-              userId: this.currentUser.uid,
-            },
-            `payment_${randomNum}`
-          );
-
-          if (eventType && eventType == 'review') {
-            await this.reviewSubmissionAndCalculation(sessionId);
-          }
+        if (eventType && eventType == 'review') {
+          await this.reviewSubmissionAndCalculation(sessionId);
         }
-      );
+      });
     }
     // mark notification data as read
-
     const chatRoomCollection = collection(
       this.firestore,
       `chatRooms`,
@@ -338,7 +338,7 @@ export class ChatuiComponent implements OnInit, OnDestroy {
       receiverId: '',
       receiverName: '',
       receiverPhotoUrl: '',
-      senderId: this.currentUser.uid,
+      senderId: this.authService?.activeUserValue?.uid,
       senderIsAstrologer: false,
       senderName: this.currentUser.firstName,
       senderPhotoUrl: this.currentUser?.profilePicUrl
@@ -400,7 +400,9 @@ export class ChatuiComponent implements OnInit, OnDestroy {
       this.timerSubscription = interval(1000).subscribe(() => {
         this.ngZone.run(() => {
           this.timer++;
-          this.checkTheBalance();
+          if (!this.parentData.userIsAstrologer) {
+            this.checkTheBalance();
+          }
         });
       });
     });
@@ -452,6 +454,33 @@ export class ChatuiComponent implements OnInit, OnDestroy {
         });
         this.messageText = '';
       }
+      if (file_url != '') {
+        const chatRoomCollection = collection(
+          this.firestore,
+          `chatRooms`,
+          this.parentData.roomCode,
+          'messages'
+        );
+        const docRef = await addDoc(chatRoomCollection, {
+          text: this.messageText,
+          file_url: file_url,
+          isRead: false,
+          mediaUrl: '',
+          message: '',
+          receiverId: '',
+          receiverName: '',
+          receiverPhotoUrl: '',
+          senderId: this.currentUser.uid,
+          senderIsAstrologer: false,
+          senderName: this.currentUser?.firstName,
+          senderPhotoUrl: this.currentUser?.profilePicUrl
+            ? this.currentUser?.profilePicUrl
+            : '',
+          time: new Date(),
+          type: type,
+        });
+        this.messageText = '';
+      }
     } catch (error) {
       console.log('this is error :', error);
     }
@@ -464,7 +493,7 @@ export class ChatuiComponent implements OnInit, OnDestroy {
       const storageRef = ref(
         this.storage,
         `/messages/data/webapp/user/` +
-          `${this.currentUser['uid']}/` +
+          `${this.authService?.activeUserValue?.uid}/` +
           selectedFile.name
       );
       const task = uploadBytesResumable(storageRef, selectedFile);

@@ -75,7 +75,7 @@ export class WalletComponent implements OnInit {
   }
 
   refreshScreen() {
-    this.userService.fetchUserData(this.currentUser['uid']);
+    this.userService.fetchUserData(this.authService.activeUserValue?.uid);
     this.activeModal.close({ response: false });
   }
   onCancel(): void {

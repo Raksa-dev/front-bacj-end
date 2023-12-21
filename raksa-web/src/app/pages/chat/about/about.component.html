@@ -38,14 +38,14 @@
               </p>
               <p
                 class="read-button"
-                *ngIf="!readMore && astrologer['bio'].length > 25"
+                *ngIf="!readMore && astrologer?.bio.length > 25"
                 (click)="readMoreText()"
               >
                 Read more >
               </p>
               <p
                 class="read-button"
-                *ngIf="readMore && astrologer['bio'].length > 25"
+                *ngIf="readMore && astrologer?.bio.length > 25"
                 (click)="readMoreText()"
               >
                 Read less >
@@ -267,8 +267,10 @@
             [ngClass]="{
               'is-invalid': relativeSubmitted && relativeFrm['relation'].errors
             }"
+            (change)="onRelationChange($event)"
           >
             <option value="null" disabled selected>Select User Type</option>
+            <option value="self">Self</option>
             <option value="father">Father</option>
             <option value="mother">Mother</option>
             <option value="son">Son</option>

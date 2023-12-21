@@ -35,7 +35,7 @@ export class AboutAstrolgerComponent implements OnInit {
   ) {}
 
   public relativeForm: FormGroup = this.formBuilder.group({
-    relation: [null, [Validators.required]],
+    relation: ['self', [Validators.required]],
     firstName: ['', [Validators.required]],
     lastName: ['', [Validators.required]],
     gender: [null, [Validators.required]],
@@ -63,6 +63,15 @@ export class AboutAstrolgerComponent implements OnInit {
       .getUserDataInfo(this.authService?.activeUserValue?.uid)
       .then((userVal) => {
         this.userData = userVal;
+        if (userVal) {
+          this.relativeForm.patchValue({
+            firstName: userVal['firstName'],
+            lastName: userVal['lastName'],
+            gender: userVal?.['gender'].toLocaleLowerCase(),
+            birthPlace: userVal?.['birthPlace'],
+            // maritialStatus: this.userData?.maritialStatus?.toLocaleLowerCase(),
+          });
+        }
       });
     this.getAllReviewsForAstroUser();
   }
@@ -75,6 +84,38 @@ export class AboutAstrolgerComponent implements OnInit {
         });
       });
     }
+  }
+
+  onRelationChange(event: any) {
+    const selectedValue = event.target.value;
+
+    if (selectedValue === 'self') {
+      this.onSelfSelected();
+      return;
+    }
+    const relationValue = this.relativeForm.get('relation').value;
+
+    // Reset all form controls except 'relation'
+    Object.keys(this.relativeForm.controls).forEach((key) => {
+      if (key !== 'relation') {
+        this.relativeForm.get(key).reset();
+      }
+    });
+
+    // Set back the 'relation' field to its original value
+    this.relativeForm.get('relation').setValue(relationValue);
+    // Add more conditions for other values if needed
+  }
+
+  onSelfSelected() {
+    // Your code to handle the "self" selection
+    this.relativeForm.patchValue({
+      firstName: this.userData?.firstName,
+      lastName: this.userData?.lastName,
+      gender: this.userData?.gender?.toLocaleLowerCase(),
+      birthPlace: this.userData?.birthPlace,
+      // maritialStatus: this.userData?.maritialStatus?.toLocaleLowerCase(),
+    });
   }
 
   readMoreText() {
@@ -137,6 +178,7 @@ export class AboutAstrolgerComponent implements OnInit {
           .NotifyAstrologerForChat(
             this.astrologer,
             this.userService.getUserData,
+            this.authService?.activeUserValue?.uid,
             'call'
           )
           .then((data) => {
@@ -254,6 +296,7 @@ export class AboutAstrolgerComponent implements OnInit {
       .NotifyAstrologerForChat(
         this.astrologer,
         this.userService.getUserData,
+        this.authService?.activeUserValue?.uid,
         'chat',
         strings
       )

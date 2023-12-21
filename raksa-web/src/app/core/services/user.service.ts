@@ -166,10 +166,17 @@ export class UserService {
     const data = await getDocs(q);
     return data;
   }
-  async NotifyAstrologerForChat(astrologerData, userData, type, message?) {
+  async NotifyAstrologerForChat(
+    astrologerData,
+    userData,
+    userId,
+    type,
+    message?
+  ) {
+    let userID = userData['uid'] || userId;
     const alreadyNotificationPresent = await this.checkNotificationIsThere(
       astrologerData['uid'],
-      userData['uid'],
+      userID,
       type
     );
     if (alreadyNotificationPresent?.size) {
@@ -192,7 +199,7 @@ export class UserService {
         body: `Want to ${type}`,
         date: new Date(),
         title: title,
-        senderId: userData['uid'],
+        senderId: userID,
         senderName: userData['firstName'],
         profilePicUrl: userData['profilePicUrl']
           ? userData['profilePicUrl']
@@ -208,38 +215,40 @@ export class UserService {
     type,
     callRoomCode?: String
   ) {
-    const alreadyNotificationPresent = await this.checkNotificationIsThere(
-      notificaitionData['senderId'],
-      userData['uid'],
-      type
-    );
-
-    if (alreadyNotificationPresent?.size) {
-      return true;
-    } else {
-      const notificationsRef = collection(
-        this.firestore,
-        'notifications',
+    if (userData && userData?.isAstrologer) {
+      const alreadyNotificationPresent = await this.checkNotificationIsThere(
         notificaitionData['senderId'],
-        'notifications'
+        userData['uid'],
+        type
       );
-      addDoc(notificationsRef, {
-        type,
-        isRead: false,
-        body: `Want to ${type}`,
-        date: new Date(),
-        title: `hey ${
-          userData['firstName'] + ' ' + userData['lastName']
-        } wants to have ${type} with you`,
-        senderId: userData['uid'],
-        senderName: userData['firstName'],
-        profilePicUrl: userData['profilePicUrl']
-          ? userData['profilePicUrl']
-          : '',
-        callRoomCode: type == 'call' ? callRoomCode : '',
-      });
-      return false;
+      if (alreadyNotificationPresent?.size) {
+        return true;
+      } else {
+        const notificationsRef = collection(
+          this.firestore,
+          'notifications',
+          notificaitionData['senderId'],
+          'notifications'
+        );
+        addDoc(notificationsRef, {
+          type,
+          isRead: false,
+          body: `Want to ${type}`,
+          date: new Date(),
+          title: `hey ${
+            userData['firstName'] + ' ' + userData['lastName']
+          } wants to have ${type} with you`,
+          senderId: userData['uid'],
+          senderName: userData['firstName'],
+          profilePicUrl: userData['profilePicUrl']
+            ? userData['profilePicUrl']
+            : '',
+          callRoomCode: type == 'call' ? callRoomCode : '',
+        });
+        return false;
+      }
     }
+    return true;
   }
   async MarkNotificationForChatAsRead(userId, NotificationId) {
     const notificationsRef = doc(

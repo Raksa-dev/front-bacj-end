@@ -134,6 +134,7 @@ export class AboutCallComponent implements OnInit {
           .NotifyAstrologerForChat(
             this.astrologer,
             this.userService.getUserData,
+            this.authService?.activeUserValue?.uid,
             'call'
           )
           .then((data) => {
@@ -251,6 +252,7 @@ export class AboutCallComponent implements OnInit {
       .NotifyAstrologerForChat(
         this.astrologer,
         this.userService.getUserData,
+        this.authService?.activeUserValue?.uid,
         'chat',
         strings
       )
