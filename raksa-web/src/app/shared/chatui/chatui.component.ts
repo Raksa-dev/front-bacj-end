@@ -294,14 +294,26 @@ export class ChatuiComponent implements OnInit, OnDestroy {
         this.authService?.activeUserValue?.uid,
         charge
       ).then(async (data) => {
-        await this.userService.createEntryInSession({
-          amount: Math.round(charge * 100) / 100,
-          astrologerId: this.parentData.notificationData['senderId'],
-          callDuration: this.timer,
-          callerId: this.authService?.activeUserValue?.uid,
-          sessionType: 'chat',
-          sessionId,
-        });
+        await this.userService
+          .createEntryInSession({
+            amount: Math.round(charge * 100) / 100,
+            astrologerId: this.parentData.notificationData['senderId'],
+            astrologerName:
+              astrologerData?.firstName + ' ' + astrologerData?.lastName,
+            astrologerPic:
+              astrologerData?.profilePicUrl || astrologerData?.linkToPhotoId||'',
+            callDuration: this.timer,
+            callerId: this.authService?.activeUserValue?.uid,
+            callerName:
+              this.currentUser.firstName + ' ' + this.currentUser?.lastName,
+            callerPic:
+              this.currentUser?.profilePicUrl ||
+              this.currentUser?.linkToPhotoId ||
+              '',
+            sessionType: 'chat',
+            sessionId,
+          })
+       
 
         await this.addBalanceToAstrolgerAccount(
           this.parentData.notificationData['senderId'],
@@ -383,7 +395,7 @@ export class ChatuiComponent implements OnInit, OnDestroy {
           this.astrologerData['chatChargePerMinute'],
           this.timer
         );
-      let checkBalance = this.astrologerData['chatChargePerMinute'] * 5;
+      let checkBalance = this.astrologerData['chatChargePerMinute'] * 2;
 
       if (
         trackBalance - checkBalance <=

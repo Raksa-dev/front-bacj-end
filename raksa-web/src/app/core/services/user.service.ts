@@ -379,8 +379,12 @@ export class UserService {
   async createEntryInSession({
     amount,
     astrologerId,
+    astrologerName,
+    astrologerPic,
     callDuration,
     callerId,
+    callerName,
+    callerPic,
     sessionType,
     sessionId,
   }) {
@@ -389,8 +393,12 @@ export class UserService {
     return setDoc(sessionRef, {
       amount,
       astrologerId,
+      astrologerName,
+      astrologerPic,
       callDuration,
       callerId,
+      callerName,
+      callerPic,
       sessionType,
       id: sessionId,
       date: new Date(),
@@ -457,6 +465,16 @@ export class UserService {
     const q = query(
       blogsRef,
       where('callerId', '==', userId),
+      orderBy('date', 'desc')
+    );
+    const data = await getDocs(q);
+    return data;
+  }
+  async getAllAstroSessions(userId) {
+    const blogsRef = collection(this.firestore, 'sessions');
+    const q = query(
+      blogsRef,
+      where('astrologerId', '==', userId),
       orderBy('date', 'desc')
     );
     const data = await getDocs(q);

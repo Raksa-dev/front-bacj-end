@@ -29,29 +29,60 @@
                             class="me-1"
                           /><span>Completed</span>
                         </p>
-                        <!-- <p class="text-end mb-0">
-                          <img
-                            src="../../../assets/images/view.png"
-                            class="me-1"
-                          /><span>1 INR / min</span>
-                        </p> -->
                       </div>
-                      <div class="d-flex justify-content-center" *ngIf="true">
+                      <div *ngIf="!isAstrologer">
                         <div
-                          class="avatar-md rounded-circle mb-2 bg-dark content-center"
+                          class="d-flex justify-content-center"
+                          *ngIf="!trsx?.astrologerPic"
                         >
-                          q
+                          <div
+                            class="avatar-md rounded-circle mb-2 bg-dark content-center"
+                          >
+                            {{
+                              trsx?.astrologerName
+                                ? trsx?.astrologerName[0]
+                                : "A"
+                            }}
+                          </div>
                         </div>
+                        <img
+                          class="avatar-md rounded-circle mb-2"
+                          src="{{ trsx?.astrologerPic }}"
+                          *ngIf="trsx?.astrologerPic"
+                        />
+                        <h4 class="fw-semi-bold mb-2">
+                          {{ trsx?.astrologerName || "astro name" }}
+                        </h4>
                       </div>
-                      <img
-                        class="avatar-md rounded-circle mb-2"
-                        src="{{ astrologer['profilePicUrl'] }}"
-                        *ngIf="false"
-                      />
-                      <h4 class="fw-semi-bold mb-2">Astrolger name</h4>
+                      <div *ngIf="isAstrologer">
+                        <div
+                          class="d-flex justify-content-center"
+                          *ngIf="!trsx?.callerPic"
+                        >
+                          <div
+                            class="avatar-md rounded-circle mb-2 bg-dark content-center"
+                          >
+                            {{ trsx?.callerName ? trsx?.callerName[0] : "A" }}
+                          </div>
+                        </div>
+                        <img
+                          class="avatar-md rounded-circle mb-2"
+                          src="{{ trsx?.callerPic }}"
+                          *ngIf="trsx?.callerPic"
+                        />
+                        <h4 class="fw-semi-bold mb-2">
+                          {{ trsx?.callerName || "User name" }}
+                        </h4>
+                      </div>
                       <p class="mb-2">{{ trsx?.id }}</p>
-
                       <div class="tags">
+                        <h5 class="text-muted me-2">
+                          {{
+                            trsx?.date.seconds * 1000 +
+                              trsx?.date.nanoseconds / 1000000
+                              | date : "dd-MM-yyyy HH:mm:ss"
+                          }}
+                        </h5>
                         <h5 class="text-muted me-2">
                           Session Type: {{ trsx?.sessionType }}
                         </h5>
@@ -62,93 +93,14 @@
                           <span>{{ trsx?.amount }} Rs</span>
 
                           <span class="me-2"> |</span>
-                          <span>{{ trsx?.callDuration }} mins</span>
+                          <span>{{ trsx?.callDuration }} Seconds</span>
                         </h6>
                       </div>
-
-                      <!-- <div class="session mt-1">
-                        <button
-                          (click)="
-                            sendChatNotificationToAstrologer(
-                              $event,
-                              astrologer,
-                              content
-                            )
-                          "
-                          class="btn btn-white"
-                        >
-                          Request Call
-                        </button>
-                      </div> -->
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <!-- <div *ngIf="allTrasactions.length">
-              <table class="table table-striped">
-                <thead style="position: sticky; top: 0; z-index: 1">
-                  <tr>
-                    <th
-                      style="background-color: #d700ff; color: white"
-                      scope="col"
-                    >
-                      sr no.
-                    </th>
-                    <th
-                      scope="col"
-                      style="background-color: #d700ff; color: white"
-                    >
-                      Session Id
-                    </th>
-                    <th
-                      scope="col"
-                      style="background-color: #d700ff; color: white"
-                    >
-                      Session type
-                    </th>
-
-                    <th
-                      scope="col"
-                      style="background-color: #d700ff; color: white"
-                    >
-                      Duration(In min)
-                    </th>
-                    <th
-                      scope="col"
-                      style="background-color: #d700ff; color: white"
-                    >
-                      Amount Charged
-                    </th>
-                    <th
-                      scope="col"
-                      style="background-color: #d700ff; color: white"
-                    >
-                      Session Date
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let trsx of allTrasactions; let i = index">
-                    <th scope="row">{{ i + 1 }}</th>
-                    <td>{{ trsx?.id }}</td>
-                    <td>{{ trsx?.sessionType }}</td>
-
-                    <td>{{ trsx?.callDuration }}</td>
-                    <td>
-                      {{ trsx?.amount }}
-                    </td>
-                    <td>
-                      {{
-                        trsx?.date.seconds * 1000 +
-                          trsx?.date.nanoseconds / 1000000
-                          | date : "yyyy-MM-dd HH:mm:ss"
-                      }}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div> -->
           </div>
         </div>
       </div>

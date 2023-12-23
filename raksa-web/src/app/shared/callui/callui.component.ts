@@ -115,7 +115,7 @@ export class CalluiComponent implements OnInit, OnDestroy {
           this.astrologerData['callChargePerMinute'],
           this.timer
         );
-      let checkBalance = this.astrologerData['callChargePerMinute'] * 5;
+      let checkBalance = this.astrologerData['callChargePerMinute'] * 2;
 
       if (
         trackBalance - checkBalance <=
@@ -350,8 +350,20 @@ export class CalluiComponent implements OnInit, OnDestroy {
           await this.userService.createEntryInSession({
             amount: Math.round(charge * 100) / 100,
             astrologerId: this.parentData.notificationData['senderId'],
+            astrologerName:
+              astrologerData?.firstName + ' ' + astrologerData?.lastName,
+            astrologerPic:
+              astrologerData?.profilePicUrl ||
+              astrologerData?.linkToPhotoId ||
+              '',
             callDuration: this.timer,
             callerId: this.currentUser.uid,
+            callerName:
+              this.currentUser.firstName + ' ' + this.currentUser?.lastName,
+            callerPic:
+              this.currentUser?.profilePicUrl ||
+              this.currentUser?.linkToPhotoId ||
+              '',
             sessionType: 'call',
             sessionId,
           });
