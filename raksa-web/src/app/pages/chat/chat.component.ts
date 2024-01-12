@@ -16,6 +16,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./chat.component.scss'],
 })
 export class ChatComponent implements OnInit {
+  loadSpinner = false;
+  requestForFeature = false;
   specialtiesArray = [
     { name: 'Vedic', checked: false },
     { name: 'Numerology', checked: false },
@@ -65,18 +67,46 @@ export class ChatComponent implements OnInit {
 
   public astrologersData = [];
 
-  ngOnInit(): void {
+  async fetchAllAstrolgers() {
     this.astroServices.getAllAstrologersData().then((data) => {
       data.forEach((doc) => {
         this.astrologersData.push(doc.data());
       });
     });
+  }
 
+  ngOnInit(): void {
+    this.fetchAllAstrolgers();
     this.userService
       .getUserDataInfo(this.authService.activeUserValue.uid)
       .then((userVal) => {
         this.userData = userVal;
       });
+  }
+  resetMatch() {
+    this.astrologersData = [];
+    this.fetchAllAstrolgers();
+    this.requestForFeature = false;
+  }
+  async findMatch() {
+    if (this.authService.activeUserValue) {
+      this.loadSpinner = true;
+      let randomNum = Math.floor(Math.random() * this.astrologersData.length);
+
+      this.astrologersData = [this.astrologersData[randomNum]];
+      this.requestForFeature = true;
+      setTimeout(() => {
+        this.loadSpinner = false;
+      }, 500);
+    } else {
+      const modalRef = this.modalService.open(LoginComponent, {
+        backdrop: 'static',
+        keyboard: false,
+        centered: true,
+        size: 'lg',
+        modalDialogClass: 'login',
+      });
+    }
   }
 
   async specialtiesArrayChecked(e, index) {

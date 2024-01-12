@@ -4,6 +4,14 @@
       <div class="d-block">
         <h2 class="fw-semi-bold mb-2">Chat with Astrologers</h2>
         <p>10,000+ available right now</p>
+        <div class="session mt-1">
+          <button
+            (click)="requestForFeature ? resetMatch() : findMatch()"
+            class="btn btn-white gradient-button"
+          >
+            {{ requestForFeature ? "Reset" : "Request For Chat" }}
+          </button>
+        </div>
       </div>
 
       <button
@@ -14,12 +22,28 @@
         Filters <img src="../../../assets/images/filter.png" class="ms-1" />
       </button>
     </div>
+    <div class="row" *ngIf="loadSpinner">
+      <div class="text-center">
+        <div class="spinner-border mb-1 text-primary" role="status"></div>
+        <div class="spinner-grow" role="status"></div>
+        <div
+          class="spinner-grow"
+          style="width: 3rem; height: 3rem"
+          role="status"
+        ></div>
 
-    <div class="row">
+        <div class="spinner-grow" role="status"></div>
+
+        <div class="spinner-border mb-1 text-primary" role="status"></div>
+        <p>Please Wait We Are Finding A match ...</p>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="!loadSpinner">
       <ng-container *ngFor="let astrologer of astrologersData">
         <div
           class="col-xl-3 col-lg-6"
-          (click)="navigateToAboutPage(astrologer)"
+          (click)="requestForFeature && navigateToAboutPage(astrologer)"
         >
           <div class="card astrologer text-center">
             <div class="card-body">
@@ -82,7 +106,7 @@
                 </h6>
               </div>
 
-              <div class="session mt-1">
+              <div *ngIf="requestForFeature" class="session mt-1">
                 <button
                   (click)="
                     sendChatNotificationToAstrologer(
