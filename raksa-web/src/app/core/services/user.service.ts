@@ -112,19 +112,65 @@ export class UserService {
     );
     return saveData;
   }
+  csvJSON(csv: string) {
+    const lines = csv.split('\n');
+    const result = [];
+    const headers = lines[0].split(',');
+
+    for (let i = 1; i < lines.length - 1; i++) {
+      const obj = {};
+
+      const currentLine = lines[i].split(',');
+      for (let j = 0; j < headers.length; j++) {
+        obj[headers[j].replace(/\r/g, '')] = currentLine[j].replace(/\r/g, '');
+      }
+
+      result.push(obj);
+    }
+    return result;
+  }
   async importDataFromJson() {
-    // const data = await this.http.get('/assets/MonthlyHoroscope.json');
-    // data.subscribe((dataum: []) => {
-    // let yearlycollectinRef = collection(
-    //   this.firestore,
-    //   'horoscopes',
-    //   'monthly',
-    //   'data'
-    // );
-    // dataum.forEach((element) => {
+    const data = await this.http
+      .get('/assets/HoroDetailsupdated.csv', {
+        responseType: 'text',
+      })
+      .toPromise();
+    const jsonData = this.csvJSON(data);
+
+    // for (let i = 0; i < jsonData.length; i++) {
+    //   let element = jsonData[i];
+    //   let yearlycollectinRef = collection(this.firestore, 'learnTab');
+    //   let q = query(yearlycollectinRef, where('_id', '==', element['_id']));
+    //   const querySnapshot = await getDocs(q);
     //   console.log(element);
-    //   addDoc(yearlycollectinRef, element);
+    //   querySnapshot.forEach((docq) => {
+    //     console.log('docq:', docq.id);
+    //     let yearlycollectionRef = doc(this.firestore, 'learnTab', docq.id);
+    //     updateDoc(yearlycollectionRef, element);
+    //   });
+    // }
+
+    // const querySnapshot = await getDocs(q);
+    // querySnapshot.forEach((docq) => {
+    //   let yearlycollectinRef = doc(this.firestore, 'learnTab', docq.id);
+    //   updateDoc(yearlycollectinRef, element);
     // });
+
+    // jsonData.forEach((element) => {
+    //   console.log('elemet', element);
+    //   // addDoc(yearlycollectinRef, element);
+    // });
+    // data.subscribe((dataum: []) => {
+    //   // let yearlycollectinRef = collection(
+    //   //   this.firestore,
+    //   //   'horoscopes',
+    //   //   'monthly',
+    //   //   'data'
+    //   // );
+    //   dataum.forEach((element) => {
+    //     console.log(element);
+    //     // addDoc(yearlycollectinRef, element);
+    //   });
     // });
   }
   async CreateAstrologer(userid, data, code): Promise<any> {

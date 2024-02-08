@@ -92,6 +92,16 @@
               >Blogs</a
             >
           </li>
+          <li class="nav-item" *ngIf="!showNotificationNavs">
+            <a
+              class="nav-link"
+              routerLink="/learn"
+              routerLinkActive="active"
+              data-bs-toggle="collapse"
+              data-bs-target=".navbar-collapse.show"
+              >Learn</a
+            >
+          </li>
           <!-- <li class="nav-item" *ngIf="showThreeNavs">
             <a
               class="nav-link"
@@ -152,6 +162,8 @@
             </a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" (click)="openSessionModal()"> Sessions </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" routerLink="/learn"> Learn </a>
             <div class="dropdown-divider"></div>
             <a
               href="javascript:void(0);"

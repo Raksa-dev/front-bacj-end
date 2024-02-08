@@ -22,6 +22,7 @@ import { AboutCallComponent } from './call/about/about.component';
 import { BlogsComponent } from './blogs/blogs.component';
 import { BlogComponent } from './blogs/blog/blog.component';
 import { InvoiceComponent } from './invoice/invoice.component';
+import { LearnComponent } from './learn/learn.component';
 
 const routes: Routes = [
   {
@@ -54,6 +55,16 @@ const routes: Routes = [
       { path: '', component: CallComponent },
       {
         path: 'about/:id',
+        component: AboutCallComponent,
+      },
+    ],
+  },
+  {
+    path: 'learn',
+    children: [
+      { path: '', component: LearnComponent },
+      {
+        path: 'more/:id',
         component: AboutCallComponent,
       },
     ],

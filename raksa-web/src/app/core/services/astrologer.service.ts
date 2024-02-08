@@ -44,6 +44,17 @@ export class AstrologerService {
     const data = await getDocs(collection(this.firestore, 'astrologers'));
     return data;
   }
+
+  async getAllLearnData(alpha?: string) {
+    const data = collection(this.firestore, 'learnTab');
+    const q = query(
+      data,
+      where('name', '>=', alpha),
+      where('name', '<=', alpha + '\uf8ff')
+    );
+    let collectiondata = collectionData(q);
+    return collectiondata;
+  }
   async getAllAstrologersDataFilterApply({
     filterSpecialties,
     filterLanguage,

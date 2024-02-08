@@ -1,0 +1,67 @@
+.content-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.open-wallet-button {
+  z-index: 1300;
+  background-color: aqua;
+  cursor: pointer;
+}
+
+.gradient-button {
+  background: linear-gradient(
+    150.77deg,
+    #d700ff 0%,
+    #7000ff 98.92%
+  ); /* Adjust colors as needed */
+
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.gradient-button:hover {
+  background: linear-gradient(
+    150.77deg,
+    #d700ff 0%,
+    #7000ff 80.92%
+  ); /* Reverse the gradient colors on hover */
+}
+
+.menu {
+  background: linear-gradient(150.77deg, #d700ff 0%, #7000ff 80.92%);
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+  display: flex;
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    font-size: 0.6rem;
+    overflow-x: scroll;
+  }
+}
+
+
+.menu ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu li {
+  display: inline;
+  margin-right: 10px;
+}
+
+.menu li a {
+  text-decoration: none;
+  color: #fefefe;
+  padding: 5px 10px;
+}
+
+.menu li a:hover {
+  background-color: #cd3cf1;
+}

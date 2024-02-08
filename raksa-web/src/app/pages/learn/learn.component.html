@@ -1,0 +1,227 @@
+<section class="section learn">
+  <div class="container">
+    <div class="mb-5">
+      <div class="d-block">
+        <h2 class="fw-semi-bold mb-2">Learn</h2>
+        <div class="menu">
+          <ul>
+            <li *ngFor="let letter of alphabet">
+              <a (click)="selectAlphabet(letter)">{{ letter }}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="!loadSpinner">
+      <ng-container *ngFor="let astrologer of astrologersData">
+        <div
+          class="col-xl-3 col-lg-6"
+          (click)="requestForFeature && navigateToAboutPage(astrologer)"
+        >
+          <div class="card astrologer text-center">
+            <div class="card-body">
+              <div
+                class="d-flex justify-content-center"
+                *ngIf="!astrologer['personal_image_s3']"
+              >
+                <div
+                  class="avatar-md rounded-circle mb-2 bg-dark content-center"
+                >
+                  {{ astrologer["name"][0]?.toUpperCase() }}
+                </div>
+              </div>
+              <img
+                class="avatar-md rounded-circle mb-2 im"
+                src="{{ astrologer['personal_image_s3'] }}"
+                *ngIf="
+                  astrologer['personal_image_s3'] != 'null' ||
+                  astrologer['personal_image_s3'] != ''
+                "
+                style="object-fit: cover"
+              />
+              <h4 class="fw-semi-bold mb-2">
+                {{ astrologer["name"]?.toUpperCase() }}
+              </h4>
+              <p class="mb-2">
+                {{ astrologer["date_of_birth"] }}
+              </p>
+
+              <div *ngIf="requestForFeature" class="session mt-1">
+                <button
+                  (click)="
+                    sendChatNotificationToAstrologer(
+                      $event,
+                      astrologer,
+                      content
+                    )
+                  "
+                  class="btn btn-white"
+                >
+                  Request Chat
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</section>
+<ngb-toast
+  *ngIf="toast"
+  [autohide]="true"
+  [delay]="5000"
+  class="toast-container position-fixed top-0 end-0 p-3 bg-success text-light"
+  (hidden)="resetToast()"
+  >{{ message }}
+</ngb-toast>
+
+<ng-template #content let-modal>
+  <div
+    class="modal-body d-flex justify-content-center align-items-center flex-column p-5"
+  >
+    <div class="mb-3">
+      <label for="dateOfBirth">{{ message }}</label>
+    </div>
+    <div class="d-flex justify-content-center align-items-center gap-3">
+      <button
+        type="button"
+        class="btn btn-outline-light"
+        (click)="modal.close()"
+      >
+        Cancel
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-light btn-success"
+        (click)="openWallet()"
+      >
+        Recharge Wallet
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #filterModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title fw-semi-bold" id="modal-basic-title">Filters</h5>
+    <button
+      type="button"
+      class="btn-close btn-close-white"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="d-flex">
+      <div class="flex-shrink-0 border-right py-3">
+        <ul ngbNav #navFilters="ngbNav" class="filter-nav flex-column">
+          <li [ngbNavItem]="1">
+            <a ngbNavLink>Expertise</a>
+
+            <ng-template ngbNavContent>
+              <div *ngFor="let expertise of specialtiesArray; let i = index">
+                <div class="form-check form-check-sm">
+                  <input
+                    class="form-check-input me-2"
+                    type="checkbox"
+                    (change)="specialtiesArrayChecked($event, i)"
+                    [(ngModel)]="expertise.checked"
+                    id="{{ i }}"
+                  />
+                  <label
+                    for="{{ i }}"
+                    class="form-check-label"
+                    for="flexRadioDefault1"
+                  >
+                    <span>{{ expertise.name }}</span>
+                  </label>
+                </div>
+              </div>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="2">
+            <a ngbNavLink>Language</a>
+
+            <ng-template ngbNavContent>
+              <div *ngFor="let language of languagesArray; let i = index">
+                <div class="form-check form-check-sm">
+                  <input
+                    class="form-check-input me-2"
+                    type="checkbox"
+                    (change)="languageArrayChecked($event, i)"
+                    [(ngModel)]="language.checked"
+                    id="{{ i }}"
+                  />
+                  <label class="form-check-label" for="{{ i }}">
+                    <span>{{ language.name }}</span>
+                  </label>
+                </div>
+              </div>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="3">
+            <a ngbNavLink>Gender</a>
+
+            <ng-template ngbNavContent>
+              <div *ngFor="let gender of genderArray; let i = index">
+                <div class="form-check form-check-sm">
+                  <input
+                    class="form-check-input me-2"
+                    type="radio"
+                    name="gender"
+                    [value]="gender.name"
+                    (change)="genderArrayChecked($event, gender.name)"
+                    id="{{ i }}"
+                    [checked]="gender.name == genderOption"
+                  />
+                  <label class="form-check-label" for="{{ i }}">
+                    <span>{{ gender.name }}</span>
+                  </label>
+                </div>
+              </div>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="4">
+            <a ngbNavLink>Year Of Experience</a>
+
+            <ng-template ngbNavContent>
+              <div
+                *ngFor="let experience of yearsOfExperienceArray; let i = index"
+              >
+                <div class="form-check form-check-sm">
+                  <input
+                    class="form-check-input me-2"
+                    type="radio"
+                    name="yearofexperience"
+                    (change)="yearsOfExperienceArrayChecked($event, i)"
+                    [value]="experience.name"
+                    (change)="
+                      yearsOfExperienceArrayChecked($event, experience.value)
+                    "
+                    id="{{ i }}"
+                    [checked]="experience.value == yearOption"
+                  />
+                  <label class="form-check-label" for="{{ i }}">
+                    <span>{{ experience.name }}</span>
+                  </label>
+                </div>
+              </div>
+            </ng-template>
+          </li>
+        </ul>
+      </div>
+      <div class="flex-grow-1 py-3">
+        <div [ngbNavOutlet]="navFilters" class="ms-3"></div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a class="me-3" (click)="resetFilter()">Reset</a>
+    <button tyle="button" class="btn btn-white" (click)="applyFilter()">
+      Apply
+    </button>
+  </div>
+  <router-outlet></router-outlet>
+</ng-template>
