@@ -45,13 +45,17 @@ export class AstrologerService {
     return data;
   }
 
-  async getAllLearnData(alpha?: string) {
+  async getAllLearnData(alpha?: string, infoType?: string) {
     const data = collection(this.firestore, 'learnTab');
-    const q = query(
-      data,
-      where('name', '>=', alpha),
-      where('name', '<=', alpha + '\uf8ff')
-    );
+    let withType =
+      infoType == ''
+        ? [where('name', '>=', alpha), where('name', '<=', alpha + '\uf8ff')]
+        : [
+            where('name', '>=', alpha),
+            where('name', '<=', alpha + '\uf8ff'),
+            where('astro_sage_rating', '==', infoType),
+          ];
+    const q = query(data, and(...withType));
     let collectiondata = collectionData(q);
     return collectiondata;
   }

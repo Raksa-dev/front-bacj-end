@@ -8,6 +8,24 @@
   background-color: aqua;
   cursor: pointer;
 }
+.blur-layer {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  backdrop-filter: blur(3px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.blur-layer::after {
+  content: "Click To See";
+  color: black;
+  font-size: 0.75rem;
+  font-weight: bold;
+  display: flex;
+}
 
 .gradient-button {
   background: linear-gradient(

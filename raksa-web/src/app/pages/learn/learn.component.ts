@@ -52,6 +52,8 @@ export class LearnComponent implements OnInit {
   genderOption = '';
   yearOption = '';
   form: FormGroup;
+  dataInformationType = '';
+  setAlphabet = 'A';
   constructor(
     private modalService: NgbModal,
     public authService: AuthService,
@@ -70,16 +72,26 @@ export class LearnComponent implements OnInit {
 
   public astrologersData = [];
 
-  async fetchAllLearnData(alpha = 'A') {
-    this.astroServices.getAllLearnData(alpha).then((data) => {
+  async fetchAllLearnData(alpha = 'A', type = '') {
+    this.astroServices.getAllLearnData(alpha, type).then((data) => {
       data.subscribe((dataum) => {
         this.astrologersData = dataum;
       });
     });
   }
+  setInformationType(type) {
+    this.dataInformationType = type;
+    this.fetchAllLearnData(this.setAlphabet, type);
+  }
 
+  reset() {
+    this.setAlphabet = 'A';
+    this.dataInformationType = '';
+    this.fetchAllLearnData();
+  }
   async selectAlphabet(letter) {
-    this.fetchAllLearnData(letter);
+    this.setAlphabet = letter;
+    this.fetchAllLearnData(letter, this.dataInformationType);
   }
 
   async fetchAllAstrolgers() {
@@ -256,7 +268,9 @@ export class LearnComponent implements OnInit {
       scrollable: true,
     });
   }
-  openConfirmation(content) {
+  chartImageS3: String;
+  openConfirmation(content, chartImageS3) {
+    this.chartImageS3 = chartImageS3;
     this.modalService
       .open(content, {
         ariaLabelledBy: 'modal-basic-title',
@@ -269,41 +283,41 @@ export class LearnComponent implements OnInit {
       .result.then();
   }
 
-  sendChatNotificationToAstrologer(e: MouseEvent, astroData, content) {
-    e.stopPropagation();
-    if (this.authService.activeUserValue) {
-      if (!astroData?.isOnline) {
-        this.message = `Astrologer is offline`;
-        this.openConfirmation(content);
-        return;
-      }
-      let checkBalance = astroData['chatChargePerMinute'] * 5;
-      if (this.userData.walletBalance > checkBalance) {
-        // this.userService
-        //   .NotifyAstrologerForChat(
-        //     astroData,
-        //     this.userService.getUserData,
-        //     'chat'
-        //   )
-        //   .then((data) => {
-        //     this.toast = true;
-        //     this.message = data?.message;
-        //   });
-        this.astroServices.setAstrologerBriefDataStore(astroData);
-        this.router.navigate([`chat/about/${astroData?.uid}`]);
-        return;
-      } else {
-        this.message = `Minimum balance of 5 minutes (${checkBalance} INR) is required to start chat.`;
-        this.openConfirmation(content);
-      }
-    } else {
-      const modalRef = this.modalService.open(LoginComponent, {
-        backdrop: 'static',
-        keyboard: false,
-        centered: true,
-        size: 'lg',
-        modalDialogClass: 'login',
-      });
-    }
-  }
+  // sendChatNotificationToAstrologer(e: MouseEvent, astroData, content) {
+  //   e.stopPropagation();
+  //   if (this.authService.activeUserValue) {
+  //     if (!astroData?.isOnline) {
+  //       this.message = `Astrologer is offline`;
+  //       this.openConfirmation(content);
+  //       return;
+  //     }
+  //     let checkBalance = astroData['chatChargePerMinute'] * 5;
+  //     if (this.userData.walletBalance > checkBalance) {
+  //       // this.userService
+  //       //   .NotifyAstrologerForChat(
+  //       //     astroData,
+  //       //     this.userService.getUserData,
+  //       //     'chat'
+  //       //   )
+  //       //   .then((data) => {
+  //       //     this.toast = true;
+  //       //     this.message = data?.message;
+  //       //   });
+  //       this.astroServices.setAstrologerBriefDataStore(astroData);
+  //       this.router.navigate([`chat/about/${astroData?.uid}`]);
+  //       return;
+  //     } else {
+  //       this.message = `Minimum balance of 5 minutes (${checkBalance} INR) is required to start chat.`;
+  //       this.openConfirmation(content);
+  //     }
+  //   } else {
+  //     const modalRef = this.modalService.open(LoginComponent, {
+  //       backdrop: 'static',
+  //       keyboard: false,
+  //       centered: true,
+  //       size: 'lg',
+  //       modalDialogClass: 'login',
+  //     });
+  //   }
+  // }
 }
