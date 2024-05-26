@@ -33,6 +33,7 @@ import { BlogComponent } from './blogs/blog/blog.component';
 import { BlogCreationComponent } from './admin/blog-creation/blog-creation.component';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { LearnComponent } from './learn/learn.component';
+import { BookComponent } from './book/book.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { LearnComponent } from './learn/learn.component';
     BlogCreationComponent,
     InvoiceComponent,
     LearnComponent,
+    BookComponent,
   ],
   imports: [
     CommonModule,

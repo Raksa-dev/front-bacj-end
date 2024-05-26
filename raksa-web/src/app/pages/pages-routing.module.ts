@@ -23,6 +23,7 @@ import { BlogsComponent } from './blogs/blogs.component';
 import { BlogComponent } from './blogs/blog/blog.component';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { LearnComponent } from './learn/learn.component';
+import { BookComponent } from './book/book.component';
 
 const routes: Routes = [
   {
@@ -120,6 +121,12 @@ const routes: Routes = [
     path: 'match-making',
     component: MatchMakingComponent,
   },
+  {
+    path: 'book',
+    component: BookComponent,
+    canActivate: [authGuard],
+  },
+
   {
     path: '**',
     redirectTo: '',
