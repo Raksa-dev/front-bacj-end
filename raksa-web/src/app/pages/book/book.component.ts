@@ -308,7 +308,7 @@ export class BookComponent implements OnInit {
     // Check if dateOfBirth is valid
     if (typeof data?.dateOfBirth === 'string') {
       // Construct the URL with query parameters
-      let apiUrl = `http://15.206.173.149:8000/get_horoscope_details?birthdate=${encodeURIComponent(
+      let apiUrl = `https://backend.raksa.xyz/get_horoscope_details?birthdate=${encodeURIComponent(
         data.dateOfBirth
       )}&birthtime=${encodeURIComponent(
         data.birthTime
