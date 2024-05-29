@@ -295,7 +295,6 @@ export class BookComponent implements OnInit {
   getAnswer(): void {
     this.loadSpinner = true;
     this.answerText = 'LOADING PLEASE WAIT .........';
-
     console.log('Getting answers...');
     let data = JSON.parse(localStorage.getItem('basic_details'));
     console.log(data.dateOfBirth);
