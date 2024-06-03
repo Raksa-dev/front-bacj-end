@@ -122,6 +122,13 @@ export class ProfileComponent {
       );
   }
 
+  displayUserBirthTime(time) {
+    if (typeof time === 'string') {
+      return true;
+    }
+    return false;
+  }
+
   onPanelClick(index) {
     if (index == 1) {
       let userData = this.userService.getUserData;
