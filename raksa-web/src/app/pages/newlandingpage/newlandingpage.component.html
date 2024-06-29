@@ -1,0 +1,118 @@
+<div class="hero-wrap text-center">
+  <div class="container">
+    <h1 class="fw-bold">Vedic Astrology Insights at Your Fingertips</h1>
+
+    <div class="row">
+      <div class="col-lg-8 text-center mx-auto">
+        <div class="d-flex justify-content-between">
+          <div class="d-block">
+            <p>
+              Discover accurate and cost-effective guidance on your life,
+              career, health, relationships, and finances with personalized
+              astrology readings.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="btn gradient-button" type="button" (click)="onClick()">
+      Get Started
+    </button>
+  </div>
+</div>
+
+<section class="section text-center">
+  <div class="container">
+    <h2 class="fw-semi-bold mb-3">
+      Raksa is Your Cosmic Guide to the universe
+    </h2>
+    <div class="guide-cards-section">
+      <div class="card guide-card" *ngFor="let testimonial of guides">
+        <div class="card-body">
+          <div class="d-flex align-items-center mb-3">
+            <div class="flex-grow-1 text-start overflow-hidden">
+              <div class="mb-3">
+                <img [src]="testimonial['avatar']" height="25px" width="25px" />
+              </div>
+              <p class="fw-semi-bold mb-1">
+                {{ testimonial["userName"] }}
+              </p>
+              <h6 class="text-muted mb-0">{{ testimonial["address"] }}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section text-center">
+  <div class="container">
+    <h2 class="fw-semi-bold mb-3">Why Raksha ?</h2>
+    <h4>
+      Choose Raksa as your trusted guide on your cosmic journey. Our platform
+      offers accurate and reliable horoscope readings, providing detailed
+      insights into all aspects of your life.  Let Raksa be your companion,
+      mentor, and pathfinder, helping you find clarity and direction in the
+      wisdom of the cosmos.
+    </h4>
+    <div class="testimonial-cards-section">
+      <div class="card testimonial" *ngFor="let testimonial of whyRaksa">
+        <div class="card-body">
+          <div class="d-flex align-items-center mb-3">
+            <div class="flex-grow-1 text-start overflow-hidden">
+              <p class="fw-semi-bold mb-1">
+                {{ testimonial["userName"] }}
+              </p>
+              <h6 class="text-muted mb-0">{{ testimonial["address"] }}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section text-center">
+  <div class="container">
+    <h2 class="fw-semi-bold mb-5">What our users say about Raksa?</h2>
+  </div>
+
+  <div class="container gx-0">
+    <owl-carousel-o [options]="testimonialOwlOptions">
+      <ng-container *ngFor="let testimonial of testimonials">
+        <ng-template carouselSlide [id]="testimonial['_id'].toString()">
+          <div class="card testimonial">
+            <div class="card-body">
+              <div
+                class="d-flex align-items-center mb-3 justify-content-center"
+              >
+                <div class="">
+                  <img
+                    class="avatar-sm"
+                    [src]="testimonial['avatar']"
+                    [alt]="testimonial['_id']"
+                    [title]="testimonial['userName']"
+                  />
+                </div>
+              </div>
+              <div class="text-center">
+                <h5 class="mb-0">{{ testimonial["message"] }}</h5>
+              </div>
+              <div class="text-center mt-3">
+                <ngb-rating
+                  rate="4.5"
+                  [max]="5"
+                  [starTemplate]="customStarTemplate"
+                  readonly="true"
+                ></ngb-rating>
+                <h6 class="mb-0">{{ testimonial["userName"] }}</h6>
+                <h6 class="mb-0">{{ testimonial["address"] }}</h6>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </ng-container>
+    </owl-carousel-o>
+  </div>
+</section>

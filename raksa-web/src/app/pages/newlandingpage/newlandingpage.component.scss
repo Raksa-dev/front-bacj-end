@@ -1,0 +1,78 @@
+.gradient-button {
+  background: linear-gradient(
+    to right,
+    #2895ff 0%,
+    #a528ff 98.92%
+  ); /* Adjust colors as needed */
+
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 10px 5px 5px red;
+}
+
+.gradient-button:hover {
+  background: linear-gradient(
+    to right,
+    #d700ff 0%,
+    #7000ff 80.92%
+  ); /* Reverse the gradient colors on hover */
+  box-shadow: 10px 5px 5px red;
+}
+
+.testimonial-cards-section {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  align-items: center;
+  margin-top: 3rem;
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+}
+
+.guide-cards-section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  align-items: center;
+  margin-top: 3rem;
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+}
+
+.testimonial-cards-section > :nth-child(even) {
+  background: linear-gradient(150.77deg, #d900ff42 0%, #6f00ff 98.92%);
+}
+
+.testimonial-cards-section > :nth-child(5) {
+  grid-column: 2; /* Start at the second column */
+}
+
+.testimonial-cards-section > :nth-child(6) {
+  grid-column: 3; /* Start at the third column */
+}
+
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+  .testimonial-cards-section > :nth-child(5) {
+    grid-column: 1; /* Start at the second column */
+  }
+
+  .testimonial-cards-section > :nth-child(6) {
+    grid-column: 1; /* Start at the third column */
+  }
+}
+
+// .testimonial {
+//   height: 200px;
+//   width: 290px;
+// }
+.guide-card {
+  height: 200px;
+  display: flex;
+}
