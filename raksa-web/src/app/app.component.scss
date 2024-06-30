@@ -54,3 +54,34 @@
   display: flex;
   text-wrap: nowrap;
 }
+
+.gradient-button {
+  background: linear-gradient(
+    to right,
+    #2895ff 0%,
+    #a528ff 98.92%
+  ); /* Adjust colors as needed */
+
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.gradient-button:hover {
+  background: linear-gradient(
+    to right,
+    #d700ff 0%,
+    #7000ff 80.92%
+  ); /* Reverse the gradient colors on hover */
+}
+.icons {
+  display: flex;
+  gap: 1rem;
+}
+
+.copy-right-plus-social-icons {
+  display: flex;
+  gap: 2rem;
+}

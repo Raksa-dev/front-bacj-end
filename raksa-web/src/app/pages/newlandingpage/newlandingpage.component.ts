@@ -213,7 +213,7 @@ export class NewlandingpageComponent {
     },
   ];
 
-  testimonialOwlOptions: OwlOptions = {
+  public testimonialOwlOptions: OwlOptions = {
     items: 3,
     autoplay: true,
     // rewind: true,

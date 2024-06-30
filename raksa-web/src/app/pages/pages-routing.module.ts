@@ -24,11 +24,12 @@ import { BlogComponent } from './blogs/blog/blog.component';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { LearnComponent } from './learn/learn.component';
 import { BookComponent } from './book/book.component';
+import { NewlandingpageComponent } from './newlandingpage/newlandingpage.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
+    component: NewlandingpageComponent,
     pathMatch: 'full',
   },
 
