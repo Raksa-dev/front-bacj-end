@@ -286,11 +286,15 @@ small {
   background-repeat: no-repeat;
   background-position: center center;
   background-image: url(../images/hero-bg.png);
-
+  height: 100vh;
   h1 {
     margin-bottom: 2rem;
     font-size: 3rem;
     line-height: 3.5rem;
+  }
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    height: 100%;
+    padding-bottom: 2rem;
   }
 }
 
@@ -885,12 +889,23 @@ small {
 .owl-next {
   right: 20px;
 }
-
 .footer {
-  padding-top: 4rem;
+  padding-top: 1rem;
   // padding-bottom: 4rem;
+  background: linear-gradient(
+    180deg,
+    rgba(112, 0, 255, 0.3) 0%,
+    rgba(215, 0, 255, 0.3) 100%
+  );
   color: $white;
-
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    flex-direction: column-reverse;
+    gap: 3rem;
+    padding: 1rem;
+  }
   .footer-widget {
     ul {
       li {
