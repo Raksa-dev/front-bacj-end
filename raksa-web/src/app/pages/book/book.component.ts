@@ -167,8 +167,6 @@ export class BookComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log('this si currentuser:', this.currentUser);
-    console.log('this is auth services:', this.authService.activeUserValue);
     this.loadMovies();
     localStorage.removeItem('basic_details');
     this.initializeCategoryForm(); // Initialize category form with selected category
