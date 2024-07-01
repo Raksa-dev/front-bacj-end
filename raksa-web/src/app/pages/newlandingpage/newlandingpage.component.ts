@@ -126,11 +126,11 @@ export class NewlandingpageComponent {
   public testimonials: Testimonial[] = [
     {
       _id: 1,
-      avatar: '../../../assets/images/testimonial/avatar-1.png',
       userName: 'Tanay',
       age: 30,
-      address: 'Madhya Pradesh, India',
-      message: `I was amazed by the accuracy and depth of insights I received through Raksa. Chatting with the astrologer provided me with valuable guidance on my career and relationships.  Highly recommended!`,
+      avatar: '../../../assets/images/testimonial/avatar-3.png',
+      address: ' Assam, India',
+      message: `Raksa's platform is user-friendly and the predesigned questions cover everything I need to know about my life. The insights are spot-on and have given me a clear direction in both my personal and professional life. Simply outstanding!`,
     },
     {
       _id: 2,
@@ -142,11 +142,12 @@ export class NewlandingpageComponent {
     },
     {
       _id: 3,
-      avatar: '../../../assets/images/testimonial/avatar-3.png',
+      avatar: '../../../assets/images/testimonial/avatar-1.png',
       userName: 'Kim',
       age: 40,
-      address: 'Assam, India',
-      message: `The live astrologers on Raksa have transformed my understanding of astrology. Their real-time guidance and accurate predictions have given me clarity and confidence in making important decisions. It has become an indispensable part of my spiritual journey.`,
+      address: 'Bangalore, India',
+      message: `The comprehensive readings and the precise muhurtha guidance provided by Raksa have been a game changer for me. It's amazing how accurate and affordable this service is. A must-try for anyone seeking astrological guidance
+`,
     },
   ];
 
