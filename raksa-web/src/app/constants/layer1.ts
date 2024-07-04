@@ -86,7 +86,7 @@ export const layer1_male_ascendants = {
       "Shah Rukh Khan's character in 'Don'",
     ],
   },
-  'Sagitarius Ascendant': {
+  'Saggitarius Ascendant': {
     description:
       'Max is the explorer, always on the hunt for new adventures. His optimistic outlook and love for freedom drive him to seek out new experiences and knowledge. Honest to a fault, Max values truth and integrity. He thrives in open, dynamic environments and loves to travel. His independent spirit and philosophical nature lead him to question the world around him, always looking for the bigger picture.',
     Hollywood: [
@@ -235,7 +235,7 @@ export const layer1_female_ascendants = {
     ],
     Bollywood: ["Veronica Malaney from 'Cocktail'", "Meera from 'NH10'"],
   },
-  'Sagitarius Ascendant': {
+  'Saggitarius Ascendant': {
     description:
       'Max is the explorer, always on the hunt for new adventures. Her optimistic outlook and love for freedom drive her to seek out new experiences and knowledge. Honest to a fault, Max values truth and integrity. She thrives in open, dynamic environments and loves to travel. Her independent spirit and philosophical nature lead her to question the world around her, always looking for the bigger picture.',
     Hollywood: [

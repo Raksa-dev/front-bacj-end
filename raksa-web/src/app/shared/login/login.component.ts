@@ -414,7 +414,8 @@ export class LoginComponent implements OnInit {
                   this.router.navigateByUrl('/astrologer');
                   // if astrologer vavigate astrologer screen
                 }
-                window.location.reload();
+                localStorage.setItem('userScreen', 'true');
+                this.router.navigateByUrl('/dashboard');
                 this.activeModal.close({ response: true });
               }
             });

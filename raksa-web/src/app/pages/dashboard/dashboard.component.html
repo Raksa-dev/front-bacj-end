@@ -1,0 +1,129 @@
+<div class="dashboard" *ngIf="selectedCategory == null">
+  <h2 class="fw-bold">I want answers in ...</h2>
+  <div class="menu-section">
+    <div *ngFor="let menu of section" class="menu-gradient">
+      <div (click)="selectedCategoryClick(menu?.menu)" class="menus">
+        <img [src]="menu.logo" alt="" />
+        <div>{{ menu?.menu }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="dashboard" *ngIf="selectedCategory == 'Self / You'">
+  <div class="">
+    <div class="mb-2">
+      <div class="bool-cat">
+        <div class="cat-continer">
+          <div
+            class="one-cat d-flex justify-content-around align-items-center"
+            (click)="selectCategory('self_awareness')"
+          >
+            <img
+              src="../../../assets/images/self-awareness.png"
+              width="80px"
+              height="80px"
+            />
+            <h5>Staying on track - Self Awareness</h5>
+          </div>
+          <div
+            class="two-cat d-flex justify-content-around align-items-center"
+            (click)="selectCategory('family')"
+          >
+            <img
+              src="../../../assets/images/family.png"
+              width="80px"
+              height="80px"
+            />
+            <h5>Family</h5>
+          </div>
+          <div
+            class="three-cat d-flex justify-content-around align-items-center"
+            (click)="selectCategory('numerology')"
+          >
+            <img
+              src="../../../assets/images/number9.png"
+              width="50px"
+              height="70px"
+            />
+            <h5>Numerolog</h5>
+          </div>
+          <div
+            class="four-cat d-flex justify-content-around align-items-center"
+            (click)="selectCategory('wealth')"
+          >
+            <img
+              src="../../../assets/images/wealth.png"
+              width="80px"
+              height="80px"
+            />
+            <h5>Welath</h5>
+          </div>
+          <div
+            class="five-cat d-flex justify-content-around align-items-center"
+            (click)="selectCategory('health')"
+          >
+            <img
+              src="../../../assets/images/health.png"
+              width="150px"
+              height="80px"
+            />
+            <h5>Health</h5>
+          </div>
+          <div
+            class="six-cat d-flex justify-content-around align-items-center"
+            (click)="selectCategory('travel')"
+          >
+            <img
+              src="../../../assets/images/travel.png"
+              width="150px"
+              height="80px"
+            />
+            <h5>Travel</h5>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="container">
+              <div class="box personal">Personal</div>
+              <div class="box staying-on-track">
+                Staying on track - Self Awareness
+              </div>
+              <div class="box family">
+                <img src="path/to/family-icon.png" alt="Family" />
+                Family
+              </div>
+              <div class="box numerology">
+                <div class="number">9</div>
+                Numerology
+              </div>
+              <div class="box wealth">
+                <img src="path/to/wealth-icon.png" alt="Wealth" />
+                Wealth
+              </div>
+              <div class="box health">
+                <img src="path/to/health-icon.png" alt="Health" />
+                Health
+              </div>
+              <div class="box travel">
+                <img src="path/to/travel-icon.png" alt="Travel" />
+                Travel
+              </div>
+            </div> -->
+    </div>
+  </div>
+</div>
+
+<div
+  class="dashboard"
+  *ngIf="selectedCategory != 'Self / You' && selectedCategory != null"
+>
+  <h2 class="fw-bold">{{ selectedCategory }}</h2>
+  <div class="menu-section">
+    <div *ngFor="let menu of section" class="menu-gradient">
+      <div (click)="selectedCategoryClick(menu?.menu)" class="menus">
+        {{ menu?.menu }}
+      </div>
+    </div>
+  </div>
+</div>

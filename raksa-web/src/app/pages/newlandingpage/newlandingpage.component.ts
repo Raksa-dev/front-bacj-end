@@ -3,6 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { Testimonial, Astrologer } from 'src/app/core/models';
 import { LoginComponent } from '../../shared/login/login.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-newlandingpage',
@@ -10,7 +11,12 @@ import { LoginComponent } from '../../shared/login/login.component';
   styleUrls: ['./newlandingpage.component.scss'],
 })
 export class NewlandingpageComponent {
-  constructor(private modalService: NgbModal) {}
+  constructor(private modalService: NgbModal, route: Router) {
+    let userType = localStorage.getItem('userType');
+    if (userType == 'user') {
+      route.navigateByUrl('/dashboard');
+    }
+  }
 
   public guides: Testimonial[] = [
     {

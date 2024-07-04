@@ -1,0 +1,164 @@
+.dashboard {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .menu-section {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: 100%;
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+  .menu-gradient {
+    background: linear-gradient(to right, #2895ff 0%, #a528ff 98.92%);
+    padding: 1px;
+    border-radius: 10px;
+  }
+  .menus {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+    height: 100%;
+    background: linear-gradient(175.65deg, #000000 3.53%, #190f37 96.47%);
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 10px;
+    padding: 0.75rem;
+    &:hover {
+      background: linear-gradient(to right, #2895ff 0%, #a528ff 98.92%);
+    }
+  }
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    height: 100%;
+    .menu-section {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+}
+
+.bool-cat {
+  display: grid;
+  gap: 100px;
+  grid-template-columns: 1fr;
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cat-continer {
+  display: grid;
+  gap: 10px;
+  grid-template-areas:
+    ".... .... one-cat one-cat"
+    ".... two-cat two-cat two-cat"
+    "three-cat three-cat four-cat four-cat"
+    ".... five-cat five-cat ...."
+    "six-cat six-cat .... ....";
+
+  grid-template-columns: repeat(4, 1fr);
+  flex: 1;
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "one-cat"
+      "two-cat"
+      "three-cat"
+      "four-cat"
+      "five-cat"
+      "six-cat";
+  }
+}
+
+.one-cat {
+  grid-area: one-cat;
+  border-radius: 20px;
+  background-color: #ffc9b2;
+  height: 100px;
+  position: relative; /* Ensure element is positioned correctly */
+  left: 1.5rem;
+  &:hover {
+    opacity: 0.91;
+  }
+  color: black;
+  h5 {
+    font-weight: 500;
+  }
+}
+
+.two-cat {
+  grid-area: two-cat;
+  height: 100px;
+  width: 80%;
+  border-radius: 20px;
+  background-color: #fbc02d;
+  position: relative; /* Ensure element is positioned correctly */
+  left: 1.5rem;
+  &:hover {
+    opacity: 0.91;
+  }
+  color: black;
+  h5 {
+    font-weight: 500;
+  }
+}
+
+.three-cat {
+  grid-area: three-cat;
+  background-color: #6d5293;
+  border-radius: 20px;
+  height: 100px;
+  &:hover {
+    opacity: 0.91;
+  }
+  color: black;
+  h5 {
+    font-weight: 500;
+  }
+}
+
+.four-cat {
+  grid-area: four-cat;
+  background-color: #46f237;
+  border-radius: 20px;
+  height: 100px;
+  &:hover {
+    opacity: 0.91;
+  }
+  color: black;
+  h5 {
+    font-weight: 500;
+  }
+}
+.five-cat {
+  grid-area: five-cat;
+  background-color: #2d46ff;
+  border-radius: 20px;
+  height: 100px;
+  &:hover {
+    opacity: 0.91;
+  }
+  color: black;
+  h5 {
+    font-weight: 500;
+  }
+}
+.six-cat {
+  grid-area: six-cat;
+  background-color: #afb9ff;
+  height: 100px;
+  border-radius: 20px;
+  position: relative; /* Ensure element is positioned correctly */
+  left: 1.5rem;
+  &:hover {
+    opacity: 0.91;
+  }
+  color: black;
+  h5 {
+    font-weight: 500;
+  }
+}

@@ -1,15 +1,367 @@
-<div class="container-fluid">
-  <div class="row d-flex align-content-center justify-content-center apitest">
+<div class="w-100 overflow-hidden">
+  <div
+    class="row d-flex align-content-center justify-content-center apitest"
+    *ngIf="formStep != 4"
+  >
     <div class="col-md-9">
       <div class="position-relative">
         <div class="back-button"></div>
+        <form
+          class="needs-validation form-fill"
+          (ngSubmit)="createProfileInRegistration()"
+          [formGroup]="signUpForm"
+          autocomplete="off"
+          *ngIf="formStep == 0"
+        >
+          <label
+            *ngIf="!currentUser"
+            for="Sign Up"
+            class="form-heading d-flex justify-content-center"
+            >Basic Details
+          </label>
+
+          <label
+            for="Sign Up"
+            class="form-heading d-flex justify-content-center"
+            *ngIf="currentUser"
+            >Hi
+            {{ currentUser?.firstName + " " + currentUser?.lastName }}</label
+          >
+
+          <div class="mb-2">
+            <label for="firstName" class="form-fields-label">Full Name</label>
+            <div>
+              <input
+                type="text"
+                id="firstName"
+                formControlName="firstName"
+                class="form-control"
+                placeholder="Enter your full name"
+              />
+              <div style="padding-top: 5px; color: darkgray">
+                <h6>*Accurate Name required for numerology</h6>
+              </div>
+              <div
+                *ngIf="profileSubmitted && signUpFrm['firstName'].errors"
+                class="invalid-feedback"
+              >
+                <span *ngIf="signUpFrm['firstName'].errors['required']"
+                  >First Name can't be empty</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="">
+              <div class="mb-2">
+                <label for="dateOfBirth" class="form-fields-label"
+                  >Birth Date</label
+                >
+                <div class="input-group clockpicker mt-1">
+                  <input
+                    ngbDatepicker
+                    readonly
+                    class="form-control"
+                    id="dateOfBirth"
+                    formControlName="dateOfBirth"
+                    #dateOfBirth="ngbDatepicker"
+                    style="font-size: 0.7rem"
+                    [minDate]="{ year: 1948, month: 1, day: 1 }"
+                    [maxDate]="{ year: currentYear, month: 12, day: 31 }"
+                  />
+
+                  <div
+                    class="input-group-append"
+                    (click)="dateOfBirth.toggle()"
+                  >
+                    <span class="input-group-text">
+                      <img src="../assets/images/calendar.png" />
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="">
+              <div class="mb-2">
+                <label for="gender" class="form-fields-label">Gender</label>
+                <select
+                  id="gender"
+                  formControlName="gender"
+                  class="form-control-select-box select-box"
+                >
+                  <option value="null" disabled selected>
+                    Select your gender
+                  </option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">other</option>
+                </select>
+                <div
+                  *ngIf="profileSubmitted && signUpFrm['gender'].errors"
+                  class="invalid-feedback"
+                >
+                  <span *ngIf="signUpFrm['gender'].errors['required']"
+                    >Gender can't be empty</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- birth place -->
+          <div class="mb-2">
+            <label for="birthPlace" class="form-fields-label"
+              >Birth Location</label
+            >
+            <ng-select
+              [items]="movies$ | async"
+              bindLabel="description"
+              [trackByFn]="trackByFn"
+              [minTermLength]="minLengthTerm"
+              [loading]="moviesLoading"
+              typeToSearchText="Please enter {{
+                minLengthTerm
+              }} or more characters"
+              [typeahead]="moviesInput$"
+              [(ngModel)]="selectedMovie"
+              formControlName="birthPlace"
+              [virtualScroll]="true"
+              class="custom"
+            >
+            </ng-select>
+            <div
+              *ngIf="profileSubmitted && signUpFrm['birthPlace'].errors"
+              class="invalid-feedback"
+            >
+              <span *ngIf="signUpFrm['birthPlace'].errors['required']"
+                >Birth Place can't be empty</span
+              >
+            </div>
+          </div>
+
+          <div class="d-flex mt-3">
+            <button
+              type="submit"
+              id="sign-in-button"
+              class="btn gradient-button"
+              [disabled]="signUpForm.invalid"
+            >
+              <span>Get Answers</span>
+              <i
+                *ngIf="!signUpFormSubmitted"
+                class="bx bx-right-arrow-alt align-middle ms-1"
+              ></i>
+              <i
+                *ngIf="signUpFormSubmitted"
+                class="bx bx-loader bx-spin align-middle ms-1"
+              ></i>
+            </button>
+          </div>
+        </form>
+
+        <!-- Do you know birth time -->
+        <div *ngIf="formStep == 1">
+          <h2>PLEASE TELL OUS</h2>
+          <div class="choose-time">
+            <div (click)="userInput(5)" class="btn gradient-button col">
+              You know your birth time
+            </div>
+            <div (click)="userInput(2)" class="btn gradient-button col">
+              You don't know your birth time
+            </div>
+          </div>
+        </div>
+
+        <!-- you know birth time -->
+        <div *ngIf="formStep == 5">
+          <h2>PLEASE ENTER YOUR BIRTH TIME</h2>
+          <div class="choose-time">
+            <div class="mb-3">
+              <app-custome-time-picker
+                (timeChange)="onTimeSelected($event)"
+              ></app-custome-time-picker>
+              <div class="next-button m-5" (click)="onTimeSelectedClick()">
+                <div>Next</div>
+                <div>></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- if user doesn't know time birth slected frame-->
+        <div class="row g-3" *ngIf="formStep == 2">
+          <h2>Please choose your approximate Time of Birth</h2>
+
+          <div class="row mb-5 text-center mt-3">
+            <h5>Choose any one option from below</h5>
+
+            <div class="col">
+              <div
+                [ngClass]="{
+                  'time-button': timeWindowSelect == 2  ,
+                }"
+                class="d-flex justify-content-center align-items-center text-center"
+                (click)="selectTimeFrame(2)"
+              >
+                <h5>YOUR CUSTOME TIME FRAME</h5>
+              </div>
+            </div>
+            <div class="col d-flex justify-content-between flex-column">
+              <div
+                [ngClass]="{
+                  'time-button': timeWindowSelect == 0  ,
+                }"
+                class="d-flex justify-content-center align-items-center"
+                (click)="selectTimeFrame(0)"
+              >
+                <h5>LONG TIME FRAME</h5>
+              </div>
+            </div>
+            <div class="col d-flex justify-content-between flex-column">
+              <div
+                [ngClass]="{
+                  'time-button': timeWindowSelect == 1  ,
+                }"
+                class="d-flex justify-content-center align-items-center text-center"
+                (click)="selectTimeFrame(1)"
+              >
+                <h5>SHORT TIME FRAME</h5>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div
+              class="col d-flex justify-content-center align-items-center flex-column position-relative"
+            >
+              <div
+                *ngIf="timeWindowSelect == 0 || timeWindowSelect == 1"
+                class="overlay-layer"
+              ></div>
+              <form
+                class="needs-validation"
+                (ngSubmit)="customeTimeSelection()"
+                [formGroup]="cutomeTimeForm"
+                autocomplete="off"
+              >
+                <div class="mb-3">
+                  <label for="dateOfBirth" class="form-fields-label"
+                    >From Time</label
+                  >
+                  <app-custome-time-picker
+                    [time]="cutomeTimeForm.get('fromBirthTime').value"
+                    (timeChange)="
+                      cutomeTimeForm.get('fromBirthTime').setValue($event)
+                    "
+                  ></app-custome-time-picker>
+                </div>
+                <div class="mb-3">
+                  <label for="dateOfBirth" class="form-fields-label"
+                    >To Time</label
+                  >
+                  <app-custome-time-picker
+                    [time]="cutomeTimeForm.get('toBirthTime').value"
+                    (timeChange)="
+                      cutomeTimeForm.get('toBirthTime').setValue($event)
+                    "
+                  ></app-custome-time-picker>
+                </div>
+                <div class="d-flex justify-content-center">
+                  <button
+                    type="submit"
+                    id="sign-in-button"
+                    class="gradient-button"
+                    (click)="customeTimeSelection()"
+                    [disabled]="cutomeTimeForm.invalid"
+                  >
+                    <span>Next</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+            <div
+              class="col d-flex justify-content-between flex-column position-relative"
+            >
+              <div
+                *ngIf="timeWindowSelect == 1 || timeWindowSelect == 2"
+                class="overlay-layer"
+              ></div>
+              <div
+                class="long-time-frame"
+                (click)="selectedTimeFrame('00:00:00', '12:00:00')"
+              >
+                <h5>Morning 00:00 AM - 12:00 PM</h5>
+              </div>
+              <div
+                class="long-time-frame"
+                (click)="selectedTimeFrame('08:00:00', '18:00:00')"
+              >
+                <h5>Day 08:00 AM - 06:00 PM</h5>
+              </div>
+              <div
+                class="long-time-frame"
+                (click)="selectedTimeFrame('18:00:00', '00:00:00')"
+              >
+                <h5>Evening 06:00 PM - 12:00 AM</h5>
+              </div>
+            </div>
+            <div
+              class="col d-flex justify-content-between flex-column position-relative"
+            >
+              <div
+                *ngIf="timeWindowSelect == 0 || timeWindowSelect == 2"
+                class="overlay-layer"
+              ></div>
+              <div class="short-time-frame">
+                <div
+                  class="d-flex time-button justify-content-center align-items-center text-center"
+                  (click)="selectedTimeFrame('00:00:00', '05:00:00')"
+                >
+                  <h5>Early Morning: 12:00 AM - 5:00 AM</h5>
+                </div>
+                <div
+                  class="d-flex time-button justify-content-center align-items-center"
+                  (click)="selectedTimeFrame('05:00:00', '12:00:00')"
+                >
+                  <h5>Morning: 5:00 AM - 12:00 PM</h5>
+                </div>
+                <div
+                  class="d-flex time-button justify-content-center align-items-center"
+                  (click)="selectedTimeFrame('12:00:00', '18:00:00')"
+                >
+                  <h5>Afternoon 12:00 PM - 6:00 PM</h5>
+                </div>
+                <div
+                  class="d-flex time-button justify-content-center align-items-center"
+                  (click)="selectedTimeFrame('18:00:00', '21:00:00')"
+                >
+                  <h5>Evening 6:00 PM - 9:00 PM</h5>
+                </div>
+                <div
+                  class="d-flex time-button justify-content-center align-items-center"
+                  (click)="selectedTimeFrame('20:00:00', '00:00:00')"
+                >
+                  <h5>Night 8:00 PM - 12:00 AM</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h3 class="text-center">OR</h3>
+          <div
+            class="d-flex justify-content-center align-items-center proceed-button"
+            (click)="selectedTimeFrame('00:00:00', '12:00:00')"
+          >
+            <h5>IF YOU STILL DON'T KNOW</h5>
+          </div>
+        </div>
+
         <!-- signup form -->
         <form
           class="needs-validation"
           (ngSubmit)="createProfileInRegistration()"
           [formGroup]="signUpForm"
           autocomplete="off"
-          *ngIf="formStep == 1"
+          *ngIf="formStep == 10"
         >
           <label
             *ngIf="!currentUser"
@@ -165,7 +517,7 @@
           </div>
         </form>
         <!-- Select Category -->
-        <div *ngIf="formStep == 2">
+        <div *ngIf="formStep == 3">
           <div class="mb-2">
             <div class="bool-cat">
               <div class="cat-continer">
@@ -278,95 +630,295 @@
             </div> -->
           </div>
         </div>
-        <!-- Questions And Promt -->
-        <div class="needs-validation" *ngIf="formStep == 3">
-          <label
-            for="summary"
-            class="form-heading d-flex justify-content-center"
-            >{{ question }}</label
-          >
 
-          <div class="row" *ngIf="loadSpinner">
-            <div class="text-center">
-              <div class="spinner-border mb-1 text-primary" role="status"></div>
-              <div class="spinner-grow" role="status"></div>
+        <!-- layer 1 -->
+        <h2 *ngIf="formStep == 100">
+          Whom do you relate to the most(Choose 3 At Most)
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="flexCheckDefault"
+            checked
+            disabled
+          />
+        </h2>
+        <div class="layer-1" *ngIf="formStep == 100">
+          <div class="row">
+            <div *ngFor="let item of items" class="col-md-6 mb-3">
               <div
-                class="spinner-grow"
-                style="width: 3rem; height: 3rem"
-                role="status"
-              ></div>
-
-              <div class="spinner-grow" role="status"></div>
-
-              <div class="spinner-border mb-1 text-primary" role="status"></div>
-              <p>Please Wait We Are Answering ...</p>
+                class="d-flex justify-content-center p-2 proceed-button flex-column"
+              >
+                <div class="d-flex justify-content-between">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="flexCheckDefault"
+                    (change)="onCheckboxChange($event, item?.ascendants)"
+                    [disabled]="item.checkbox"
+                  />
+                  <!-- <div class="see-story" (mouseenter)="open(item)">
+                    See Story
+                  </div> -->
+                </div>
+                <!-- <h5>{{ item.ascendants }}</h5> -->
+                <div class="layer1-text">
+                  {{ item?.data?.description }}
+                </div>
+                <div class="layer1-text layer-1-background layer-1-headings">
+                  Hollywood Characters
+                </div>
+                <div
+                  class="layer1-text layer-1-headings"
+                  *ngFor="let data of item?.data?.Hollywood"
+                >
+                  <li>{{ data }}</li>
+                </div>
+                <div class="layer1-text layer-1-background layer-1-headings">
+                  Bollywood Characters
+                </div>
+                <div
+                  class="layer1-text layer-1-headings"
+                  *ngFor="let data of item?.data?.Bollywood"
+                >
+                  <li>{{ data }}</li>
+                </div>
+              </div>
             </div>
           </div>
+        </div>
+        <div
+          *ngIf="
+            ((3 <= useCheckAnwers.length && items.length > 3) ||
+              (1 <= useCheckAnwers.length && items.length <= 3)) &&
+            formStep == 100
+          "
+          class="next-button"
+          (click)="buttonNext()"
+        >
+          <div>Next</div>
+          <div>></div>
+        </div>
+        <!-- layer 2 -->
+        <h2 *ngIf="formStep == 1000">
+          Whom do you relate to the most(choose 1)
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="flexCheckDefault"
+            checked
+            disabled
+          />
+        </h2>
 
-          <textarea
-            id="summary"
-            class="form-control"
-            [(ngModel)]="answerText"
-            style="width: 100%; height: 400px"
-            *ngIf="!loadSpinner"
-          ></textarea>
-          <div class="d-flex justify-content-between mt-5">
-            <button
-              type="submit"
-              id="sign-in-button"
-              class="btn gradient-button"
-              (click)="getPreviousQuestion()"
-            >
-              <span>Previous</span>
-            </button>
-            <button
-              type="submit"
-              id="sign-in-button"
-              class="btn gradient-button"
-              (click)="getAnswer()"
-            >
-              <span>Submit</span>
-            </button>
-            <button
-              type="submit"
-              id="sign-in-button"
-              class="btn gradient-button"
-              (click)="getNextQuestion()"
-            >
-              <span>Next</span>
-            </button>
-          </div>
-          <div class="d-flex justify-content-between mt-5">
-            <button
-              type="submit"
-              id="sign-in-button"
-              class="btn gradient-button"
-              (click)="backToCategory()"
-            >
-              <span>Back To Category</span>
-            </button>
-          </div>
+        <div class="layer-1" *ngIf="formStep == 1000">
+          <form
+            class="needs-validation"
+            (ngSubmit)="createProfileInRegistration()"
+            [formGroup]="checkboxForm"
+            autocomplete="off"
+          >
+            <div class="row">
+              <div
+                *ngFor="let item of layer2Question; let i = index"
+                class="col-md-6 mb-3"
+              >
+                <div
+                  class="d-flex justify-content-center p-2 proceed-button flex-column"
+                >
+                  <div class="d-flex justify-content-between">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="flexCheckDefault"
+                      [formControlName]="'checkbox' + i"
+                      (change)="onCheckboxLayerChange('checkbox' + i)"
+                    />
+                  </div>
+                  <!-- <h5>{{ item.ascendants }}</h5> -->
+                  <div class="layer1-text">
+                    <h6>{{ item?.response }}</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div
+          *ngIf="anyCheckBoxChecked"
+          class="next-button"
+          (click)="buttonNextLayer2()"
+        >
+          <div>Next</div>
+          <div>></div>
         </div>
       </div>
     </div>
   </div>
-</div>
-<div
-  class="paywall-overlay"
-  *ngIf="currentUser && currentUser?.walletBalance < 29"
->
-  <div class="paywall-message-box">
-    <img
-      src="../../../assets/images/wallet-recharge.png"
-      width="250px"
-      height="250px"
-    />
-    <div class="paywall-action-area">
-      <h5>You need a minimum balance of 29 Rs</h5>
-      <p>Recharge now to get answers to life’s questions!</p>
-      <button (click)="openWalletModal()" class="recharge-button">
-        RECHARGE
+
+  <!-- Questions And Promt -->
+  <div class="questions-and-answers" *ngIf="formStep == 4">
+    <div class="side-panel-gradient">
+      <div class="side-panel">
+        <div class="question-title">
+          <h5>Questions</h5>
+        </div>
+        <div class="side-panel-gradient-question">
+          <div class="side-panel-question-section">
+            <div *ngFor="let ques of question; let i = index">
+              <div
+                class="question-box {{
+                  i == questionSelected ? 'selectedQuestion' : ''
+                }}"
+                (click)="selectQuestionOnClick(i)"
+              >
+                {{ ques }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="question-title gradient-button-new"
+          (click)="backToCategory()"
+        >
+          More Category
+        </div>
+      </div>
+    </div>
+    <div class="main-panel">
+      <div class="question-title gradient-button-new float-end">
+        Consult Astrologer
+      </div>
+      <div
+        class="initial-setup"
+        *ngIf="loadSpinner || questionSelected == null"
+      >
+        <img
+          class="bg-meditation"
+          src="../../../assets/images/bg-mediation.png"
+          alt=""
+        />
+        <img
+          class="foreground"
+          src="../../../assets/images/bg-foreground.png"
+          alt=""
+        />
+      </div>
+      <textarea
+        id="summary"
+        class="form-control"
+        [(ngModel)]="answerText"
+        style="width: 100%; height: 400px"
+        *ngIf="!loadSpinner && questionSelected != null"
+      ></textarea>
+    </div>
+
+    <!-- <label for="summary" class="form-heading d-flex justify-content-center">{{
+      question
+    }}</label> -->
+
+    <!-- <div class="row" *ngIf="loadSpinner">
+      <div class="text-center">
+        <div class="spinner-border mb-1 text-primary" role="status"></div>
+        <div class="spinner-grow" role="status"></div>
+        <div
+          class="spinner-grow"
+          style="width: 3rem; height: 3rem"
+          role="status"
+        ></div>
+
+        <div class="spinner-grow" role="status"></div>
+
+        <div class="spinner-border mb-1 text-primary" role="status"></div>
+        <p>Please Wait We Are Answering ...</p>
+      </div>
+    </div> -->
+
+    <!-- <textarea
+      id="summary"
+      class="form-control"
+      [(ngModel)]="answerText"
+      style="width: 100%; height: 400px"
+      *ngIf="!loadSpinner"
+    ></textarea> -->
+    <!-- <div class="d-flex justify-content-between mt-5">
+      <button
+        type="submit"
+        id="sign-in-button"
+        class="btn gradient-button"
+        (click)="getPreviousQuestion()"
+      >
+        <span>Previous</span>
       </button>
+      <button
+        type="submit"
+        id="sign-in-button"
+        class="btn gradient-button"
+        (click)="getAnswer()"
+      >
+        <span>Submit</span>
+      </button>
+      <button
+        type="submit"
+        id="sign-in-button"
+        class="btn gradient-button"
+        (click)="getNextQuestion()"
+      >
+        <span>Next</span>
+      </button>
+    </div> -->
+    <!-- <div class="d-flex justify-content-between mt-5">
+      <button
+        type="submit"
+        id="sign-in-button"
+        class="btn gradient-button"
+        (click)="backToCategory()"
+      >
+        <span>Back To Category</span>
+      </button>
+    </div> -->
+  </div>
+
+  <!-- Paywall -->
+  <div
+    class="paywall-overlay"
+    *ngIf="
+      (currentUser && currentUser?.walletBalance < 29) ||
+      (loadSpinner && formStep != 4)
+    "
+  >
+    <div *ngIf="loadSpinner && formStep != 4" class="initial-setup">
+      <img
+        class="bg-meditation"
+        src="../../../assets/images/bg-mediation.png"
+        alt=""
+      />
+      <img
+        class="foreground"
+        src="../../../assets/images/bg-foreground.png"
+        alt=""
+      />
+      <h3 class="z-3">Loading...</h3>
+    </div>
+
+    <div
+      class="paywall-message-box"
+      *ngIf="currentUser && currentUser?.walletBalance < 29"
+    >
+      <img
+        src="../../../assets/images/wallet-recharge.png"
+        width="250px"
+        height="250px"
+      />
+      <div class="paywall-action-area">
+        <h5>You need a minimum balance of 29 Rs</h5>
+        <p>Recharge now to get answers to life’s questions!</p>
+        <button (click)="openWalletModal()" class="recharge-button">
+          RECHARGE
+        </button>
+      </div>
     </div>
   </div>
 </div>

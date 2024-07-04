@@ -25,6 +25,7 @@ import { InvoiceComponent } from './invoice/invoice.component';
 import { LearnComponent } from './learn/learn.component';
 import { BookComponent } from './book/book.component';
 import { NewlandingpageComponent } from './newlandingpage/newlandingpage.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
   {
@@ -32,7 +33,11 @@ const routes: Routes = [
     component: NewlandingpageComponent,
     pathMatch: 'full',
   },
-
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [authGuard],
+  },
   {
     path: 'horoscopes',
     component: HoroscopesComponent,

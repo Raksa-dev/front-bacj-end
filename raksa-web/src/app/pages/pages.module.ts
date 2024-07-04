@@ -35,6 +35,7 @@ import { InvoiceComponent } from './invoice/invoice.component';
 import { LearnComponent } from './learn/learn.component';
 import { BookComponent } from './book/book.component';
 import { NewlandingpageComponent } from './newlandingpage/newlandingpage.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { NewlandingpageComponent } from './newlandingpage/newlandingpage.compone
     LearnComponent,
     BookComponent,
     NewlandingpageComponent,
+    DashboardComponent,
   ],
   imports: [
     CommonModule,
