@@ -791,10 +791,17 @@
       <div class="question-title gradient-button-new float-end">
         Consult Astrologer
       </div>
-      <div
-        class="initial-setup"
-        *ngIf="loadSpinner || questionSelected == null"
-      >
+
+      <div class="find-answers" *ngIf="questionSelected == null">
+        <img
+          class="torch-ligth"
+          src="../../../assets/images/torch_light.png"
+          alt=""
+        />
+        <img src="../../../assets/images/find_answers.png" alt="" />
+      </div>
+
+      <div class="initial-setup" *ngIf="loadSpinner">
         <img
           class="bg-meditation"
           src="../../../assets/images/bg-mediation.png"

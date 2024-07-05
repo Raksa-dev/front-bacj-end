@@ -539,7 +539,37 @@ select option {
   justify-content: space-between;
   height: 100%;
 }
+.find-answers {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  height: 100%;
+  align-items: center;
+  .torch-ligth {
+    position: absolute;
+    height: 150px;
+    top: 18%;
+    left: 13%;
+    animation: moveTorch 5s infinite;
+    transform-origin: right;
+  }
+  img {
+    position: absolute;
+    height: 400px;
+  }
+}
 
+@keyframes moveTorch {
+  0%,
+  100% {
+    transform: translateY(5px) rotate(0) scale(1);
+    transform-origin: 90% 50%;
+  }
+
+  75% {
+    transform: translateY(-80px) rotate(1.2deg) scale(2) translateX(-10px);
+  }
+}
 .initial-setup {
   display: flex;
   position: relative;
