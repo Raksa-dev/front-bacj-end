@@ -50,6 +50,7 @@ export class AuthService {
     signOut(this.auth)
       .then(() => {
         console.log('User signed out successfully!');
+        localStorage.removeItem('userType');
         this.router.navigateByUrl('/');
       })
       .catch((error) => {

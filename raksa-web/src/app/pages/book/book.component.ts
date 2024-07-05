@@ -184,6 +184,8 @@ export class BookComponent implements OnInit {
   public formStep: number = 0;
   public loadSpinner: boolean = false;
 
+  public maxDate: { year: number; month: number; day: number };
+
   public signUpForm: FormGroup = this.formBuilder.group({
     firstName: ['', [Validators.required]],
     gender: [null, [Validators.required]],
@@ -228,6 +230,8 @@ export class BookComponent implements OnInit {
   selectedMovie: any;
   minLengthTerm = 3;
 
+  public cacheAnswers = {};
+
   constructor(
     // public windowRefService: WindowRefService,
     public activeModal: NgbActiveModal,
@@ -245,6 +249,12 @@ export class BookComponent implements OnInit {
       this.questionSet.category = params.get('cat');
       this.question = this.categoricalQuestion[params.get('cat')];
     });
+    const currentDate = new Date();
+    this.maxDate = {
+      year: currentDate.getFullYear(),
+      month: currentDate.getMonth() + 1, // months are 0-based
+      day: currentDate.getDate(),
+    };
     this.checkboxForm = this.formBuilder.group({
       checkbox0: false,
       checkbox1: false,
@@ -558,57 +568,63 @@ export class BookComponent implements OnInit {
   getAnswer(index: number): void {
     this.loadSpinner = true;
     this.answerText = 'LOADING PLEASE WAIT .........';
-    let data = JSON.parse(localStorage.getItem('basic_details'));
-    // Check if dateOfBirth is valid
-    if (typeof data?.dateOfBirth === 'string') {
-      // Construct the URL with query parameters
-      let apiUrl = `https://backend.raksa.xyz/get_horoscope_details?birthdate=${encodeURIComponent(
-        data.dateOfBirth
-      )}&birthtime=${encodeURIComponent(
-        data.birthTime
-      )}&birthlocation=${encodeURIComponent(
-        data.birthPlace
-      )}&birthname=${encodeURIComponent(
-        data.firstName
-      )}&gender=${encodeURIComponent(
-        data.gender
-      )}&category=${encodeURIComponent(
-        this.questionSet.category
-      )}&index=${index}`;
+    if (this.cacheAnswers[index] == undefined) {
+      let data = JSON.parse(localStorage.getItem('basic_details'));
+      // Check if dateOfBirth is valid
+      if (typeof data?.dateOfBirth === 'string') {
+        // Construct the URL with query parameters
+        let apiUrl = `https://backend.raksa.xyz/get_horoscope_details?birthdate=${encodeURIComponent(
+          data.dateOfBirth
+        )}&birthtime=${encodeURIComponent(
+          data.birthTime
+        )}&birthlocation=${encodeURIComponent(
+          data.birthPlace
+        )}&birthname=${encodeURIComponent(
+          data.firstName
+        )}&gender=${encodeURIComponent(
+          data.gender
+        )}&category=${encodeURIComponent(
+          this.questionSet.category
+        )}&index=${index}`;
 
-      // Send a POST request with the data in the query string
-      this.http
-        .post<any>(apiUrl, {})
-        .pipe(
-          catchError((error) => {
-            // Handle errors
-            console.error('Error fetching data:', error);
-            return throwError('Error fetching data. Please try again later.');
-          })
-        )
-        .subscribe(
-          (resp) => {
-            // Handle successful response
-            if (resp.Error) {
-              console.error('Server returned an error:', resp.Error);
-              this.answerText = 'Error: ' + resp.Error;
-            } else {
-              console.log('Server response:', resp.message);
+        // Send a POST request with the data in the query string
+        this.http
+          .post<any>(apiUrl, {})
+          .pipe(
+            catchError((error) => {
+              // Handle errors
+              console.error('Error fetching data:', error);
+              return throwError('Error fetching data. Please try again later.');
+            })
+          )
+          .subscribe(
+            (resp) => {
+              // Handle successful response
+              if (resp.Error) {
+                console.error('Server returned an error:', resp.Error);
+                this.answerText = 'Error: ' + resp.Error;
+              } else {
+                console.log('Server response:', resp.message);
+                this.loadSpinner = false;
+                this.answerText = resp.message;
+                this.cacheAnswers[index] = resp.message;
+              }
+            },
+            (error) => {
+              // Handle HTTP error
+              console.error('HTTP Error:', error);
               this.loadSpinner = false;
-              this.answerText = resp.message;
-            }
-          },
-          (error) => {
-            // Handle HTTP error
-            console.error('HTTP Error:', error);
-            this.loadSpinner = false;
 
-            this.answerText = 'HTTP Error: ' + error.message;
-          }
-        );
+              this.answerText = 'HTTP Error: ' + error.message;
+            }
+          );
+      } else {
+        console.error('Invalid dateOfBirth:', data?.dateOfBirth);
+        this.answerText = 'Invalid dateOfBirth';
+      }
     } else {
-      console.error('Invalid dateOfBirth:', data?.dateOfBirth);
-      this.answerText = 'Invalid dateOfBirth';
+      this.answerText = this.cacheAnswers[index];
+      this.loadSpinner = false;
     }
   }
   userInput(input: number) {
