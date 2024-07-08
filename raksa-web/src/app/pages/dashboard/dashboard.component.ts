@@ -20,6 +20,20 @@ export class DashboardComponent {
   public selectedCategory = null;
 
   selectedCategoryClick(cat) {
+    let list = [
+      'Foreign Settlement',
+      'Remedies',
+      'Job VS Business',
+      'Love',
+      'Students',
+      'Improving Sex Life',
+      'Career Insights Problems',
+    ];
+    if (list.includes(cat)) {
+      this.router.navigate([`/book`], { queryParams: { cat } });
+      return;
+    }
+
     this.selectedCategory = cat;
   }
 

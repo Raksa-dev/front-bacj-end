@@ -9,6 +9,16 @@ export const USER = {
   ],
 };
 
+export const CATEGORICALMAPPING = {
+  'Foreign Settlement': 'foreign_settlement',
+  Remedies: 'remedies',
+  'Job VS Business': 'job_vs_business',
+  Love: 'love',
+  Students: 'students',
+  'Improving Sex Life': 'improving_sex_life',
+  'Career Insights Problems': 'career_insights_problems',
+};
+
 export const USER_DASHBOARD = {
   main: [
     {
@@ -62,6 +72,10 @@ export const USER_DASHBOARD = {
     {
       logo: '../../../assets/images/dashboard/Improving_Sex_Life.png',
       menu: 'Improving Sex Life',
+    },
+    {
+      logo: '../../../assets/images/dashboard/Improving_Sex_Life.png',
+      menu: 'Career Insights Problems',
     },
   ],
 };

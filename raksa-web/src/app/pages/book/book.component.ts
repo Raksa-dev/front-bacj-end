@@ -32,6 +32,7 @@ import { Observable, Subject, of, throwError } from 'rxjs';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { WalletComponent } from 'src/app/shared/wallet/wallet.component';
 import { QUESTIONS } from 'src/app/constants/questions';
+import { CATEGORICALMAPPING } from 'src/app/constants/userconstants';
 
 @Component({
   selector: 'app-book',
@@ -64,6 +65,16 @@ export class BookComponent implements OnInit {
     },
   ];
 
+  isHovered = false;
+
+  showUsers() {
+    this.isHovered = true;
+  }
+
+  hideUsers() {
+    this.isHovered = false;
+  }
+
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
   public currentYear = new Date().getFullYear();
 
@@ -87,6 +98,21 @@ export class BookComponent implements OnInit {
     minute: number;
     second: number;
   };
+
+  public userList;
+
+  getUserList() {
+    let userList = localStorage.getItem('userList');
+    this.userList = JSON.parse(userList);
+  }
+  populateForm(user) {
+    this.signUpForm.patchValue({
+      firstName: user?.firstName,
+      gender: user?.gender,
+      dateOfBirth: user?.showDateOfBirth,
+      birthPlace: user?.birthPlace,
+    });
+  }
 
   onTimeSelected(time) {
     this.selectedTimeIfYouKnow = time;
@@ -164,6 +190,8 @@ export class BookComponent implements OnInit {
 
   public cacheAnswers = {};
 
+  setCategoryInApi = '';
+
   constructor(
     // public windowRefService: WindowRefService,
     public activeModal: NgbActiveModal,
@@ -177,9 +205,13 @@ export class BookComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    let included = Object.keys(CATEGORICALMAPPING);
     this.router.queryParamMap.subscribe((params) => {
-      this.questionSet.category = params.get('cat');
+      this.questionSet.category = included.includes(params.get('cat'))
+        ? CATEGORICALMAPPING[params.get('cat')]
+        : params.get('cat');
       this.question = this.categoricalQuestion[params.get('cat')];
+      this.setCategoryInApi = CATEGORICALMAPPING[params.get('cat')];
     });
     const currentDate = new Date();
     this.maxDate = {
@@ -195,6 +227,7 @@ export class BookComponent implements OnInit {
     this.loadMovies();
     localStorage.removeItem('basic_details');
     this.initializeCategoryForm(); // Initialize category form with selected category
+    this.getUserList();
   }
 
   trackByFn(item: any) {
@@ -468,13 +501,15 @@ export class BookComponent implements OnInit {
       return;
     }
     let formValues = this.signUpForm.value;
+    formValues['showDateOfBirth'] = formValues['dateOfBirth'];
     formValues['dateOfBirth'] =
       formValues['dateOfBirth'].year +
       '-' +
       String(formValues['dateOfBirth'].month).padStart(2, '0') +
       '-' +
       String(formValues['dateOfBirth'].day).padStart(2, '0');
-    formValues['birthPlace'] = formValues['birthPlace'].description;
+    formValues['birthPlace'] =
+      formValues['birthPlace'].description || formValues['birthPlace'];
     formValues['gender'] = formValues['gender'];
     formValues['firstName'] = formValues['firstName'];
     // format birthtime
@@ -486,6 +521,19 @@ export class BookComponent implements OnInit {
     // }`;
     // //////////////////
     // formValues['birthTime'] = formattedTime;
+    let userList = localStorage.getItem('userList');
+    if (userList == undefined) {
+      localStorage.setItem('userList', JSON.stringify([formValues]));
+    } else {
+      let parsedData = JSON.parse(userList);
+      let getData = parsedData.find(
+        (data) => data.firstName == formValues?.firstName
+      );
+      if (!getData) {
+        parsedData.push(formValues);
+        localStorage.setItem('userList', JSON.stringify(parsedData));
+      }
+    }
     this.formStep = 1;
     localStorage.setItem('basic_details', JSON.stringify(formValues));
   }
@@ -505,7 +553,9 @@ export class BookComponent implements OnInit {
       // Check if dateOfBirth is valid
       if (typeof data?.dateOfBirth === 'string') {
         // Construct the URL with query parameters
-        let apiUrl = `https://backend.raksa.xyz/get_horoscope_details?birthdate=${encodeURIComponent(
+        let apiUrl = `https://backend.raksa.xyz/${
+          this.setCategoryInApi || 'get_horoscope_details'
+        }?birthdate=${encodeURIComponent(
           data.dateOfBirth
         )}&birthtime=${encodeURIComponent(
           data.birthTime
@@ -536,7 +586,6 @@ export class BookComponent implements OnInit {
                 console.error('Server returned an error:', resp.Error);
                 this.answerText = 'Error: ' + resp.Error;
               } else {
-                console.log('Server response:', resp.message);
                 this.loadSpinner = false;
                 this.answerText = resp.message;
                 this.cacheAnswers[index] = resp.message;

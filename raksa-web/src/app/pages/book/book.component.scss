@@ -206,6 +206,22 @@ select option {
   padding: 0.5rem;
 }
 
+.answer-textarea {
+  &::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+  }
+
+  &::-webkit-scrollbar-track {
+    background: linear-gradient(150.77deg, #d700ff 0%, #7000ff 80.92%);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(to right, #43c6ac, #f8ffae);
+    border-radius: 6px; /* Rounded corners */
+  }
+}
+
 .form-check-input:checked {
   background-color: #2ae173;
 }
@@ -611,4 +627,39 @@ select option {
       transform: rotate(360deg);
     }
   }
+}
+
+.select-users {
+  position: relative;
+  width: 100%; /* Adjust as needed */
+  display: inline-block;
+}
+
+.time-button {
+  display: flex;
+  padding: 0.25rem; /* p-1 in Tailwind CSS */
+  cursor: pointer;
+}
+
+.users {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.5s ease-out;
+}
+
+.users.show {
+  max-height: 500px; /* Adjust as needed */
+}
+
+.users .time-button {
+  transform: translateX(-100%);
+  transition: transform 0.5s ease-out;
+}
+
+.users.show .time-button {
+  transform: translateX(0);
 }

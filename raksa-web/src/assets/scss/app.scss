@@ -205,11 +205,11 @@ small {
   }
 
   &.scrolled {
-    background-color: rgba(255, 255, 255);
+    background: linear-gradient(to right, #2895ff 0%, #a528ff 98.92%);
 
     .navbar {
       .navbar-brand {
-        color: $silver;
+        color: white;
 
         &.active {
           span {
@@ -225,7 +225,7 @@ small {
       .navbar-nav {
         .nav-item {
           .nav-link {
-            color: $silver;
+            color: white;
 
             &.active {
               color: $black;
