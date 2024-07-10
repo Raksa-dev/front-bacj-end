@@ -114,6 +114,9 @@ export class BookComponent implements OnInit {
     });
   }
 
+  consultAstrologer() {
+    this.route.navigate(['chat']);
+  }
   onTimeSelected(time) {
     this.selectedTimeIfYouKnow = time;
   }

@@ -3,7 +3,8 @@
   <div class="menu-section">
     <div *ngFor="let menu of section" class="menu-gradient">
       <div (click)="selectedCategoryClick(menu?.menu)" class="menus">
-        <img [src]="menu.logo" alt="" />
+        <img [src]="menu.logo" alt="" *ngIf="menu.menu != 'Who Am I'" />
+        <img [src]="menu.logo" style="object-fit: contain;" height="50px" width="100px" alt="" *ngIf="menu.menu == 'Who Am I'" />
         <div>{{ menu?.menu }}</div>
       </div>
     </div>

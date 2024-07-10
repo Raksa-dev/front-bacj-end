@@ -28,6 +28,7 @@ export class DashboardComponent {
       'Students',
       'Improving Sex Life',
       'Career Insights Problems',
+      'Who Am I',
     ];
     if (list.includes(cat)) {
       this.router.navigate([`/book`], { queryParams: { cat } });

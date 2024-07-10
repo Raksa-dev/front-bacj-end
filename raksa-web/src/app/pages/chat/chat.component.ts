@@ -253,6 +253,43 @@ export class ChatComponent implements OnInit {
       .result.then();
   }
 
+  bookAnAppointment(e: MouseEvent, astroData, content) {
+    e.stopPropagation();
+    if (this.authService.activeUserValue) {
+      if (!astroData?.isOnline) {
+        this.message = `Astrologer is offline`;
+        this.openConfirmation(content);
+        return;
+      }
+      let checkBalance = astroData['chatChargePerMinute'] * 5;
+      if (this.userData.walletBalance > checkBalance) {
+        // this.userService
+        //   .NotifyAstrologerForChat(
+        //     astroData,
+        //     this.userService.getUserData,
+        //     'chat'
+        //   )
+        //   .then((data) => {
+        //     this.toast = true;
+        //     this.message = data?.message;
+        //   });
+        // this.astroServices.setAstrologerBriefDataStore(astroData);
+        // this.router.navigate([`chat/about/${astroData?.uid}`]);
+        return;
+      } else {
+        this.message = `Minimum balance of 5 minutes (${checkBalance} INR) is required to start chat.`;
+        this.openConfirmation(content);
+      }
+    } else {
+      const modalRef = this.modalService.open(LoginComponent, {
+        backdrop: 'static',
+        keyboard: false,
+        centered: true,
+        size: 'lg',
+        modalDialogClass: 'login',
+      });
+    }
+  }
   sendChatNotificationToAstrologer(e: MouseEvent, astroData, content) {
     e.stopPropagation();
     if (this.authService.activeUserValue) {

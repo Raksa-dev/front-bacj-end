@@ -67,6 +67,7 @@ export const QUESTIONS = {
     'How can I ensure safe and enjoyable travels based on my birth chart?',
   ],
   business: [],
+  'Who Am I': ['Who Am I'],
   Remedies: [
     'What general remedies should I follow to improve my overall well-being?',
     'Are there any specific rituals or practices I should perform today?',
