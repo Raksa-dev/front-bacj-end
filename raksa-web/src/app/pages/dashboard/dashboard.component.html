@@ -3,8 +3,7 @@
   <div class="menu-section">
     <div *ngFor="let menu of section" class="menu-gradient">
       <div (click)="selectedCategoryClick(menu?.menu)" class="menus">
-        <img [src]="menu.logo" alt="" *ngIf="menu.menu != 'Who Am I'" />
-        <img [src]="menu.logo" style="object-fit: contain;" height="50px" width="100px" alt="" *ngIf="menu.menu == 'Who Am I'" />
+        <img [src]="menu.logo" alt="" />
         <div>{{ menu?.menu }}</div>
       </div>
     </div>
@@ -117,13 +116,14 @@
 
 <div
   class="dashboard"
-  *ngIf="selectedCategory != 'Self / You' && selectedCategory != null"
+  *ngIf="selectedCategory == 'Know' && selectedCategory != null"
 >
   <h2 class="fw-bold">{{ selectedCategory }}</h2>
   <div class="menu-section">
     <div *ngFor="let menu of section" class="menu-gradient">
-      <div (click)="selectedCategoryClick(menu?.menu)" class="menus">
-        {{ menu?.menu }}
+      <div (click)="selectCategory(menu?.menu)" class="menus">
+        <img [src]="menu.logo" alt="" />
+        <div>{{ menu?.menu }}</div>
       </div>
     </div>
   </div>

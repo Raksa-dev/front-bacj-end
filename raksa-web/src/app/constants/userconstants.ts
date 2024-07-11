@@ -18,6 +18,14 @@ export const CATEGORICALMAPPING = {
   'Improving Sex Life': 'improving_sex_life',
   'Career Insights Problems': 'career_insights_problems',
   'Who Am I': 'who_am_i',
+  'Know your child': 'know_your_child',
+  'Know your husband': 'know_your_husband',
+  'Know your wife': 'know_your_wife',
+  'Know your colleague': 'know_your_colleague',
+  'Know your boss': 'know_your_boss',
+  'Know your mother': 'know_your_mother',
+  'Know your guardian': 'know_your_guardian',
+  'Know your friend': 'know_your_friend',
 };
 
 export const USER_DASHBOARD = {
@@ -86,59 +94,39 @@ export const USER_DASHBOARD = {
   know: [
     {
       logo: '../../../assets/images/dashboard/Foreign_Settlement.png',
-      menu: 'Foreign Settlement',
+      menu: 'Know your child',
     },
     {
       logo: '../../../assets/images/dashboard/Horoscope_Match.png',
-      menu: 'Horoscope Match',
+      menu: 'Know your husband',
     },
     {
       logo: '../../../assets/images/dashboard/Family_Dynamics.png',
-      menu: 'Family Dynamics',
+      menu: 'Know your wife',
     },
     {
       logo: '../../../assets/images/dashboard/Muhurtha.png',
-      menu: 'Muhurtha',
+      menu: 'Know your father',
     },
     {
       logo: '../../../assets/images/dashboard/Today_Panchanga.png',
-      menu: 'Today’s Panchanga',
+      menu: 'Know your mother',
     },
     {
       logo: '../../../assets/images/dashboard/perm_identity.png',
-      menu: 'Self / You',
+      menu: 'Know your guardian',
     },
     {
       logo: '../../../assets/images/dashboard/lightbulb_outline.png',
-      menu: 'Know',
+      menu: 'Know your boss',
     },
     {
       logo: '../../../assets/images/dashboard/Today’_prediction.png',
-      menu: 'Today’s prediction',
+      menu: 'Know your colleague',
     },
     {
       logo: '../../../assets/images/dashboard/Remedies.png',
-      menu: 'Remedies',
-    },
-    {
-      logo: '../../../assets/images/dashboard/Job_VS_Business.png',
-      menu: 'Job VS Business',
-    },
-    {
-      logo: '../../../assets/images/dashboard/Love.png',
-      menu: 'Love',
-    },
-    {
-      logo: '../../../assets/images/dashboard/Students.png',
-      menu: 'Students',
-    },
-    {
-      logo: '../../../assets/images/dashboard/Improving_Sex_Life.png',
-      menu: 'Improving Sex Life',
-    },
-    {
-      logo: '../../../assets/images/dashboard/Improving_Sex_Life.png',
-      menu: 'Career Insights Problems',
+      menu: 'Know your friend',
     },
   ],
 };

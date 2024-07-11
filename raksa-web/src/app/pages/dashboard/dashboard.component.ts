@@ -36,6 +36,9 @@ export class DashboardComponent {
     }
 
     this.selectedCategory = cat;
+    if ((cat = 'Know')) {
+      this.section = USER_DASHBOARD['know'];
+    }
   }
 
   selectCategory(cat: string): void {
