@@ -29,6 +29,9 @@ export class DashboardComponent {
       'Improving Sex Life',
       'Career Insights Problems',
       'Who Am I',
+      'Muhurtha',
+      'Today’s Panchanga',
+      'Today’s prediction',
     ];
     if (list.includes(cat)) {
       this.router.navigate([`/book`], { queryParams: { cat } });
@@ -36,7 +39,7 @@ export class DashboardComponent {
     }
 
     this.selectedCategory = cat;
-    if ((cat = 'Know')) {
+    if (cat == 'Know') {
       this.section = USER_DASHBOARD['know'];
     }
   }

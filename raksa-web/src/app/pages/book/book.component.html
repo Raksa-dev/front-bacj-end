@@ -15,7 +15,12 @@
       <div class="position-relative">
         <div
           class="select-users"
-          *ngIf="formStep == 0 && userList != undefind && userList.length > 0"
+          *ngIf="
+            formStep == 0 &&
+            userList != undefind &&
+            userList.length > 0 &&
+            questionSet.category != 'panchanga'
+          "
           (mouseover)="showUsers()"
           (mouseout)="hideUsers()"
         >
@@ -30,7 +35,6 @@
             </div>
           </div>
         </div>
-
         <form
           class="needs-validation form-fill"
           (ngSubmit)="createProfileInRegistration()"
@@ -52,136 +56,272 @@
             >Hi
             {{ currentUser?.firstName + " " + currentUser?.lastName }}</label
           >
+          <div *ngIf="questionSet.category == 'panchanga'">
+            <div class="mb-2">
+              <label for="event_date" class="form-fields-label">Date</label>
+              <div class="input-group clockpicker mt-1">
+                <input
+                  ngbDatepicker
+                  readonly
+                  class="form-control"
+                  id="event_date"
+                  formControlName="event_date"
+                  #dateOfBirth="ngbDatepicker"
+                  style="font-size: 0.7rem"
+                  [minDate]="{ year: 1948, month: 1, day: 1 }"
+                  [maxDate]="maxDate"
+                />
 
-          <div class="mb-2">
-            <label for="firstName" class="form-fields-label">Full Name</label>
-            <div>
-              <input
-                type="text"
-                id="firstName"
-                formControlName="firstName"
-                class="form-control"
-                placeholder="Enter your full name"
-              />
-              <div style="padding-top: 5px; color: darkgray">
-                <h6>*Accurate Name required for numerology</h6>
-              </div>
-              <div
-                *ngIf="profileSubmitted && signUpFrm['firstName'].errors"
-                class="invalid-feedback"
-              >
-                <span *ngIf="signUpFrm['firstName'].errors['required']"
-                  >First Name can't be empty</span
-                >
+                <div class="input-group-append" (click)="dateOfBirth.toggle()">
+                  <span class="input-group-text">
+                    <img src="../assets/images/calendar.png" />
+                  </span>
+                </div>
               </div>
             </div>
+            <!-- birth place -->
+            <div class="mb-2">
+              <label for="location" class="form-fields-label"
+                >Enter Correct Location</label
+              >
+              <ng-select
+                [items]="movies$ | async"
+                bindLabel="description"
+                [trackByFn]="trackByFn"
+                [minTermLength]="minLengthTerm"
+                [loading]="moviesLoading"
+                typeToSearchText="Please enter {{
+                  minLengthTerm
+                }} or more characters"
+                [typeahead]="moviesInput$"
+                [(ngModel)]="selectedMovie"
+                formControlName="location"
+                [virtualScroll]="true"
+                class="custom"
+              >
+              </ng-select>
+            </div>
+
+            <div class="d-flex mt-3">
+              <button
+                type="submit"
+                id="sign-in-button"
+                class="btn gradient-button"
+                [disabled]="signUpForm.invalid"
+              >
+                <span>Get Answers</span>
+                <i
+                  *ngIf="!signUpFormSubmitted"
+                  class="bx bx-right-arrow-alt align-middle ms-1"
+                ></i>
+                <i
+                  *ngIf="signUpFormSubmitted"
+                  class="bx bx-loader bx-spin align-middle ms-1"
+                ></i>
+              </button>
+            </div>
           </div>
-
-          <div class="row">
-            <div class="">
-              <div class="mb-2">
-                <label for="dateOfBirth" class="form-fields-label"
-                  >Birth Date</label
+          <!-- for other categories -->
+          <div *ngIf="questionSet.category != 'panchanga'">
+            <div class="mb-2">
+              <label for="firstName" class="form-fields-label">Full Name</label>
+              <div>
+                <input
+                  type="text"
+                  id="firstName"
+                  formControlName="firstName"
+                  class="form-control"
+                  placeholder="Enter your full name"
+                />
+                <div style="padding-top: 5px; color: darkgray">
+                  <h6>*Accurate Name required for numerology</h6>
+                </div>
+                <div
+                  *ngIf="profileSubmitted && signUpFrm['firstName'].errors"
+                  class="invalid-feedback"
                 >
-                <div class="input-group clockpicker mt-1">
-                  <input
-                    ngbDatepicker
-                    readonly
-                    class="form-control"
-                    id="dateOfBirth"
-                    formControlName="dateOfBirth"
-                    #dateOfBirth="ngbDatepicker"
-                    style="font-size: 0.7rem"
-                    [minDate]="{ year: 1948, month: 1, day: 1 }"
-                    [maxDate]="maxDate"
-                  />
-
-                  <div
-                    class="input-group-append"
-                    (click)="dateOfBirth.toggle()"
+                  <span *ngIf="signUpFrm['firstName'].errors['required']"
+                    >First Name can't be empty</span
                   >
-                    <span class="input-group-text">
-                      <img src="../assets/images/calendar.png" />
-                    </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="">
+                <div class="mb-2">
+                  <label for="dateOfBirth" class="form-fields-label"
+                    >Birth Date</label
+                  >
+                  <div class="input-group clockpicker mt-1">
+                    <input
+                      ngbDatepicker
+                      readonly
+                      class="form-control"
+                      id="dateOfBirth"
+                      formControlName="dateOfBirth"
+                      #dateOfBirth="ngbDatepicker"
+                      style="font-size: 0.7rem"
+                      [minDate]="{ year: 1948, month: 1, day: 1 }"
+                      [maxDate]="maxDate"
+                    />
+
+                    <div
+                      class="input-group-append"
+                      (click)="dateOfBirth.toggle()"
+                    >
+                      <span class="input-group-text">
+                        <img src="../assets/images/calendar.png" />
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="">
+                <div class="mb-2">
+                  <label for="gender" class="form-fields-label">Gender</label>
+                  <select
+                    id="gender"
+                    formControlName="gender"
+                    class="form-control-select-box select-box"
+                  >
+                    <option value="null" disabled selected>
+                      Select your gender
+                    </option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">other</option>
+                  </select>
+                  <div
+                    *ngIf="profileSubmitted && signUpFrm['gender'].errors"
+                    class="invalid-feedback"
+                  >
+                    <span *ngIf="signUpFrm['gender'].errors['required']"
+                      >Gender can't be empty</span
+                    >
                   </div>
                 </div>
               </div>
             </div>
-            <div class="">
-              <div class="mb-2">
-                <label for="gender" class="form-fields-label">Gender</label>
-                <select
-                  id="gender"
-                  formControlName="gender"
-                  class="form-control-select-box select-box"
+
+            <!-- birth place -->
+            <div class="mb-2">
+              <label for="birthPlace" class="form-fields-label"
+                >Birth Location</label
+              >
+              <ng-select
+                [items]="movies$ | async"
+                bindLabel="description"
+                [trackByFn]="trackByFn"
+                [minTermLength]="minLengthTerm"
+                [loading]="moviesLoading"
+                typeToSearchText="Please enter {{
+                  minLengthTerm
+                }} or more characters"
+                [typeahead]="moviesInput$"
+                formControlName="birthPlace"
+                [virtualScroll]="true"
+                class="custom"
+              >
+              </ng-select>
+              <div
+                *ngIf="profileSubmitted && signUpFrm['birthPlace'].errors"
+                class="invalid-feedback"
+              >
+                <span *ngIf="signUpFrm['birthPlace'].errors['required']"
+                  >Birth Place can't be empty</span
                 >
-                  <option value="null" disabled selected>
-                    Select your gender
-                  </option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">other</option>
-                </select>
-                <div
-                  *ngIf="profileSubmitted && signUpFrm['gender'].errors"
-                  class="invalid-feedback"
-                >
-                  <span *ngIf="signUpFrm['gender'].errors['required']"
-                    >Gender can't be empty</span
-                  >
+              </div>
+            </div>
+
+            <!-- current place -->
+            <div class="mb-2" *ngIf="signUpForm.contains('currentLocation')">
+              <label for="currentLocation" class="form-fields-label"
+                >Enter Current Location</label
+              >
+              <ng-select
+                [items]="movies$ | async"
+                bindLabel="description"
+                [trackByFn]="trackByFn"
+                [minTermLength]="minLengthTerm"
+                [loading]="moviesLoading"
+                typeToSearchText="Please enter {{
+                  minLengthTerm
+                }} or more characters"
+                [typeahead]="moviesInput$"
+                formControlName="currentLocation"
+                [virtualScroll]="true"
+                class="custom"
+              >
+              </ng-select>
+            </div>
+
+            <div class="mb-2" *ngIf="signUpForm.contains('fromDate')">
+              <label for="event_date" class="form-fields-label"
+                >From Date</label
+              >
+              <div class="input-group clockpicker mt-1">
+                <input
+                  ngbDatepicker
+                  readonly
+                  class="form-control"
+                  id="fromDate"
+                  formControlName="fromDate"
+                  #dateOfBirth="ngbDatepicker"
+                  style="font-size: 0.7rem"
+                  [minDate]="{ year: 1948, month: 1, day: 1 }"
+                  [maxDate]="maxDate"
+                />
+
+                <div class="input-group-append" (click)="dateOfBirth.toggle()">
+                  <span class="input-group-text">
+                    <img src="../assets/images/calendar.png" />
+                  </span>
                 </div>
               </div>
             </div>
-          </div>
 
-          <!-- birth place -->
-          <div class="mb-2">
-            <label for="birthPlace" class="form-fields-label"
-              >Birth Location</label
-            >
-            <ng-select
-              [items]="movies$ | async"
-              bindLabel="description"
-              [trackByFn]="trackByFn"
-              [minTermLength]="minLengthTerm"
-              [loading]="moviesLoading"
-              typeToSearchText="Please enter {{
-                minLengthTerm
-              }} or more characters"
-              [typeahead]="moviesInput$"
-              [(ngModel)]="selectedMovie"
-              formControlName="birthPlace"
-              [virtualScroll]="true"
-              class="custom"
-            >
-            </ng-select>
-            <div
-              *ngIf="profileSubmitted && signUpFrm['birthPlace'].errors"
-              class="invalid-feedback"
-            >
-              <span *ngIf="signUpFrm['birthPlace'].errors['required']"
-                >Birth Place can't be empty</span
-              >
+            <div class="mb-2" *ngIf="signUpForm.contains('toDate')">
+              <label for="event_date" class="form-fields-label">To Date</label>
+              <div class="input-group clockpicker mt-1">
+                <input
+                  ngbDatepicker
+                  readonly
+                  class="form-control"
+                  id="toDate"
+                  formControlName="toDate"
+                  #dateOfBirth="ngbDatepicker"
+                  style="font-size: 0.7rem"
+                  [minDate]="{ year: 1948, month: 1, day: 1 }"
+                  [maxDate]="maxDate"
+                />
+
+                <div class="input-group-append" (click)="dateOfBirth.toggle()">
+                  <span class="input-group-text">
+                    <img src="../assets/images/calendar.png" />
+                  </span>
+                </div>
+              </div>
             </div>
-          </div>
 
-          <div class="d-flex mt-3">
-            <button
-              type="submit"
-              id="sign-in-button"
-              class="btn gradient-button"
-              [disabled]="signUpForm.invalid"
-            >
-              <span>Get Answers</span>
-              <i
-                *ngIf="!signUpFormSubmitted"
-                class="bx bx-right-arrow-alt align-middle ms-1"
-              ></i>
-              <i
-                *ngIf="signUpFormSubmitted"
-                class="bx bx-loader bx-spin align-middle ms-1"
-              ></i>
-            </button>
+            <div class="d-flex mt-3">
+              <button
+                type="submit"
+                id="sign-in-button"
+                class="btn gradient-button"
+                [disabled]="signUpForm.invalid"
+              >
+                <span>Get Answers</span>
+                <i
+                  *ngIf="!signUpFormSubmitted"
+                  class="bx bx-right-arrow-alt align-middle ms-1"
+                ></i>
+                <i
+                  *ngIf="signUpFormSubmitted"
+                  class="bx bx-loader bx-spin align-middle ms-1"
+                ></i>
+              </button>
+            </div>
           </div>
         </form>
 
@@ -785,7 +925,10 @@
 
   <!-- Questions And Promt -->
   <div class="questions-and-answers" *ngIf="formStep == 4">
-    <div class="side-panel-gradient">
+    <div
+      class="side-panel-gradient"
+      *ngIf="questionSet.category != 'panchanga'"
+    >
       <div class="side-panel">
         <div class="question-title">
           <h5>Questions</h5>
@@ -813,7 +956,10 @@
       </div>
     </div>
     <div class="main-panel">
-      <div class="question-title gradient-button-new float-end" (click)="consultAstrologer()">
+      <div
+        class="question-title gradient-button-new float-end"
+        (click)="consultAstrologer()"
+      >
         Consult Astrologer
       </div>
 
@@ -822,8 +968,91 @@
           class="torch-ligth"
           src="../../../assets/images/torch_light.png"
           alt=""
+          *ngIf="questionSet.category != 'panchanga'"
         />
-        <img src="../../../assets/images/find_answers.png" alt="" />
+        <img
+          src="../../../assets/images/find_answers.png"
+          alt=""
+          *ngIf="questionSet.category != 'panchanga'"
+        />
+
+        <div
+          class="table-container"
+          *ngIf="questionSet.category == 'panchanga'"
+        >
+          <table class="styled-table">
+            <tbody>
+              <tr>
+                <td>Moon Rise</td>
+                <td>{{ answerText.MoonRise }}</td>
+              </tr>
+              <tr>
+                <td>Moon Set</td>
+                <td>{{ answerText.MoonSet }}</td>
+              </tr>
+              <tr>
+                <td>Sun Rise</td>
+                <td>{{ answerText.SunRise }}</td>
+              </tr>
+              <tr>
+                <td>Sun Set</td>
+                <td>{{ answerText.SunSet }}</td>
+              </tr>
+              <tr>
+                <td>Vaaram</td>
+                <td>{{ answerText.Vaaram }}</td>
+              </tr>
+              <tr>
+                <td>Karna</td>
+                <td>{{ answerText.Karna }}</td>
+              </tr>
+              <tr>
+                <td>Tithi</td>
+                <td>{{ answerText.Tithi }}</td>
+              </tr>
+              <tr>
+                <td>Maasa</td>
+                <td>{{ answerText.Maasa }}</td>
+              </tr>
+              <tr>
+                <td>Ritu</td>
+                <td>{{ answerText.Ritu }}</td>
+              </tr>
+              <tr>
+                <td>Nakshatra</td>
+                <td>{{ answerText.Nakshatra }}</td>
+              </tr>
+              <tr>
+                <td>Yoga</td>
+                <td>{{ answerText.Yoga }}</td>
+              </tr>
+              <tr>
+                <td>Day Duration</td>
+                <td>{{ answerText["Day Duration"] }}</td>
+              </tr>
+              <tr>
+                <td>Night Duration</td>
+                <td>{{ answerText["Night Duration"] }}</td>
+              </tr>
+              <tr>
+                <td>Rahu Kalam</td>
+                <td>{{ answerText["Rahu Kalam"] }}</td>
+              </tr>
+              <tr>
+                <td>Yama Kalam</td>
+                <td>{{ answerText["Yama Kalam"] }}</td>
+              </tr>
+              <tr>
+                <td>Gulika Kalam</td>
+                <td>{{ answerText["Gulika Kalam"] }}</td>
+              </tr>
+              <tr>
+                <td>Durmuhurtam</td>
+                <td>{{ answerText.Durmuhurtam }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <div class="initial-setup" *ngIf="loadSpinner">
@@ -838,6 +1067,46 @@
           alt=""
         />
       </div>
+      <div
+        class="table-container"
+        *ngIf="
+          !loadSpinner &&
+          questionSelected != null &&
+          signUpForm.contains('fromDate')
+        "
+      >
+        <table class="table-auto border-collapse border border-gray-300 w-full">
+          <thead class="bg-gray-200">
+            <tr>
+              <th class="border border-gray-300 px-4 py-2">
+                Tarabala Category
+              </th>
+              <th class="border border-gray-300 px-4 py-2">
+                Chandra Bala category
+              </th>
+              <th class="border border-gray-300 px-4 py-2">Date</th>
+              <th class="border border-gray-300 px-4 py-2">Time</th>
+            </tr>
+          </thead>
+          <tbody class="max-h-64 overflow-y-scroll block">
+            <tr *ngFor="let data of answerText">
+              <td class="border border-gray-300 px-4 py-2">
+                {{ data["Tarabala Category"] }}
+              </td>
+              <td class="border border-gray-300 px-4 py-2">
+                {{ data["Chandra Bala category "] }}
+              </td>
+              <td class="border border-gray-300 px-4 py-2">
+                {{ data["Date"] }}
+              </td>
+              <td class="border border-gray-300 px-4 py-2">
+                {{ data["Time"] }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- text area -->
       <textarea
         id="summary"
         class="form-control answer-textarea"

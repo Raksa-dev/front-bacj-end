@@ -25,6 +25,7 @@ body {
   background: linear-gradient(175.65deg, $black 3.53%, #190f37 96.47%);
   background-repeat: no-repeat;
   background-attachment: fixed;
+  overflow-x: hidden;
 }
 
 ::placeholder {

@@ -216,6 +216,33 @@ export class BookComponent implements OnInit {
       this.question = this.categoricalQuestion[params.get('cat')];
       this.setCategoryInApi = CATEGORICALMAPPING[params.get('cat')];
     });
+    if (this.questionSet.category == 'panchanga') {
+      this.signUpForm = this.formBuilder.group({
+        event_date: [null, [Validators.required]],
+        location: ['', [Validators.required]],
+        category: 'panchanga',
+        index: 0,
+      });
+    }
+    if (
+      this.questionSet.category == 'today_prediction' ||
+      this.questionSet.category == 'muhurta_auspicious'
+    ) {
+      this.signUpForm.addControl(
+        'currentLocation',
+        this.formBuilder.control('', [Validators.required])
+      );
+    }
+    if (this.questionSet.category == 'muhurta_auspicious') {
+      this.signUpForm.addControl(
+        'fromDate',
+        this.formBuilder.control('', [Validators.required])
+      );
+      this.signUpForm.addControl(
+        'toDate',
+        this.formBuilder.control('', [Validators.required])
+      );
+    }
     const currentDate = new Date();
     this.maxDate = {
       year: currentDate.getFullYear(),
@@ -497,6 +524,47 @@ export class BookComponent implements OnInit {
     const formattedTime = `${hour}:${minute}:${second}`;
     return formattedTime;
   }
+  onGetDataOfpanch(formValues) {
+    this.loadSpinner = true;
+    let apiUrl = `https://backend.raksa.xyz/${
+      this.setCategoryInApi
+    }?event_date=${encodeURIComponent(
+      formValues.event_date
+    )}&location=${encodeURIComponent(
+      formValues.location.split(',')[0]
+    )}&category=${encodeURIComponent(this.questionSet.category)}&index=${0}`;
+
+    // Send a POST request with the formValues in the query string
+    this.http
+      .post<any>(apiUrl, {})
+      .pipe(
+        catchError((error) => {
+          // Handle errors
+          console.error('Error fetching data:', error);
+          return throwError('Error fetching data. Please try again later.');
+        })
+      )
+      .subscribe(
+        (resp) => {
+          // Handle successful response
+          if (resp.Error) {
+            console.error('Server returned an error:', resp.Error);
+            this.answerText = 'Error: ' + resp.Error;
+          } else {
+            this.loadSpinner = false;
+            this.answerText = resp.message;
+            this.formStep = 4;
+          }
+        },
+        (error) => {
+          // Handle HTTP error
+          console.error('HTTP Error:', error);
+          this.loadSpinner = false;
+
+          this.answerText = 'HTTP Error: ' + error.message;
+        }
+      );
+  }
 
   createProfileInRegistration(): void {
     this.signUpFormSubmitted = true;
@@ -504,6 +572,18 @@ export class BookComponent implements OnInit {
       return;
     }
     let formValues = this.signUpForm.value;
+    if (this.questionSet.category == 'panchanga') {
+      formValues['event_date'] =
+        formValues['event_date'].year +
+        '-' +
+        String(formValues['event_date'].month).padStart(2, '0') +
+        '-' +
+        String(formValues['event_date'].day).padStart(2, '0');
+      formValues['location'] = formValues['location'].description;
+      this.onGetDataOfpanch(formValues);
+      return;
+    }
+
     formValues['showDateOfBirth'] = formValues['dateOfBirth'];
     formValues['dateOfBirth'] =
       formValues['dateOfBirth'].year +
@@ -512,9 +592,29 @@ export class BookComponent implements OnInit {
       '-' +
       String(formValues['dateOfBirth'].day).padStart(2, '0');
     formValues['birthPlace'] =
-      formValues['birthPlace'].description || formValues['birthPlace'];
+      formValues['birthPlace']?.description || formValues['birthPlace'];
+    formValues['currentLocation'] =
+      formValues['currentLocation']?.description ||
+      formValues['currentLocation'] ||
+      '';
     formValues['gender'] = formValues['gender'];
     formValues['firstName'] = formValues['firstName'];
+
+    if (this.questionSet.category == 'muhurta_auspicious') {
+      formValues['fromDate'] =
+        formValues['fromDate'].year +
+        '-' +
+        String(formValues['fromDate'].month).padStart(2, '0') +
+        '-' +
+        String(formValues['fromDate'].day).padStart(2, '0');
+
+      formValues['toDate'] =
+        formValues['toDate'].year +
+        '-' +
+        String(formValues['toDate'].month).padStart(2, '0') +
+        '-' +
+        String(formValues['toDate'].day).padStart(2, '0');
+    }
     // format birthtime
     // const hour = formValues['birthTime']?.hour?.toString().padStart(2, '0');
     // const minute = formValues['birthTime']?.minute?.toString().padStart(2, '0');
@@ -571,7 +671,19 @@ export class BookComponent implements OnInit {
         )}&category=${encodeURIComponent(
           this.questionSet.category
         )}&index=${index}`;
-
+        if (this.signUpForm.contains('currentLocation')) {
+          apiUrl += `&current_location=${encodeURIComponent(
+            data.currentLocation.split(',')[0]
+          )}`;
+        }
+        if (
+          this.signUpForm.contains('fromDate') &&
+          this.signUpForm.contains('toDate')
+        ) {
+          apiUrl += `&start_date=${encodeURIComponent(
+            data.fromDate
+          )}&end_date=${encodeURIComponent(data.toDate)}`;
+        }
         // Send a POST request with the data in the query string
         this.http
           .post<any>(apiUrl, {})
@@ -589,9 +701,14 @@ export class BookComponent implements OnInit {
                 console.error('Server returned an error:', resp.Error);
                 this.answerText = 'Error: ' + resp.Error;
               } else {
+                if (this.questionSet.category == 'muhurta_auspicious') {
+                  this.answerText = resp;
+                  this.cacheAnswers[index] = resp;
+                } else {
+                  this.answerText = resp.message;
+                  this.cacheAnswers[index] = resp.message;
+                }
                 this.loadSpinner = false;
-                this.answerText = resp.message;
-                this.cacheAnswers[index] = resp.message;
               }
             },
             (error) => {

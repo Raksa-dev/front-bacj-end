@@ -128,6 +128,17 @@ export const QUESTIONS = {
     'What should I be cautious about when planning to move abroad?',
     'Will I be able to maintain my cultural identity in a foreign country?',
   ],
+  Muhurtha: [
+    'How is my current planetary period (Dasha) affecting me according to my astrological information ?',
+  ],
+  'Today’s prediction': [
+    'What are my general predictions for today? How will my day go overall? Are there any specific events or situations I should be aware of today?',
+    'How will my workday go today? Should I expect any challenges or opportunities at work today? Is today a good day to start new projects or take on additional responsibilities?',
+    'What does today hold for my financial situation? Should I make any significant financial decisions today? Are there any unexpected expenses or financial gains indicated for today?',
+    'How will my personal relationships be today? Should I expect any significant interactions with my partner or family members? Is today a good day to resolve conflicts or strengthen bonds with loved ones?',
+    'What should I be aware of regarding my health today? Are there any specific health issues I should pay attention to? Is today a good day to start a new health regimen or visit a doctor?',
+    'Is today a favorable day to make important decisions? Should I delay any significant decisions or actions until another day?',
+  ],
   'Improving Sex Life': [
     'How does the position of Venus influence my approach to romance and intimacy?',
     'What does Mars indicate about my sexual energy and desires?',
