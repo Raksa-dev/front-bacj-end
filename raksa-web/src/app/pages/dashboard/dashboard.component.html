@@ -1,10 +1,23 @@
 <div class="dashboard" *ngIf="selectedCategory == null">
   <h2 class="fw-bold">I want answers in ...</h2>
   <div class="menu-section">
-    <div *ngFor="let menu of section" class="menu-gradient">
+    <div
+      *ngFor="let menu of section"
+      class="menu-gradient"
+      (mouseover)="showTooltip($event, menu?.menu)"
+    >
       <div (click)="selectedCategoryClick(menu?.menu)" class="menus">
         <img [src]="menu.logo" alt="" />
         <div>{{ menu?.menu }}</div>
+
+        <div *ngIf="menu?.comingSoon" class="coming-soon">Coming Soon</div>
+        <div
+          class="tooltip-1"
+          (mouseout)="hideTooltip()"
+          *ngIf="menu?.menu === tooltipVisible"
+        >
+          {{ menu?.toolTip }}
+        </div>
       </div>
     </div>
   </div>
@@ -46,7 +59,7 @@
               width="50px"
               height="70px"
             />
-            <h5>Numerolog</h5>
+            <h5>Numerology</h5>
           </div>
           <div
             class="four-cat d-flex justify-content-around align-items-center"
@@ -57,7 +70,7 @@
               width="80px"
               height="80px"
             />
-            <h5>Welath</h5>
+            <h5>Wealth</h5>
           </div>
           <div
             class="five-cat d-flex justify-content-around align-items-center"

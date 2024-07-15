@@ -16,8 +16,22 @@ export class DashboardComponent {
       localStorage.setItem('userType', 'user');
     }
   }
-  public section = USER_DASHBOARD.main;
+  public section: any = USER_DASHBOARD.main;
   public selectedCategory = null;
+
+  tooltipVisible = null;
+  // tooltipX = '0px';
+  // tooltipY = '0px';
+
+  showTooltip(event: MouseEvent, menu) {
+    this.tooltipVisible = menu;
+    // this.tooltipX = event.clientX + 10 + 'px';
+    // this.tooltipY = event.clientY + 10 + 'px';
+  }
+
+  hideTooltip() {
+    this.tooltipVisible = null;
+  }
 
   selectedCategoryClick(cat) {
     let list = [

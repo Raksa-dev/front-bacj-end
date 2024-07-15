@@ -106,12 +106,28 @@ export class BookComponent implements OnInit {
     this.userList = JSON.parse(userList);
   }
   populateForm(user) {
-    this.signUpForm.patchValue({
-      firstName: user?.firstName,
-      gender: user?.gender,
-      dateOfBirth: user?.showDateOfBirth,
-      birthPlace: user?.birthPlace,
-    });
+    if (user?.birthTime) {
+      this.signUpForm.addControl(
+        'birthTime',
+        this.formBuilder.control(user['rawFormatbirthTime'], [
+          Validators.required,
+        ])
+      );
+      this.signUpForm.patchValue({
+        firstName: user?.firstName,
+        gender: user?.gender,
+        dateOfBirth: user?.showDateOfBirth,
+        birthPlace: user?.birthPlace,
+        birthTime: user['rawFormatbirthTime'],
+      });
+    } else {
+      this.signUpForm.patchValue({
+        firstName: user?.firstName,
+        gender: user?.gender,
+        dateOfBirth: user?.showDateOfBirth,
+        birthPlace: user?.birthPlace,
+      });
+    }
   }
 
   consultAstrologer() {
@@ -131,6 +147,22 @@ export class BookComponent implements OnInit {
     const formattedTime = `${hour}:${minute}:${second}`;
     let data = JSON.parse(localStorage.getItem('basic_details'));
     data['birthTime'] = formattedTime;
+    data['rawFormatbirthTime'] = this.selectedTimeIfYouKnow;
+
+    let userList = localStorage.getItem('userList');
+    if (userList == undefined) {
+      localStorage.setItem('userList', JSON.stringify([data]));
+    } else {
+      let parsedData = JSON.parse(userList);
+      let getData = parsedData.find(
+        (dataum) => dataum.firstName == data?.firstName
+      );
+      if (!getData) {
+        parsedData.push(data);
+        localStorage.setItem('userList', JSON.stringify(parsedData));
+      }
+    }
+
     localStorage.setItem('basic_details', JSON.stringify(data));
     this.formStep = 4;
   }
@@ -282,7 +314,6 @@ export class BookComponent implements OnInit {
 
   onCheckboxChange(event: Event, item) {
     const checkbox = event.target as HTMLInputElement;
-
     if (this.useCheckAnwers.includes(item) && !checkbox.checked) {
       let filterData = this.useCheckAnwers.filter((data) => data != item);
       this.useCheckAnwers = filterData;
@@ -363,6 +394,27 @@ export class BookComponent implements OnInit {
     let optionTime = this.layer2Question[findCheckbox].time;
     let data = JSON.parse(localStorage.getItem('basic_details'));
     data['birthTime'] = optionTime;
+    let splitDate = optionTime.split(':').map((data) => Number(data));
+    let fromatedDate = {
+      hour: splitDate[0],
+      minute: splitDate[1],
+      second: splitDate[2],
+    };
+
+    data['rawFormatbirthTime'] = fromatedDate;
+    let userList = localStorage.getItem('userList');
+    if (userList == undefined) {
+      localStorage.setItem('userList', JSON.stringify([data]));
+    } else {
+      let parsedData = JSON.parse(userList);
+      let getData = parsedData.find(
+        (dataum) => dataum.firstName == data?.firstName
+      );
+      if (!getData) {
+        parsedData.push(data);
+        localStorage.setItem('userList', JSON.stringify(parsedData));
+      }
+    }
     localStorage.setItem('basic_details', JSON.stringify(data));
     this.formStep = 4;
   }
@@ -615,30 +667,27 @@ export class BookComponent implements OnInit {
         '-' +
         String(formValues['toDate'].day).padStart(2, '0');
     }
-    // format birthtime
-    // const hour = formValues['birthTime']?.hour?.toString().padStart(2, '0');
-    // const minute = formValues['birthTime']?.minute?.toString().padStart(2, '0');
-    // const second = formValues['birthTime']?.second?.toString().padStart(2, '0');
-    // const formattedTime = `${hour}:${minute}:${second} ${
-    //   formValues['birthTime']?.hour >= 12 ? 'PM' : 'AM'
-    // }`;
-    // //////////////////
-    // formValues['birthTime'] = formattedTime;
-    let userList = localStorage.getItem('userList');
-    if (userList == undefined) {
-      localStorage.setItem('userList', JSON.stringify([formValues]));
-    } else {
-      let parsedData = JSON.parse(userList);
-      let getData = parsedData.find(
-        (data) => data.firstName == formValues?.firstName
-      );
-      if (!getData) {
-        parsedData.push(formValues);
-        localStorage.setItem('userList', JSON.stringify(parsedData));
-      }
+
+    if (formValues['birthTime']) {
+      const hour = formValues['birthTime']?.hour?.toString().padStart(2, '0');
+      const minute = formValues['birthTime']?.minute
+        ?.toString()
+        .padStart(2, '0');
+      const second = formValues['birthTime']?.second
+        ?.toString()
+        .padStart(2, '0');
+      const formattedTime = `${hour}:${minute}:${second}`;
+      //////////////////
+      formValues['birthTime'] = formattedTime;
     }
-    this.formStep = 1;
+
     localStorage.setItem('basic_details', JSON.stringify(formValues));
+
+    if (formValues['birthTime']) {
+      this.formStep = 4;
+    } else {
+      this.formStep = 1;
+    }
   }
 
   customeTimeSelection(): void {

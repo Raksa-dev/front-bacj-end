@@ -16,9 +16,12 @@
     background: linear-gradient(to right, #2895ff 0%, #a528ff 98.92%);
     padding: 1px;
     border-radius: 10px;
+    position: relative;
   }
   .menus {
     display: flex;
+    position: relative;
+
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -29,15 +32,54 @@
     font-weight: 600;
     border-radius: 10px;
     padding: 0.75rem;
-    &:hover {
-      background: linear-gradient(to right, #2895ff 0%, #a528ff 98.92%);
-    }
+  }
+  .menus:hover {
+    background: linear-gradient(to right, #2895ff 0%, #a528ff 98.92%);
+  }
+  .tooltip-1 {
+    position: absolute;
+    background: linear-gradient(to right, #2895ff 0%, #a528ff 98.92%);
+    color: rgb(255, 255, 255);
+    padding: 5px;
+    border-radius: 5px;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    display: block;
+    font-size: 0.75rem;
+    line-height: 1rem;
   }
   @media only screen and (min-width: 320px) and (max-width: 767px) {
     height: 100%;
     .menu-section {
       grid-template-columns: repeat(1, 1fr);
     }
+  }
+}
+
+.coming-soon {
+  position: absolute;
+  bottom: 0;
+  right: 0px;
+  background-color: yellow;
+  color: black;
+  width: 150px;
+  text-align: center;
+  // rotate: 330deg;
+  font-size: 0.85rem;
+  border-radius: 5px;
+  animation: rotateAnimation 4s ease-in-out infinite;
+}
+
+@keyframes rotateAnimation {
+  0% {
+    transform: rotate(330deg);
+  }
+  50% {
+    transform: rotate(340deg);
+  }
+  100% {
+    transform: rotate(330deg);
   }
 }
 
