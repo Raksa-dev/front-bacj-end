@@ -28,7 +28,9 @@ select option {
   border-radius: 10px;
   cursor: pointer;
 }
-
+.examples {
+  color: rgba(255, 255, 255, 0.732);
+}
 .gradient-button-new:hover {
   background: linear-gradient(
     to right,
@@ -145,6 +147,8 @@ select option {
   transition: background 0.3s ease;
 }
 .ng-select.custom {
+  background: linear-gradient(150.77deg, #d900ff79 0%, #6f00ffb7 80.92%);
+  border-radius: 10px;
   .ng-dropdown-panel {
     background: #230033;
     color: #fff;

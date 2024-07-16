@@ -133,6 +133,7 @@ export class BookComponent implements OnInit {
   consultAstrologer() {
     this.route.navigate(['chat']);
   }
+  youKnowYourTimeButton = false;
   onTimeSelected(time) {
     this.selectedTimeIfYouKnow = time;
   }
@@ -144,7 +145,17 @@ export class BookComponent implements OnInit {
     const second = this.selectedTimeIfYouKnow?.second
       ?.toString()
       .padStart(2, '0');
+    if (
+      this.selectedTimeIfYouKnow == null ||
+      this.selectedTimeIfYouKnow == undefined
+    ) {
+      this.youKnowYourTimeButton = true;
+      return;
+    } else {
+      this.youKnowYourTimeButton = false;
+    }
     const formattedTime = `${hour}:${minute}:${second}`;
+    console.log('this is fomrated', formattedTime);
     let data = JSON.parse(localStorage.getItem('basic_details'));
     data['birthTime'] = formattedTime;
     data['rawFormatbirthTime'] = this.selectedTimeIfYouKnow;

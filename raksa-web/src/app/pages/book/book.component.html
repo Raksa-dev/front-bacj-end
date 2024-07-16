@@ -82,7 +82,7 @@
             <!-- birth place -->
             <div class="mb-2">
               <label for="location" class="form-fields-label"
-                >Enter Correct Location</label
+                >Enter currentYear Location</label
               >
               <ng-select
                 [items]="movies$ | async"
@@ -356,9 +356,24 @@
           <h2>PLEASE ENTER YOUR BIRTH TIME</h2>
           <div class="choose-time">
             <div class="mb-3">
+              <h5>We are following 24 hours format</h5>
+
               <app-custome-time-picker
                 (timeChange)="onTimeSelected($event)"
               ></app-custome-time-picker>
+              <h5 *ngIf="youKnowYourTimeButton" style="color: red">
+                HH : MM : SS Mandatory
+              </h5>
+
+              <div class="examples">
+                <h5>Examples are as follow:</h5>
+                <div class="d-flex gap-3">
+                  <h6>12 Am = 00:00:00,</h6>
+                  <h6>10 Am = 10:00:00,</h6>
+                  <h6>9 Pm = 21:00:00</h6>
+                </div>
+              </div>
+
               <div class="next-button m-5" (click)="onTimeSelectedClick()">
                 <div>Next</div>
                 <div>></div>
