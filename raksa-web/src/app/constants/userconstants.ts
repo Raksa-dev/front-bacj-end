@@ -41,7 +41,7 @@ export const USER_DASHBOARD = {
     {
       logo: '../../../assets/images/dashboard/Foreign_Settlement.png',
       menu: 'Foreign Settlement',
-      toolTip: 'Foreign Settlement',
+      toolTip: 'Astrological guidance for foreign experiences and settlements.',
     },
     {
       logo: '../../../assets/images/dashboard/Horoscope_Match.png',
