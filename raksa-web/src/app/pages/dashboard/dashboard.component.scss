@@ -207,3 +207,55 @@
     font-weight: 500;
   }
 }
+
+.paywall-overlay {
+  background-color: #2424245c;
+  height: 100vh;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.paywall-message-box {
+  background-color: #d9d9d9;
+  border-radius: 15px;
+  border: 2px solid black;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  width: 30%;
+}
+.paywall-action-area {
+  background-color: #a3eeffb5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 0.75em;
+  text-align: center;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  h5 {
+    color: black;
+    font-weight: 500;
+  }
+  p {
+    color: black;
+    font-weight: 400;
+    font-size: 0.75rem;
+  }
+  .recharge-button {
+    background-color: #2ae173;
+    border-radius: 50px;
+    border: none;
+    color: whitesmoke;
+    padding-inline: 3rem;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+}

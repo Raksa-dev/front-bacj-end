@@ -253,7 +253,7 @@ export class ChatComponent implements OnInit {
       .result.then();
   }
 
-  bookAnAppointment(e: MouseEvent, astroData, content) {
+  bookAnAppointment(e: MouseEvent, astroData, book, content) {
     e.stopPropagation();
     if (this.authService.activeUserValue) {
       if (!astroData?.isOnline) {
@@ -261,8 +261,10 @@ export class ChatComponent implements OnInit {
         this.openConfirmation(content);
         return;
       }
-      let checkBalance = astroData['chatChargePerMinute'] * 5;
+      let checkBalance = astroData['chatChargePerMinute'] * 1;
       if (this.userData.walletBalance > checkBalance) {
+        this.openConfirmation(book);
+
         // this.userService
         //   .NotifyAstrologerForChat(
         //     astroData,

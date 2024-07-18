@@ -540,6 +540,7 @@ export class LoginComponent implements OnInit {
         localStorage.removeItem('user-sign-up-data');
         this.userService.fetchUserData(this.authService.activeUserValue['uid']);
         localStorage.setItem('userScreen', 'true');
+        localStorage.setItem('newuser', 'true');
         this.router.navigateByUrl('/dashboard');
         this.activeModal.close({ response: true });
       })

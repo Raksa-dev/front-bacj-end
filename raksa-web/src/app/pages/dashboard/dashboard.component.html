@@ -141,3 +141,20 @@
     </div>
   </div>
 </div>
+
+<div class="paywall-overlay" *ngIf="confitee">
+  <div class="paywall-message-box">
+    <img
+      src="../../../assets/images/wallet-recharge.png"
+      width="250px"
+      height="250px"
+    />
+    <div class="paywall-action-area">
+      <h5 style="text-align: center">
+        🎉 Congratulations! 🎉 You've just received a ₹29 gift from us to make
+        your day a little brighter! Enjoy! 💸✨
+      </h5>
+      <button class="recharge-button" (click)="hideConfitee()">Claim</button>
+    </div>
+  </div>
+</div>

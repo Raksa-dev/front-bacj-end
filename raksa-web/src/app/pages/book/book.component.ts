@@ -155,7 +155,6 @@ export class BookComponent implements OnInit {
       this.youKnowYourTimeButton = false;
     }
     const formattedTime = `${hour}:${minute}:${second}`;
-    console.log('this is fomrated', formattedTime);
     let data = JSON.parse(localStorage.getItem('basic_details'));
     data['birthTime'] = formattedTime;
     data['rawFormatbirthTime'] = this.selectedTimeIfYouKnow;
@@ -695,9 +694,25 @@ export class BookComponent implements OnInit {
     localStorage.setItem('basic_details', JSON.stringify(formValues));
 
     if (formValues['birthTime']) {
-      this.formStep = 4;
+      this.deductBalanceFromUserAccount(
+        this.authService?.activeUserValue?.uid,
+        29
+      ).then((data) => {
+        this.userService.fetchUserData(this.authService.activeUserValue?.uid);
+
+        this.formStep = 4;
+      });
     } else {
-      this.formStep = 1;
+      this.deductBalanceFromUserAccount(
+        this.authService?.activeUserValue?.uid,
+        29
+      ).then((data) => {
+            this.userService.fetchUserData(
+              this.authService.activeUserValue?.uid
+            );
+
+        this.formStep = 1;
+      });
     }
   }
 
