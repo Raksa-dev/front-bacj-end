@@ -87,12 +87,13 @@ export class LoginComponent implements OnInit {
   public signUpForm: FormGroup = this.formBuilder.group({
     firstName: ['', [Validators.required]],
     lastName: ['', [Validators.required]],
+    email: ['', [Validators.required]],
     gender: [null, [Validators.required]],
     dateOfBirth: [null, [Validators.required]],
-    birthTime: [null, [Validators.required]],
+    // birthTime: [null, [Validators.required]],
     birthPlace: ['', [Validators.required]],
-    maritialStatus: [null, [Validators.required]],
-    isAstrologer: [null, [Validators.required]],
+    // maritialStatus: [null, [Validators.required]],
+    // isAstrologer: [null, [Validators.required]],
   });
   public signUpFormSubmitted: boolean = false;
 
@@ -514,31 +515,31 @@ export class LoginComponent implements OnInit {
       formValues['dateOfBirth'].month - 1,
       formValues['dateOfBirth'].day
     );
-    formValues['isAstrologer'] =
-      formValues['isAstrologer'] == 'true' ? true : false;
+    // formValues['isAstrologer'] =
+    //   formValues['isAstrologer'] == 'true' ? true : false;
     formValues['birthPlace'] = formValues['birthPlace'].description;
     // format birthtime
-    const hour = formValues['birthTime']?.hour?.toString().padStart(2, '0');
-    const minute = formValues['birthTime']?.minute?.toString().padStart(2, '0');
-    const second = formValues['birthTime']?.second?.toString().padStart(2, '0');
-    const formattedTime = `${hour}:${minute}:${second} ${
-      formValues['birthTime']?.hour >= 12 ? 'PM' : 'AM'
-    }`;
+    // const hour = formValues['birthTime']?.hour?.toString().padStart(2, '0');
+    // const minute = formValues['birthTime']?.minute?.toString().padStart(2, '0');
+    // const second = formValues['birthTime']?.second?.toString().padStart(2, '0');
+    // const formattedTime = `${hour}:${minute}:${second} ${
+    //   formValues['birthTime']?.hour >= 12 ? 'PM' : 'AM'
+    // }`;
     //////////////////
-    formValues['birthTime'] = formattedTime;
-    let relativeDataArray =
-      JSON.parse(localStorage.getItem('relative-data')!) || [];
+    // formValues['birthTime'] = formattedTime;
+    // let relativeDataArray =
+    //   JSON.parse(localStorage.getItem('relative-data')!) || [];
 
-    if (relativeDataArray.length) {
-      formValues['relatives'] = relativeDataArray;
-    }
-    formValues['walletBalance'] = 0;
+    // if (relativeDataArray.length) {
+    //   formValues['relatives'] = relativeDataArray;
+    // }
+    formValues['walletBalance'] = 29;
     this.userService
       .CreateUser(formValues)
       .then((data) => {
         localStorage.removeItem('user-sign-up-data');
         this.userService.fetchUserData(this.authService.activeUserValue['uid']);
-        window.location.reload();
+        localStorage.setItem('userScreen', 'true');
         this.router.navigateByUrl('/dashboard');
         this.activeModal.close({ response: true });
       })
