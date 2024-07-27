@@ -14,6 +14,7 @@ export const CATEGORICALMAPPING = {
   Remedies: 'remedies',
   'Job VS Business': 'job_vs_business',
   Love: 'love',
+  'Horoscope Match': 'horoscope_match',
   Students: 'students',
   'Improving Sex Life': 'improving_sex_life',
   'Career Insights Problems': 'career_insights_problems',

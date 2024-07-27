@@ -1,3 +1,9 @@
+.web-view-visible {
+  display: block;
+}
+.mobile-view-visible {
+  display: none;
+}
 .apitest {
   height: 100vh;
   display: flex;
@@ -262,10 +268,15 @@ select option {
   background-color: gray;
   padding: 20px;
 }
+
 .choose-time {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    grid-template-columns: 1fr;
+    margin: 10px;
+  }
 }
 
 .box {
@@ -425,7 +436,7 @@ select option {
   align-items: center;
 }
 .paywall-message-box {
-  background-color: #d9d9d9;
+  background-color: #5f39ff;
   border-radius: 15px;
   border: 2px solid black;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -474,6 +485,9 @@ select option {
   height: 90vh;
   display: flex;
   gap: 20px;
+  .side-panel-gradient-responsive {
+    display: none;
+  }
   .side-panel-gradient {
     background: linear-gradient(150.77deg, #d700ff 0%, #7000ff 80.92%);
     width: 25.6vw;
@@ -579,6 +593,112 @@ select option {
   }
 }
 
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+  h2 {
+    font-size: 1.75rem;
+  }
+  .web-view-visible {
+    display: none;
+  }
+
+  .mobile-view-visible {
+    display: block;
+  }
+
+  .questions-and-answers {
+    z-index: 10000;
+    .side-panel-gradient {
+      display: none;
+    }
+
+    .side-panel-gradient-responsive {
+      position: absolute;
+      width: 90vw;
+      height: 90vh;
+      display: block;
+    }
+    .side-panel-gradient-question {
+      background: linear-gradient(to right, #2895ff 0%, #a528ff 98.92%);
+      padding: 1px;
+      border-radius: 10px;
+    }
+    .side-panel {
+      height: 100vh;
+      width: 100vw;
+      background: linear-gradient(175.65deg, #000000 3.53%, #190f37 96.47%);
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      .question-title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #6a00ff;
+        border-radius: 5px;
+      }
+    }
+    .side-panel-question-section {
+      background: #230033;
+      border-radius: 5px;
+      height: 73vh;
+      padding: 10px;
+      overflow-y: scroll;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      .selectedQuestion {
+        background-color: #6a00ff;
+      }
+      .question-box {
+        border: #ffffff;
+        border: 1px solid #6a00ff;
+        border-radius: 10px;
+        font-size: 0.8rem;
+        line-height: 1.2rem;
+        display: flex;
+        padding: 10px;
+        cursor: pointer;
+        &:hover {
+          border: 1px solid #6a00ff62;
+        }
+      }
+      &::-webkit-scrollbar {
+        width: 0px; /* Width of the scrollbar */
+      }
+
+      &::-webkit-scrollbar-track {
+        background-color: #f1f1f1; /* Track color */
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: #888; /* Thumb color */
+        border-radius: 6px; /* Rounded corners */
+      }
+    }
+    .main-panel {
+      width: 100%;
+      padding: 1rem;
+    }
+  }
+  .find-answers {
+    z-index: 10;
+    width: 90vw;
+    overflow: hidden;
+    .torch-ligth {
+      position: absolute;
+      height: 80px;
+      top: 33%;
+      left: 0%;
+      animation: none;
+    }
+    img {
+      position: absolute;
+      height: 200px;
+    }
+  }
+}
+
 @keyframes moveTorch {
   0%,
   100% {
@@ -670,6 +790,7 @@ select option {
 
 .table-container {
   height: 70vh;
+  background-color: #190f37;
   overflow-y: scroll;
   &::-webkit-scrollbar {
     width: 8px; /* Width of the scrollbar */

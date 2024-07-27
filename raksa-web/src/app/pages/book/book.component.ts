@@ -189,6 +189,12 @@ export class BookComponent implements OnInit {
 
   public maxDate: { year: number; month: number; day: number };
 
+  public openQuestion = false;
+
+  openQuestions() {
+    this.openQuestion = true;
+  }
+
   public signUpForm: FormGroup = this.formBuilder.group({
     firstName: ['', [Validators.required]],
     gender: [null, [Validators.required]],
@@ -707,9 +713,7 @@ export class BookComponent implements OnInit {
         this.authService?.activeUserValue?.uid,
         29
       ).then((data) => {
-            this.userService.fetchUserData(
-              this.authService.activeUserValue?.uid
-            );
+        this.userService.fetchUserData(this.authService.activeUserValue?.uid);
 
         this.formStep = 1;
       });
@@ -726,6 +730,8 @@ export class BookComponent implements OnInit {
   getAnswer(index: number): void {
     this.loadSpinner = true;
     this.answerText = 'LOADING PLEASE WAIT .........';
+    this.openQuestion = false;
+
     if (this.cacheAnswers[index] == undefined) {
       let data = JSON.parse(localStorage.getItem('basic_details'));
       // Check if dateOfBirth is valid

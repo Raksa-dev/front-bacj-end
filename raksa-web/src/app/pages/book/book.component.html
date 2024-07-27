@@ -367,7 +367,7 @@
 
               <div class="examples">
                 <h5>Examples are as follow:</h5>
-                <div class="d-flex gap-3">
+                <div class="d-flex gap-0 gap-sm-3 flex-column flex-sm-row">
                   <h6>12 Am = 00:00:00,</h6>
                   <h6>10 Am = 10:00:00,</h6>
                   <h6>9 Pm = 21:00:00</h6>
@@ -473,7 +473,7 @@
               </form>
             </div>
             <div
-              class="col d-flex justify-content-between flex-column position-relative"
+              class="col-12 col-sm-4 d-flex justify-content-between flex-column position-relative"
             >
               <div
                 *ngIf="timeWindowSelect == 1 || timeWindowSelect == 2"
@@ -983,15 +983,66 @@
         </div>
       </div>
     </div>
+
+    <div class="side-panel-gradient-responsive" *ngIf="openQuestion">
+      <div class="side-panel">
+        <div
+          class="question-title gradient-button-new"
+          style="font-size: 1rem"
+          (click)="backToCategory()"
+        >
+          More Category
+        </div>
+        <div class="question-title">
+          <h5>Questions</h5>
+        </div>
+        <div class="side-panel-gradient-question">
+          <div class="side-panel-question-section">
+            <div *ngFor="let ques of question; let i = index">
+              <div
+                class="question-box {{
+                  i == questionSelected ? 'selectedQuestion' : ''
+                }}"
+                (click)="selectQuestionOnClick(i)"
+              >
+                {{ ques }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="main-panel">
       <div
-        class="question-title gradient-button-new float-end"
+        class="web-view-visible question-title gradient-button-new float-end"
         (click)="consultAstrologer()"
       >
         Consult Astrologer
       </div>
+      <div class="mobile-view-visible">
+        <div class="d-flex">
+          <div
+            class="question-title"
+            style="flex: 0; font-size: 2rem; margin: 10px"
+            (click)="openQuestions()"
+          >
+            ☰
+          </div>
+          <div
+            class="question-title gradient-button-new"
+            style="flex: 10; font-size: 1rem"
+            (click)="consultAstrologer()"
+          >
+            Consult Astrologer
+          </div>
+        </div>
+      </div>
 
-      <div class="find-answers" *ngIf="questionSelected == null">
+      <div
+        class="find-answers"
+        *ngIf="questionSelected == null && !openQuestion"
+      >
         <img
           class="torch-ligth"
           src="../../../assets/images/torch_light.png"
@@ -1003,7 +1054,6 @@
           alt=""
           *ngIf="questionSet.category != 'panchanga'"
         />
-
         <div
           class="table-container"
           *ngIf="questionSet.category == 'panchanga'"

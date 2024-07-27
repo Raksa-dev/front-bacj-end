@@ -70,6 +70,7 @@ export class DashboardComponent {
       'Muhurtha',
       'Today’s Panchanga',
       'Today’s prediction',
+      'Horoscope Match',
     ];
     this.userService.fetchUserData(this.authService.activeUserValue?.uid);
     if (list.includes(cat)) {
