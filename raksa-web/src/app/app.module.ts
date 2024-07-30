@@ -45,6 +45,7 @@ import { CalluiComponent } from './shared/callui/callui.component';
 import { TruncatePipe } from './pipes/truncate.pipe';
 import { TransactionComponent } from './shared/transaction/transaction.component';
 import { SessionsComponent } from './shared/sessions/sessions.component';
+import { TypewrittereffectComponent } from './shared/typewrittereffect/typewrittereffect.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { SessionsComponent } from './shared/sessions/sessions.component';
     TruncatePipe,
     TransactionComponent,
     SessionsComponent,
+    // TypewrittereffectComponent,
   ],
   imports: [
     BrowserModule,

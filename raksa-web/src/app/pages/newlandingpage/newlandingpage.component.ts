@@ -157,6 +157,24 @@ export class NewlandingpageComponent {
     },
   ];
 
+  public heroImage = [
+    {
+      _id: 1,
+      img: '../../../assets/images/hero-image-1.png',
+      text: 'Answers to Life’s Most Important Questions',
+    },
+    {
+      _id: 2,
+      img: '../../../assets/images/hero-image-2.png',
+      text: 'Answers to Life’s Most Important Questions',
+    },
+    {
+      _id: 3,
+      img: '../../../assets/images/hero-image-3.png',
+      text: 'Answers to Life’s Most Important Questions',
+    },
+  ];
+
   onClick() {
     const modalRef = this.modalService.open(LoginComponent, {
       backdrop: 'static',
@@ -220,6 +238,17 @@ export class NewlandingpageComponent {
     },
   ];
 
+  public heroImageOwlOptions: OwlOptions = {
+    items: 1,
+    autoplay: true,
+    loop: true,
+    dots: true,
+    margin: 150,
+    stagePadding: 136,
+    navText: ['', ''],
+    autoWidth: true,
+  };
+
   public testimonialOwlOptions: OwlOptions = {
     items: 3,
     autoplay: true,
@@ -229,10 +258,7 @@ export class NewlandingpageComponent {
     dots: true,
     autoWidth: true,
     nav: true,
-    navText: [
-      "<img src='../../../assets/images/circle-left.png'>",
-      "<img src='../../../assets/images/circle-right.png'>",
-    ],
+    navText: ['', ''],
     margin: 36,
     stagePadding: 136,
 

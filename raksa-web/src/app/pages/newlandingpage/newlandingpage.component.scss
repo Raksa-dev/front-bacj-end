@@ -1,3 +1,31 @@
+.hero-wrap {
+  position: relative;
+  padding-top: 100px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-image: url(../../../assets/images/hero-bg.png);
+  // height: 100vh;
+}
+.hero-ab {
+  position: absolute;
+  bottom: 100px;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.hero-banner {
+  position: absolute;
+  bottom: 0;
+  background-color: #6f00ff;
+  display: flex;
+  width: 100%;
+  padding: 0.5rem;
+  text-align: center;
+  justify-content: space-evenly;
+}
+
 .gradient-button {
   background: linear-gradient(
     to right,
@@ -20,6 +48,14 @@
     #7000ff 80.92%
   ); /* Reverse the gradient colors on hover */
   box-shadow: 10px 5px 5px red;
+}
+.hero-card {
+  background: #0d081d;
+  border: 1px solid #6f00ff;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border-radius: 10px;
 }
 
 .testimonial-cards-section {
@@ -76,7 +112,28 @@
   height: 200px;
   display: flex;
 }
-
+.hero-text-left-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  .hero-text {
+    line-height: 5rem;
+    font-size: 4rem;
+    color: rgb(240, 240, 240);
+    font-weight: 700;
+  }
+  h5 {
+    line-height: 5rem;
+    font-size: 1rem;
+    color: rgb(240, 240, 240);
+    font-weight: 500;
+  }
+}
+.act-trust {
+  display: flex;
+  justify-content: space-around;
+}
 .cta-container {
   height: 300px;
   width: 100vw;
@@ -126,4 +183,13 @@
       }
     }
   }
+}
+
+.corsell-continer {
+  margin: 1rem;
+}
+
+.hero-page-v2 {
+  display: grid;
+  grid-template-columns: 1fr 600px;
 }

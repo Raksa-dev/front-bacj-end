@@ -1,8 +1,43 @@
-<div class="hero-wrap text-center">
-  <div class="container">
-    <h1 class="fw-bold">Vedic Astrology Insights at Your Fingertips</h1>
+<div class="hero-wrap">
+  <div class="hero-page-v2">
+    <div class="hero-text-left-section">
+      <div class="w-75 hero-text">
+        Find Answers to
+        <div>Life’s Most</div>
+        Difficult
+        <div>Questions</div>
+        <h5>Guaranteed Accurate and Consistent Guidance.</h5>
+        <app-typewrittereffect></app-typewrittereffect>
+      </div>
+    </div>
 
-    <div class="row">
+    <div class="corsell-continer">
+      <owl-carousel-o [options]="heroImageOwlOptions">
+        <ng-container *ngFor="let testimonial of heroImage">
+          <ng-template carouselSlide [id]="testimonial['_id'].toString()">
+            <div class="hero-card">
+              <div class="flex-grow-1">
+                <img
+                  [src]="testimonial['img']"
+                  [alt]="testimonial['text']"
+                  [title]="testimonial['text']"
+                  height="200px"
+                  style="object-fit: contain"
+                />
+              </div>
+
+              <div class="text-center">
+                <h5 class="mb-0">{{ testimonial["text"] }}</h5>
+              </div>
+            </div>
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
+    </div>
+    <!-- <h1 class="fw-bold">Vedic Astrology Insights at Your Fingertips</h1>
+    <h1 class="fw-bold">Vedic Astrology Insights at Your Fingertips</h1> -->
+
+    <!-- <div class="row">
       <div class="col-lg-8 text-center mx-auto">
         <div class="d-flex justify-content-between">
           <div class="d-block">
@@ -14,10 +49,62 @@
           </div>
         </div>
       </div>
-    </div>
-    <button class="btn gradient-button" type="button" (click)="onClick()">
+    </div> -->
+    <!-- <button class="btn gradient-button" type="button" (click)="onClick()">
       Get Started
-    </button>
+    </button> -->
+  </div>
+  <!-- <div class="act-trust">
+    <div>
+      <button class="btn gradient-button" type="button" (click)="onClick()">
+        Get Started
+      </button>
+    </div>
+    <div>
+      <button class="btn gradient-button" type="button" (click)="onClick()">
+        Get Started
+      </button>
+    </div>
+  </div> -->
+  <div class="hero-ab">
+    <div class="hero-text-left-section">
+      <button class="btn gradient-button" type="button" (click)="onClick()">
+        Get Started For Free
+      </button>
+    </div>
+    <div class="d-flex justify-content-end align-items-center">
+      <img src="../../../assets/images/Protected.png" alt="" srcset="" />
+      <h6 class="w-50">
+        Your security is our utmost priority. All user details are kept safe and
+        confidential.
+      </h6>
+    </div>
+  </div>
+  <div class="hero-banner">
+    <h5 style="font-weight: 900">
+      99%
+      <div>Customer Satisfaction</div>
+    </h5>
+    <h5 style="font-weight: 900">
+      Trusted by
+      <div>Astrology Experts</div>
+    </h5>
+    <h5 style="font-weight: 900">
+      Founded in
+      <div>2022</div>
+    </h5>
+    <h5 style="font-weight: 900">
+      Top Reviews
+      <div>
+        <ngb-rating
+          style="color: rgb(247, 255, 17)"
+          rate="55"
+          [max]="5"
+          readonly="true"
+        >
+        </ngb-rating>
+      </div>
+    </h5>
   </div>
 </div>
 
