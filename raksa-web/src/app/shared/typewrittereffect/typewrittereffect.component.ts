@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TypewrittereffectComponent implements OnInit {
   sentences: string[] = [
-    'Hello, this is the first sentence.',
-    'Will I get a job soon ?',
-    'Finally, this is the third sentence.',
+    'When will I get married ?',
+    'Will she come back to me ?',
+    'Should I start a business ?',
+    'When will I be healthy again ?',
+    'What will my day be like ?',
+    'Will I ever fall in love again ?',
   ];
   displayedText: string = '';
   typingSpeed: number = 100; // milliseconds per character
