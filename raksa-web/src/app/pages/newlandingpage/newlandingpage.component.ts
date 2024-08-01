@@ -166,12 +166,12 @@ export class NewlandingpageComponent {
     {
       _id: 2,
       img: '../../../assets/images/hero-image-2.png',
-      text: 'Answers to Life’s Most Important Questions',
+      text: 'Guided Astrology to Navigate Life with Confidence',
     },
     {
       _id: 3,
       img: '../../../assets/images/hero-image-3.png',
-      text: 'Answers to Life’s Most Important Questions',
+      text: 'Find Balance and Harmony with Astrological Guidance',
     },
   ];
 

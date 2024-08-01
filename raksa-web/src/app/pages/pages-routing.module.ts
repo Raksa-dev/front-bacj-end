@@ -26,6 +26,8 @@ import { LearnComponent } from './learn/learn.component';
 import { BookComponent } from './book/book.component';
 import { NewlandingpageComponent } from './newlandingpage/newlandingpage.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { WhyraksaComponent } from './whyraksa/whyraksa.component';
+import { OurstoryComponent } from './ourstory/ourstory.component';
 
 const routes: Routes = [
   {
@@ -86,6 +88,14 @@ const routes: Routes = [
   {
     path: 'invoice',
     children: [{ path: ':id', component: InvoiceComponent }],
+  },
+  {
+    path: 'whyraksa',
+    component: WhyraksaComponent,
+  },
+  {
+    path: 'our-story',
+    component: OurstoryComponent,
   },
   {
     path: 'admin',

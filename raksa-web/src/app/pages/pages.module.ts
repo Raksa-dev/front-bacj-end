@@ -37,6 +37,8 @@ import { BookComponent } from './book/book.component';
 import { NewlandingpageComponent } from './newlandingpage/newlandingpage.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { TypewrittereffectComponent } from '../shared/typewrittereffect/typewrittereffect.component';
+import { WhyraksaComponent } from './whyraksa/whyraksa.component';
+import { OurstoryComponent } from './ourstory/ourstory.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +66,8 @@ import { TypewrittereffectComponent } from '../shared/typewrittereffect/typewrit
     NewlandingpageComponent,
     DashboardComponent,
     TypewrittereffectComponent,
+    WhyraksaComponent,
+    OurstoryComponent,
   ],
   imports: [
     CommonModule,
