@@ -70,6 +70,29 @@
   }
 }
 
+.text-with-flame {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.Raksa-gif {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 4rem;
+  border-right: 1px solid purple;
+  img {
+    object-fit: cover;
+    width: 100%;
+  }
+}
+
+.comparision {
+  display: grid;
+  grid-template-columns: 1fr 500px;
+}
+
 .guide-cards-section {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

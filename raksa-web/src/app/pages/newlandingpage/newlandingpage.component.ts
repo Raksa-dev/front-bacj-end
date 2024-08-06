@@ -175,6 +175,25 @@ export class NewlandingpageComponent {
     },
   ];
 
+  public otherApps = [
+    {
+      _id: 0,
+      img: '../../../assets/images/DM-0.png',
+    },
+    {
+      _id: 1,
+      img: '../../../assets/images/DM-1.png',
+    },
+    {
+      _id: 2,
+      img: '../../../assets/images/DM-2.png',
+    },
+    {
+      _id: 3,
+      img: '../../../assets/images/DM-3.png',
+    },
+  ];
+
   onClick() {
     const modalRef = this.modalService.open(LoginComponent, {
       backdrop: 'static',

@@ -28,6 +28,7 @@ import { NewlandingpageComponent } from './newlandingpage/newlandingpage.compone
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { WhyraksaComponent } from './whyraksa/whyraksa.component';
 import { OurstoryComponent } from './ourstory/ourstory.component';
+import { OurphilosophyComponent } from './ourphilosophy/ourphilosophy.component';
 
 const routes: Routes = [
   {
@@ -96,6 +97,10 @@ const routes: Routes = [
   {
     path: 'our-story',
     component: OurstoryComponent,
+  },
+  {
+    path: 'our-philosophy',
+    component: OurphilosophyComponent,
   },
   {
     path: 'admin',

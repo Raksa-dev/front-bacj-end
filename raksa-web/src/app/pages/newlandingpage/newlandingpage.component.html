@@ -110,6 +110,43 @@
 
 <section class="section text-center">
   <div class="container">
+    <div class="comparision">
+      <div class="text-with-flame">
+        <h2 class="fw-semi-bold mb-3">Raksa</h2>
+        <img src="../../../assets/images/flame.png" height="80px" width="80px" alt="" />
+      </div>
+      <h2 class="fw-semi-bold mb-3">Other apps</h2>
+    </div>
+
+    <div class="comparision">
+      <div class="Raksa-gif">
+        <img src="../../../assets/images/Raksa.gif" alt="" />
+      </div>
+
+      <div class="corsell-continer">
+        <owl-carousel-o [options]="heroImageOwlOptions">
+          <ng-container *ngFor="let testimonial of otherApps">
+            <ng-template carouselSlide [id]="testimonial['_id'].toString()">
+              <div class="">
+                <div class="flex-grow-1">
+                  <img
+                    [src]="testimonial['img']"
+                    alt="Other apps"
+                    height="400px"
+                    style="object-fit: contain"
+                  />
+                </div>
+              </div>
+            </ng-template>
+          </ng-container>
+        </owl-carousel-o>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section text-center">
+  <div class="container">
     <h2 class="fw-semi-bold mb-3">
       Raksa is Your Cosmic Guide to the universe
     </h2>

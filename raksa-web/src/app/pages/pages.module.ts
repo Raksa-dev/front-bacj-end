@@ -39,6 +39,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { TypewrittereffectComponent } from '../shared/typewrittereffect/typewrittereffect.component';
 import { WhyraksaComponent } from './whyraksa/whyraksa.component';
 import { OurstoryComponent } from './ourstory/ourstory.component';
+import { OurphilosophyComponent } from './ourphilosophy/ourphilosophy.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { OurstoryComponent } from './ourstory/ourstory.component';
     TypewrittereffectComponent,
     WhyraksaComponent,
     OurstoryComponent,
+    OurphilosophyComponent,
   ],
   imports: [
     CommonModule,
