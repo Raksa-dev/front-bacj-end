@@ -346,6 +346,17 @@ export class UserService {
       }
     );
   }
+  async GetRazorPayOrderId(amount) {
+    return this.http.post(
+      `${this.BASE_URL}/api/razorpay`,
+      {
+        amount,
+      },
+      {
+        responseType: 'json',
+      }
+    );
+  }
   async GetUploadPicLink(formData) {
     return this.http.post(`${this.BASE_URL}/api/upload`, formData);
   }

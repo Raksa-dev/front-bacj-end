@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+const CryptoJS = require('crypto-js');
+
 import { Auth } from 'firebase/auth';
 import {
   AuthService,
@@ -17,13 +19,17 @@ import {
 export class WalletComponent implements OnInit {
   showPaymentOverlay: boolean = false;
   amountWithGstAddition = 0;
+  razorPay;
+
   constructor(
     public authService: AuthService,
     public userService: UserService,
     public windowRefService: WindowRefService,
     public activeModal: NgbActiveModal,
     public formBuilder: FormBuilder
-  ) {}
+  ) {
+    this.razorPay = window['Razorpay'];
+  }
   public addMoneyForm: FormGroup = this.formBuilder.group({
     amount: [null, [Validators.required]],
   });
@@ -43,7 +49,15 @@ export class WalletComponent implements OnInit {
   setAmount(amount) {
     this.addMoneyForm.setValue({ amount });
   }
-  async openPayment(type) {
+
+  encryptForRazorPay(userId, amount) {
+    var ciphertext = CryptoJS.AES.encrypt(
+      JSON.stringify({ userId, amount }),
+      'Astro'
+    ).toString();
+    return ciphertext;
+  }
+  async openPayment(type, ciphertext?) {
     const formValues = this.addMoneyForm.value;
     if (type == 'phonePay') {
       (
@@ -70,6 +84,54 @@ export class WalletComponent implements OnInit {
         let child = window.open('about:blank', 'myChild');
         child.document.write(data);
         child.document.close();
+      });
+    }
+
+    if (type == 'razorpay') {
+      await (
+        await this.userService.GetRazorPayOrderId(
+          this.amountWithGstAddition * 100
+        )
+      ).subscribe((data) => {
+        var options = {
+          key: 'rzp_test_TMnO8MHrkUaHg7', // Enter the Key ID generated from the Dashboard
+          amount: this.amountWithGstAddition * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+          currency: 'INR',
+          name: 'Raksa', //your business name
+          description: 'Test Transaction',
+          image: 'https://example.com/your_logo',
+          order_id: data['id'], //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+          handler: function (response) {
+            window.location.replace(
+              `/transaction?type=success&val=${ciphertext}&orderId=${response.razorpay_order_id}`
+            );
+          },
+          prefill: {
+            //We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
+            name: 'Gaurav Kumar', //your customer's name
+            email: 'gaurav.kumar@example.com',
+            contact: '7022101633', //Provide the customer's phone number for better conversion rates
+          },
+          notes: {
+            address: 'Razorpay Corporate Office',
+          },
+          theme: {
+            color: '#3399cc',
+          },
+        };
+        var rzp1 = new this.razorPay(options);
+
+        rzp1.on('payment.failed', function (response) {
+          alert(response.error.code);
+          alert(response.error.description);
+          alert(response.error.source);
+          alert(response.error.step);
+          alert(response.error.reason);
+          alert(response.error.metadata.order_id);
+          alert(response.error.metadata.payment_id);
+        });
+
+        rzp1.open();
       });
     }
   }

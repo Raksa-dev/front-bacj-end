@@ -156,6 +156,22 @@
     >
       <span>Phone Pe</span>
     </button>
+    <button
+      type="submit"
+      id="sign-in-button"
+      class="btn gradient-button"
+      (click)="
+        openPayment(
+          'razorpay',
+          encryptForRazorPay(
+            authService.activeUserValue['uid'],
+            amountWithGstAddition
+          )
+        )
+      "
+    >
+      <span>Razor Pay</span>
+    </button>
     <!-- <button
       id="sign-in-button"
       class="btn gradient-button"

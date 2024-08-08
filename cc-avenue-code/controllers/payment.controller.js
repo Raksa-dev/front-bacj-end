@@ -1,5 +1,6 @@
 const nodeCCAvenue = require("node-ccavenue");
 const CryptoJS = require("crypto-js");
+const { request } = require("../helper");
 
 class PaymentController {
   static async handlePaymentControllerPhone(req, res, next) {
@@ -78,6 +79,46 @@ class PaymentController {
       }
     } catch (error) {
       next(error);
+    }
+  }
+  static async handleRazorpay(req, res, next) {
+    try {
+      const { amount } = req.body;
+      const body = {
+        amount: amount,
+        currency: "INR",
+        receipt: "Receipt no. 1",
+        notes: {
+          notes_key_1: "Tea, Earl Grey, Hot",
+          notes_key_2: "Tea, Earl Grey… decaf.",
+        },
+      };
+
+      const username = "rzp_test_TMnO8MHrkUaHg7";
+      const password = "SOsbAnO0WapuO5fMd1Sr4CnA";
+
+      // Encode the credentials in base64
+      const encodedCredentials = Buffer.from(
+        `${username}:${password}`
+      ).toString("base64");
+
+      const data = await request(
+        {
+          method: "POST",
+          hostname: "api.razorpay.com",
+          path: "/v1/orders",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Basic ${encodedCredentials}`,
+          },
+        },
+        body
+      ).then((dataRes) => {
+        return dataRes;
+      });
+      res.json(data);
+    } catch (err) {
+      next(err);
     }
   }
 }

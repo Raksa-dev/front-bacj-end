@@ -8,9 +8,17 @@
   color: rgb(240, 240, 240);
   gap: 3rem;
 
-  h1 {
+  h1::before {
+    content: "Our Philosophy";
+    background-color: #f3f25b;
     font-size: 7rem;
     font-weight: 800;
+    background-color: #f3f25b;
+    height: 10%;
+    background: url("../../../assets/images/gradient-amination.gif") 50% 50%;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
   }
   p {
     width: 60%;

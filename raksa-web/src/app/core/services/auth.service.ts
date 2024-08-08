@@ -68,8 +68,6 @@ export class AuthService {
     return data;
   }
   async getMonthlyHoroscope(zodiac, date): Promise<Observable<any>> {
-    console.log(zodiac, date);
-
     const coll = collection(this.firestore, 'horoscopes', 'monthly', 'data');
     const q1 = query(
       coll,
