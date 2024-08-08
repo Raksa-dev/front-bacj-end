@@ -108,9 +108,9 @@ export class WalletComponent implements OnInit {
           },
           prefill: {
             //We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
-            name: 'Gaurav Kumar', //your customer's name
-            email: 'gaurav.kumar@example.com',
-            contact: '7022101633', //Provide the customer's phone number for better conversion rates
+            name: this.currentUser?.firstName || 'random user name', //your customer's name
+            email: this.currentUser?.email || 'randome@abc.com',
+            contact: this.authService.activeUserValue?.phoneNumber, //Provide the customer's phone number for better conversion rates
           },
           notes: {
             address: 'Razorpay Corporate Office',
