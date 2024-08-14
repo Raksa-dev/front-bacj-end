@@ -363,15 +363,15 @@
                           currentUser.gender
                         }}</label>
                       </div>
-                      <div class="user-data-col">
+                      <!-- <div class="user-data-col">
                         <label for="firstName" class="form-sub-heading"
                           >Birth Date</label
                         >
                         <label for="firstName" class="user-values">{{
                           currentUser.dateOfBirth.toDate().toDateString()
                         }}</label>
-                      </div>
-                      <div class="user-data-col">
+                      </div> -->
+                      <!-- <div class="user-data-col">
                         <label for="firstName" class="form-sub-heading"
                           >Birth Time</label
                         >
@@ -381,6 +381,17 @@
                             : (currentUser.dateOfBirth.seconds * 1000 +
                                 currentUser.dateOfBirth.nanoseconds / 1000000
                               | date : "HH:mm:ss")
+                        }}</label>
+                      </div> -->
+                      <div
+                        *ngIf="currentUser?.currentPlace"
+                        class="user-data-col"
+                      >
+                        <label for="firstName" class="form-sub-heading"
+                          >Current Place</label
+                        >
+                        <label for="firstName" class="user-values">{{
+                          currentUser.currentPlace
                         }}</label>
                       </div>
                       <div
@@ -394,14 +405,14 @@
                           currentUser.birthPlace
                         }}</label>
                       </div>
-                      <div class="user-data-col">
+                      <!-- <div class="user-data-col">
                         <label for="firstName" class="form-sub-heading"
                           >Maritial Status</label
                         >
                         <label for="firstName" class="user-values">{{
                           currentUser.maritialStatus
                         }}</label>
-                      </div>
+                      </div> -->
                     </div>
                   </ng-template>
                 </div>

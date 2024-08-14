@@ -51,6 +51,21 @@
   ); /* Reverse the gradient colors on hover */
 }
 
+.gradient-button-blue {
+  background: linear-gradient(
+    150.77deg,
+    #332ded 0%,
+    #1f0ff1 98.92%
+  ); /* Adjust colors as needed */
+
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
 .name-phone {
   display: flex;
   justify-content: center;
@@ -175,6 +190,13 @@ select option {
     grid-template-columns: 1fr 1fr;
   }
 }
+.input-with-button {
+  display: grid;
+  grid-template-columns: 1fr 100px;
+  align-items: end;
+  gap: 10px;
+  margin-bottom: 1rem;
+}
 .payment-buttons {
   display: grid;
   grid-template-columns: 1fr;
@@ -190,4 +212,7 @@ select option {
   background-color: #fff;
   padding: 1rem;
   border-radius: 3px;
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    width: 100%;
+  }
 }

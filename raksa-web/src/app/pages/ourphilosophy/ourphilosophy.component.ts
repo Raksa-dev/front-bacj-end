@@ -24,4 +24,13 @@ export class OurphilosophyComponent {
       modalDialogClass: 'login',
     });
   }
+  scrollToSection() {
+    var section = document.getElementById('thoughts');
+    if (section) {
+      window.scrollTo({
+        top: section.offsetTop - 100,
+        behavior: 'smooth',
+      });
+    }
+  }
 }

@@ -5,7 +5,9 @@
   background-repeat: no-repeat;
   background-position: center center;
   background-image: url(../../../assets/images/hero-bg.png);
-  // height: 100vh;
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    height: 100vh;
+  }
 }
 .hero-ab {
   position: absolute;
@@ -13,6 +15,9 @@
   display: flex;
   justify-content: space-around;
   width: 100%;
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    flex-direction: column;
+  }
 }
 
 .hero-banner {
@@ -24,6 +29,17 @@
   padding: 0.5rem;
   text-align: center;
   justify-content: space-evenly;
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    text-align: left;
+    padding: 0.3rem;
+    height: 60px;
+    h5 {
+      font-size: 0.75rem;
+      display: inline;
+      height: 60px;
+      line-height: 1rem;
+    }
+  }
 }
 
 .gradient-button {
@@ -82,15 +98,23 @@
   align-items: center;
   padding-right: 4rem;
   border-right: 1px solid purple;
+  width: 100%;
   img {
     object-fit: cover;
     width: 100%;
+    @media only screen and (min-width: 320px) and (max-width: 767px) {
+      width: 350px;
+    }
   }
 }
 
 .comparision {
   display: grid;
   grid-template-columns: 1fr 500px;
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    grid-template-columns: 1fr;
+    overflow-x: hidden;
+  }
 }
 
 .guide-cards-section {
@@ -138,9 +162,10 @@
 .hero-text-left-section {
   display: flex;
   justify-content: center;
-  align-items: end;
+  align-items: center;
   flex-direction: column;
   .hero-text {
+    width: 75%;
     line-height: 5rem;
     font-size: 4rem;
     color: rgb(240, 240, 240);
@@ -152,7 +177,23 @@
     color: rgb(240, 240, 240);
     font-weight: 500;
   }
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    margin: 10px;
+    align-items: center;
+
+    h5 {
+      line-height: 1.5rem;
+    }
+    .hero-text {
+      width: 100%;
+      line-height: 3rem;
+      font-size: 2rem;
+      color: rgb(240, 240, 240);
+      font-weight: 700;
+    }
+  }
 }
+
 .act-trust {
   display: flex;
   justify-content: space-around;
@@ -210,9 +251,16 @@
 
 .corsell-continer {
   margin: 1rem;
+  display: block;
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    display: none;
+  }
 }
 
 .hero-page-v2 {
   display: grid;
   grid-template-columns: 1fr 750px;
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    grid-template-columns: 1fr;
+  }
 }

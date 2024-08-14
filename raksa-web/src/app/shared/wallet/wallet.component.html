@@ -46,18 +46,29 @@
                       [formGroup]="addMoneyForm"
                       autocomplete="off"
                     >
-                      <div class="mb-2">
-                        <label for="amount" class="form-fields-label"
-                          >Amount</label
+                      <div class="input-with-button">
+                        <div class="mb-2">
+                          <label for="amount" class="form-fields-label"
+                            >Amount</label
+                          >
+                          <input
+                            type="number"
+                            id="amount"
+                            formControlName="amount"
+                            class="form-control"
+                            placeholder="Enter Amount"
+                          />
+                        </div>
+                        <button
+                          type="submit"
+                          id="sign-in-button"
+                          class="btn gradient-button w-100 h-50 mb-1 d-flex justify-content-center align-items-center"
+                          [disabled]="addMoneyForm.invalid"
                         >
-                        <input
-                          type="number"
-                          id="amount"
-                          formControlName="amount"
-                          class="form-control"
-                          placeholder="Enter Amount"
-                        />
+                          <span>Proceed</span>
+                        </button>
                       </div>
+
                       <div class="payment-buttons-bits">
                         <div
                           id="sign-in-button"
@@ -103,7 +114,7 @@
                         </div>
                       </div>
 
-                      <div class="d-flex justify-content-center">
+                      <!-- <div class="d-flex justify-content-center">
                         <button
                           type="submit"
                           id="sign-in-button"
@@ -112,7 +123,7 @@
                         >
                           <span>Proceed To Pay</span>
                         </button>
-                      </div>
+                      </div> -->
                     </form>
                   </ng-template>
                 </div>
@@ -159,7 +170,7 @@
     <button
       type="submit"
       id="sign-in-button"
-      class="btn gradient-button"
+      class="btn gradient-button-blue"
       (click)="
         openPayment(
           'razorpay',

@@ -89,9 +89,9 @@ export class LoginComponent implements OnInit {
     lastName: ['', [Validators.required]],
     email: ['', [Validators.required]],
     gender: [null, [Validators.required]],
-    dateOfBirth: [null, [Validators.required]],
+    // dateOfBirth: [null, [Validators.required]],
     // birthTime: [null, [Validators.required]],
-    birthPlace: ['', [Validators.required]],
+    currentPlace: ['', [Validators.required]],
     // maritialStatus: [null, [Validators.required]],
     // isAstrologer: [null, [Validators.required]],
   });
@@ -510,14 +510,14 @@ export class LoginComponent implements OnInit {
     }
     let formValues = this.signUpForm.value;
     formValues['uid'] = this.authService.activeUserValue['uid'];
-    formValues['dateOfBirth'] = new Date(
-      formValues['dateOfBirth'].year,
-      formValues['dateOfBirth'].month - 1,
-      formValues['dateOfBirth'].day
-    );
+    // formValues['dateOfBirth'] = new Date(
+    //   formValues['dateOfBirth'].year,
+    //   formValues['dateOfBirth'].month - 1,
+    //   formValues['dateOfBirth'].day
+    // );
     // formValues['isAstrologer'] =
     //   formValues['isAstrologer'] == 'true' ? true : false;
-    formValues['birthPlace'] = formValues['birthPlace'].description;
+    formValues['currentPlace'] = formValues['currentPlace'].description;
     // format birthtime
     // const hour = formValues['birthTime']?.hour?.toString().padStart(2, '0');
     // const minute = formValues['birthTime']?.minute?.toString().padStart(2, '0');

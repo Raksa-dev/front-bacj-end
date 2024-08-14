@@ -94,8 +94,8 @@ class PaymentController {
         },
       };
 
-      const username = "rzp_test_TMnO8MHrkUaHg7";
-      const password = "SOsbAnO0WapuO5fMd1Sr4CnA";
+      const username = "rzp_live_gOs6JLaCdCJhJv";
+      const password = "CrDbN81vOudORiF1KYTOie4w";
 
       // Encode the credentials in base64
       const encodedCredentials = Buffer.from(

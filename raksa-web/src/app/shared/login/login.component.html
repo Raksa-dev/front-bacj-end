@@ -164,7 +164,7 @@
                 >
               </div>
             </div>
-            <div class="row">
+            <!-- <div class="row">
               <div class="col-lg-6">
                 <div class="mb-2">
                   <label for="dateOfBirth" class="form-fields-label"
@@ -222,7 +222,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
 
             <!-- birth place -->
             <div class="mb-2">
@@ -459,7 +459,7 @@
                 >
               </div>
             </div>
-            <div class="row">
+            <!-- <div class="row">
               <div class="col-lg">
                 <div class="mb-2">
                   <label for="dateOfBirth" class="form-fields-label"
@@ -503,12 +503,12 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
 
             <!-- birth place -->
             <div class="mb-2">
-              <label for="birthPlace" class="form-fields-label"
-                >Birth Place</label
+              <label for="currentPlace" class="form-fields-label"
+                >Current Place</label
               >
               <ng-select
                 [items]="movies$ | async"
@@ -522,7 +522,7 @@
                 [typeahead]="moviesInput$"
                 [(ngModel)]="selectedMovie"
                 [ngModelOptions]="{ standalone: true }"
-                formControlName="birthPlace"
+                formControlName="currentPlace"
                 [virtualScroll]="true"
                 class="custom"
               >

@@ -94,12 +94,13 @@ export class WalletComponent implements OnInit {
         )
       ).subscribe((data) => {
         var options = {
-          key: 'rzp_test_TMnO8MHrkUaHg7', // Enter the Key ID generated from the Dashboard
+          key: 'rzp_live_gOs6JLaCdCJhJv', // Enter the Key ID generated from the Dashboard
           amount: this.amountWithGstAddition * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
           currency: 'INR',
           name: 'Raksa', //your business name
           description: 'Test Transaction',
-          image: 'https://example.com/your_logo',
+          image:
+            'https://firebasestorage.googleapis.com/v0/b/raksa-1e906.appspot.com/o/Raksa%20Logo.png?alt=media&token=0a691c2e-cffc-42b7-a50a-6f980152b3c6',
           order_id: data['id'], //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
           handler: function (response) {
             window.location.replace(
