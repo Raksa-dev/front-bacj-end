@@ -14,8 +14,6 @@ import { LoginComponent } from '../shared/login/login.component';
 export class authGuard {
   constructor(
     private authService: AuthService,
-    private router: Router,
-    authServices: AuthService,
     private modalService: NgbModal
   ) {}
 

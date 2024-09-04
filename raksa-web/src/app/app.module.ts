@@ -33,6 +33,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { environment } from '../environments/environment';
@@ -82,6 +85,8 @@ import { TypewrittereffectComponent } from './shared/typewrittereffect/typewritt
 
     // AngularFireModule.initializeApp(environment.firebaseConfig),
     // AngularFirestoreModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule,
 
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),

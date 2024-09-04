@@ -40,6 +40,9 @@ import {
   signInWithPhoneNumber,
   getAdditionalUserInfo,
 } from '@angular/fire/auth';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import firebase from 'firebase/compat/app';
+
 import { Observable, Subject, concat, of, throwError } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -185,7 +188,8 @@ export class LoginComponent implements OnInit {
     public formBuilder: FormBuilder,
     public router: Router,
     private http: HttpClient,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private afAuth: AngularFireAuth
   ) {}
 
   ngOnInit(): void {
@@ -311,6 +315,53 @@ export class LoginComponent implements OnInit {
       })
     );
   };
+
+  signInWithGoogle() {
+    this.afAuth
+      .signInWithPopup(new firebase.auth.GoogleAuthProvider())
+      .then((data) => {
+        this.userService.fetchUserData(data?.user?.uid).then((datum) => {
+          if (datum?.uid == undefined) {
+            const payload = {
+              uid: this.authService.activeUserValue['uid'],
+              firstName: data?.additionalUserInfo?.profile['given_name'],
+              lastName: data?.additionalUserInfo?.profile['family_name'],
+              email: data?.additionalUserInfo?.profile['email'],
+              gender: '',
+              currentPlace: '',
+              walletBalance: 29,
+            };
+            this.userService
+              .CreateUser(payload)
+              .then((data) => {
+                localStorage.removeItem('user-sign-up-data');
+                this.userService.fetchUserData(
+                  this.authService.activeUserValue['uid']
+                );
+                localStorage.setItem('userScreen', 'true');
+                localStorage.setItem('newuser', 'true');
+                this.router.navigateByUrl('/dashboard');
+                this.activeModal.close({ response: true });
+              })
+              .catch((error: any) => {
+                console.log(error);
+              });
+          } else {
+            // exsting user show him dashbord
+            this.userService.fetchUserData(
+              this.authService.activeUserValue['uid']
+            );
+            localStorage.setItem('userScreen', 'true');
+
+            this.router.navigateByUrl('/dashboard');
+            this.activeModal.close({ response: true });
+          }
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   sendLoginCode(): void {
     this.phoneSubmitted = true;

@@ -893,7 +893,7 @@
               </div>
             </div>
 
-            <div class="d-flex justify-content-center">
+            <div class="d-flex justify-content-center mb-4">
               <button
                 type="submit"
                 id="sign-in-button"
@@ -911,7 +911,23 @@
                 ></i>
               </button>
             </div>
+            <h3 style="text-align: center">OR</h3>
           </form>
+          <div class="sign-in-with-google">
+            <button
+              (click)="signInWithGoogle()"
+              id="sign-in-button"
+              class="btn sign-in-with-google-button"
+            >
+              <img
+                src="../../../assets/images/google_logo.png"
+                height="50px"
+                width="50px"
+              />
+              <span>Sign In With Google</span>
+            </button>
+          </div>
+
           <!-- verify otp form -->
           <form
             *ngIf="formStep == 2"

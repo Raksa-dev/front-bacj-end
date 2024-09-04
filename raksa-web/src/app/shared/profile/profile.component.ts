@@ -97,7 +97,14 @@ export class ProfileComponent {
 
   ngOnInit(): void {
     this.loadMovies();
-    // this.userService.fetchUserData(this.userService?.getUserData?.uid);
+    this.userService
+      .fetchUserData(
+        this.authService.activeUserValue?.uid,
+        this.authService.activeUserValue
+      )
+      .then((dataum) => {
+        this.currentUser = dataum;
+      });
   }
 
   trackByFn(item: any) {

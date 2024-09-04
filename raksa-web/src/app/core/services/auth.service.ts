@@ -37,8 +37,7 @@ export class AuthService {
       if (user) {
         localStorage.setItem('raksa-user', JSON.stringify(user));
         this.activeUserSubject.next(user);
-
-        this.userService.fetchUserData(user?.uid);
+        this.userService.fetchUserData(user?.uid, user);
       } else {
         this.activeUserSubject.next(null);
         localStorage.removeItem('raksa-user');

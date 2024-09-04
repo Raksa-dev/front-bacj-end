@@ -15,7 +15,15 @@
 // .select-box option {
 //   color: black; /* Set the text color of all options */
 // }
-
+.sign-in-with-google {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.sign-in-with-google-button {
+  background-color: rgb(46, 46, 241);
+  color: #fff;
+}
 select option {
   margin: 40px;
   background: #230033;
