@@ -8,6 +8,92 @@ import { AuthService, UserService } from 'src/app/core/services';
   styleUrls: ['./sessions.component.scss'],
 })
 export class SessionsComponent implements OnInit {
+  MAPPED_DASHBOARD = {
+    foreign_settlement: {
+      key: 'Foreign Settlement',
+      logo: '../../../assets/images/dashboard/Foreign_Settlement.png',
+    },
+    remedies: {
+      key: 'Remedies',
+      logo: '../../../assets/images/dashboard/Remedies.png',
+    },
+    job_vs_business: {
+      key: 'Job VS Business',
+      logo: '../../../assets/images/dashboard/Job_VS_Business.png',
+    },
+    love: {
+      key: 'Love',
+      logo: '../../../assets/images/dashboard/Love.png',
+    },
+    horoscope_match: {
+      key: 'Horoscope Match',
+      logo: '../../../assets/images/dashboard/Horoscope_Match.png',
+    },
+    students: {
+      key: 'Students',
+      logo: '../../../assets/images/dashboard/Students.png',
+    },
+    improving_sex_life: {
+      key: 'Improving Sex Life',
+      logo: '../../../assets/images/dashboard/Improving_Sex_Life.png',
+    },
+    career_insights_problems: {
+      key: 'Career Insights Problems',
+      logo: '../../../assets/images/dashboard/career_insights.png',
+    },
+    who_am_i: {
+      key: 'Who Am I',
+      logo: '../../../assets/images/dashboard/who_am_i.png',
+    },
+    muhurta_auspicious: {
+      key: 'Muhurtha',
+      logo: '../../../assets/images/dashboard/Muhurtha.png',
+    },
+    panchanga: {
+      key: 'Today’s Panchanga',
+      logo: '../../../assets/images/dashboard/Today_Panchanga.png',
+    },
+    today_prediction: {
+      key: 'Today’s prediction',
+      logo: '../../../assets/images/dashboard/Today’_prediction.png',
+    },
+    know_your_child: {
+      key: 'Know your child',
+      logo: '../../../assets/images/dashboard/Foreign_Settlement.png',
+    },
+    know_your_husband: {
+      key: 'Know your husband',
+      logo: '../../../assets/images/dashboard/Horoscope_Match.png',
+    },
+    know_your_wife: {
+      key: 'Know your wife',
+      logo: '../../../assets/images/dashboard/Family_Dynamics.png',
+    },
+    know_your_father: {
+      key: 'Know your father',
+      logo: '../../../assets/images/dashboard/Muhurtha.png',
+    },
+    know_your_mother: {
+      key: 'Know your mother',
+      logo: '../../../assets/images/dashboard/Today_Panchanga.png',
+    },
+    know_your_guardian: {
+      key: 'Know your guardian',
+      logo: '../../../assets/images/dashboard/perm_identity.png',
+    },
+    know_your_boss: {
+      key: 'Know your boss',
+      logo: '../../../assets/images/dashboard/lightbulb_outline.png',
+    },
+    know_your_colleague: {
+      key: 'Know your colleague',
+      logo: '../../../assets/images/dashboard/Today’_prediction.png',
+    },
+    know_your_friend: {
+      key: 'Know your friend',
+      logo: '../../../assets/images/dashboard/Remedies.png',
+    },
+  };
   allTrasactions = [];
   isAstrologer;
   constructor(
@@ -19,7 +105,7 @@ export class SessionsComponent implements OnInit {
   getAllTransaction() {
     if (this.userService.getUserData?.isAstrologer) {
       this.isAstrologer = true;
-      
+
       this.userService
         .getAllAstroSessions(this.authService.activeUserValue?.uid)
         .then((data) => {

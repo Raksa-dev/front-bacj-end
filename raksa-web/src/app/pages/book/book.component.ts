@@ -29,7 +29,7 @@ import { AuthService, UserService } from 'src/app/core/services';
 // import { WindowRefService } from 'src/app/core/services';
 
 import { Observable, Subject, of, throwError } from 'rxjs';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute,Router } from '@angular/router';
 import { WalletComponent } from 'src/app/shared/wallet/wallet.component';
 import { QUESTIONS } from 'src/app/constants/questions';
 import { CATEGORICALMAPPING } from 'src/app/constants/userconstants';
@@ -698,13 +698,30 @@ export class BookComponent implements OnInit {
     }
 
     localStorage.setItem('basic_details', JSON.stringify(formValues));
-
+    const min = 1000000000;
+    const max = 9999999999;
+    const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+    let sessionId = `session_${randomNum}`;
     if (formValues['birthTime']) {
       this.deductBalanceFromUserAccount(
         this.authService?.activeUserValue?.uid,
         29
-      ).then((data) => {
+      ).then(async (data) => {
         this.userService.fetchUserData(this.authService.activeUserValue?.uid);
+
+        await this.userService.createEntryInSession({
+          amount: 29,
+          astrologerId: this.authService.activeUserValue?.uid,
+          astrologerName: null,
+          astrologerPic: '',
+          callDuration: new Date(),
+          callerId: this.authService.activeUserValue?.uid,
+          callerName:
+            this.currentUser.firstName + ' ' + this.currentUser?.lastName,
+          callerPic: '',
+          sessionType: this.questionSet.category,
+          sessionId,
+        });
 
         this.formStep = 4;
       });
@@ -712,8 +729,21 @@ export class BookComponent implements OnInit {
       this.deductBalanceFromUserAccount(
         this.authService?.activeUserValue?.uid,
         29
-      ).then((data) => {
+      ).then(async (data) => {
         this.userService.fetchUserData(this.authService.activeUserValue?.uid);
+        await this.userService.createEntryInSession({
+          amount: 29,
+          astrologerId: null,
+          astrologerName: null,
+          astrologerPic: '',
+          callDuration: '',
+          callerId: '',
+          callerName:
+            this.currentUser.firstName + ' ' + this.currentUser?.lastName,
+          callerPic: '',
+          sessionType: this.questionSet.category,
+          sessionId,
+        });
 
         this.formStep = 1;
       });

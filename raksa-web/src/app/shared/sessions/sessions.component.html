@@ -30,7 +30,7 @@
                           /><span>Completed</span>
                         </p>
                       </div>
-                      <div *ngIf="!isAstrologer">
+                      <!-- <div *ngIf="!isAstrologer">
                         <div
                           class="d-flex justify-content-center"
                           *ngIf="!trsx?.astrologerPic"
@@ -73,8 +73,17 @@
                         <h4 class="fw-semi-bold mb-2">
                           {{ trsx?.callerName || "User name" }}
                         </h4>
+                      </div> -->
+                      <!-- <p class="mb-2">{{ trsx?.id }}</p> -->
+                      <div>
+                        <img
+                          class="avatar-md rounded-circle mb-2"
+                          src="{{ MAPPED_DASHBOARD[trsx?.sessionType].logo }}"
+                        />
+                        <h4 class="fw-semi-bold mb-2">
+                          {{ MAPPED_DASHBOARD[trsx?.sessionType].key }}
+                        </h4>
                       </div>
-                      <p class="mb-2">{{ trsx?.id }}</p>
                       <div class="tags">
                         <h5 class="text-muted me-2">
                           {{
@@ -83,17 +92,18 @@
                               | date : "dd-MM-yyyy HH:mm:ss"
                           }}
                         </h5>
-                        <h5 class="text-muted me-2">
-                          Session Type: {{ trsx?.sessionType }}
-                        </h5>
+                        <!-- <h5 class="text-muted me-2">
+                          Session Type:
+                          {{ MAPPED_DASHBOARD[trsx?.sessionType].key }}
+                        </h5> -->
                       </div>
 
                       <div class="reviews">
                         <h6 class="mb-2">
                           <span>{{ trsx?.amount }} Rs</span>
 
-                          <span class="me-2"> |</span>
-                          <span>{{ trsx?.callDuration }} Seconds</span>
+                          <!-- <span class="me-2"> |</span>
+                          <span>{{ trsx?.callDuration }} Seconds</span> -->
                         </h6>
                       </div>
                     </div>
