@@ -23,12 +23,19 @@
 .sign-in-with-google-button {
   background-color: rgb(46, 46, 241);
   color: #fff;
+  width: 100%;
 }
 select option {
   margin: 40px;
   background: #230033;
   color: #fff;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+}
+
+.sign-in-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .gradient-button {
