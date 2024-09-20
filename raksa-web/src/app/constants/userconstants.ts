@@ -30,6 +30,7 @@ export const CATEGORICALMAPPING = {
   'Know your mother': 'know_your_mother',
   'Know your guardian': 'know_your_guardian',
   'Know your friend': 'know_your_friend',
+  'Loshu Grid': 'loshu_grid',
 };
 
 export const USER_DASHBOARD = {
@@ -38,11 +39,19 @@ export const USER_DASHBOARD = {
       logo: '../../../assets/images/dashboard/who_am_i.png',
       menu: 'Who Am I',
       toolTip: 'Explore your astrological profile and discover your true self.',
+      freeToUse: true,
+    },
+    {
+      logo: '../../../assets/images/dashboard/who_am_i.png',
+      menu: 'Loshu Grid',
+      toolTip: 'Explore your astrological profile and discover your true self.',
+      freeToUse: true,
     },
     {
       logo: '../../../assets/images/dashboard/Foreign_Settlement.png',
       menu: 'Foreign Settlement',
       toolTip: 'Astrological guidance for foreign experiences and settlements.',
+      freeToUse: false,
     },
     {
       logo: '../../../assets/images/dashboard/Horoscope_Match.png',
@@ -50,6 +59,7 @@ export const USER_DASHBOARD = {
       comingSoon: true,
       toolTip:
         'Compare horoscopes to evaluate compatibility with your partner.',
+      freeToUse: false,
     },
     {
       logo: '../../../assets/images/dashboard/Family_Dynamics.png',
@@ -57,67 +67,79 @@ export const USER_DASHBOARD = {
       comingSoon: true,
       toolTip:
         "Gain insights into your family's astrological influences and relationships.",
+      freeToUse: false,
     },
     {
       logo: '../../../assets/images/dashboard/Muhurtha.png',
       menu: 'Muhurtha',
       toolTip:
         'Find ideal times for important activities based on astrological calculations.',
+      freeToUse: false,
     },
     {
       logo: '../../../assets/images/dashboard/Today_Panchanga.png',
       menu: 'Today’s Panchanga',
       toolTip:
         "Check today's Panchanga for auspicious timings and lunar phases.",
+      freeToUse: false,
     },
     {
       logo: '../../../assets/images/dashboard/perm_identity.png',
       menu: 'Self / You',
       toolTip: 'Explore your personal traits and astrological influences.',
+      freeToUse: false,
     },
     {
       logo: '../../../assets/images/dashboard/lightbulb_outline.png',
       menu: 'Know',
       toolTip:
         'Gain insights about you and your relationships: spouse, parents, and children.',
+      freeToUse: false,
     },
     {
       logo: '../../../assets/images/dashboard/Today’_prediction.png',
       menu: 'Today’s prediction',
       toolTip: 'Get your daily horoscope and insights for today.',
+      freeToUse: false,
     },
     {
       logo: '../../../assets/images/dashboard/Remedies.png',
       menu: 'Remedies',
       toolTip: 'Explore astrological remedies to improve your well-being.',
+      freeToUse: false,
     },
     {
       logo: '../../../assets/images/dashboard/Job_VS_Business.png',
       menu: 'Job VS Business',
       toolTip:
         'Analyze your strengths to choose between a job or starting a business.',
+      freeToUse: false,
     },
     {
       logo: '../../../assets/images/dashboard/Love.png',
       menu: 'Love',
       toolTip: 'Uncover astrological insights for your romantic relationships.',
+      freeToUse: false,
     },
     {
       logo: '../../../assets/images/dashboard/Students.png',
       menu: 'Students',
       toolTip:
         'Find astrological guidance for academic success and study habits.',
+      freeToUse: false,
     },
     {
       logo: '../../../assets/images/dashboard/Improving_Sex_Life.png',
       menu: 'Improving Sex Life',
       toolTip:
         'Discover astrological tips to enhance your intimate relationships.',
+      freeToUse: false,
     },
     {
       logo: '../../../assets/images/dashboard/career_insights.png',
       menu: 'Career Insights Problems',
       toolTip: 'Discover astrological guidance for your career path.',
+      freeToUse: false,
     },
   ],
   know: [

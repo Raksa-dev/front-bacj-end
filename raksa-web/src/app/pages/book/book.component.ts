@@ -4,8 +4,9 @@ import {
   layer1_male_ascendants,
   layer1_female_ascendants,
 } from 'src/app/constants/layer1';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import {
   catchError,
@@ -29,7 +30,7 @@ import { AuthService, UserService } from 'src/app/core/services';
 // import { WindowRefService } from 'src/app/core/services';
 
 import { Observable, Subject, of, throwError } from 'rxjs';
-import { ActivatedRoute,Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { WalletComponent } from 'src/app/shared/wallet/wallet.component';
 import { QUESTIONS } from 'src/app/constants/questions';
 import { CATEGORICALMAPPING } from 'src/app/constants/userconstants';
@@ -252,10 +253,22 @@ export class BookComponent implements OnInit {
     private http: HttpClient,
     public userService: UserService,
     public authService: AuthService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private sanitizer: DomSanitizer
   ) {}
 
+  public safeHtml: SafeHtml;
+
+  checkWalletBalance = false;
   ngOnInit(): void {
+    this.userService
+      .fetchUserData(this.authService.activeUserValue?.uid)
+      .then((data) => {
+        if (data?.walletBalance < 29) {
+          this.checkWalletBalance = true;
+        }
+      });
+
     let included = Object.keys(CATEGORICALMAPPING);
     this.router.queryParamMap.subscribe((params) => {
       this.questionSet.category = included.includes(params.get('cat'))
@@ -634,7 +647,41 @@ export class BookComponent implements OnInit {
       );
   }
 
+  des;
+  getDescription(birthdate): void {
+    try {
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        Accept: 'text/html', // This indicates we expect an HTML response
+      });
+      let apiUrl = `https://backend.raksa.xyz/loshu_grid_description?birthdate=${encodeURIComponent(
+        birthdate
+      )}`;
+      this.http
+        .post<string>(apiUrl, {}, { headers, responseType: 'text' as 'json' })
+        .subscribe(
+          (resphtmlResponse: string) => {
+            this.safeHtml =
+              this.sanitizer.bypassSecurityTrustHtml(resphtmlResponse);
+
+            // this.formStep = 12;
+            this.loadSpinner = false;
+          },
+          (error) => {
+            // Handle HTTP error
+            console.error('HTTP Error:', error);
+            this.loadSpinner = false;
+
+            this.answerText = 'HTTP Error: ' + error.message;
+          }
+        );
+    } catch (error) {
+      console.log('this is error:', error);
+    }
+  }
+  public grid;
   createProfileInRegistration(): void {
+    this.loadSpinner = true;
     this.signUpFormSubmitted = true;
     if (this.signUpForm.invalid) {
       return;
@@ -703,50 +750,113 @@ export class BookComponent implements OnInit {
     const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
     let sessionId = `session_${randomNum}`;
     if (formValues['birthTime']) {
-      this.deductBalanceFromUserAccount(
-        this.authService?.activeUserValue?.uid,
-        29
-      ).then(async (data) => {
-        this.userService.fetchUserData(this.authService.activeUserValue?.uid);
+      if (this.questionSet.category != 'loshu_grid') {
+        this.deductBalanceFromUserAccount(
+          this.authService?.activeUserValue?.uid,
+          29
+        ).then(async (data) => {
+          this.userService.fetchUserData(this.authService.activeUserValue?.uid);
 
-        await this.userService.createEntryInSession({
-          amount: 29,
-          astrologerId: this.authService.activeUserValue?.uid,
-          astrologerName: null,
-          astrologerPic: '',
-          callDuration: new Date(),
-          callerId: this.authService.activeUserValue?.uid,
-          callerName:
-            this.currentUser.firstName + ' ' + this.currentUser?.lastName,
-          callerPic: '',
-          sessionType: this.questionSet.category,
-          sessionId,
+          await this.userService.createEntryInSession({
+            amount: 29,
+            astrologerId: this.authService.activeUserValue?.uid,
+            astrologerName: null,
+            astrologerPic: '',
+            callDuration: new Date(),
+            callerId: this.authService.activeUserValue?.uid,
+            callerName:
+              this.currentUser?.firstName + ' ' + this.currentUser?.lastName,
+            callerPic: '',
+            sessionType: this.questionSet.category,
+            sessionId,
+          });
+          this.formStep = 4;
+          this.loadSpinner = false;
         });
+      } else {
+        let apiUrl = `https://backend.raksa.xyz/loshu_grid?birthdate=${encodeURIComponent(
+          formValues['dateOfBirth']
+        )}`;
+        this.http
+          .post<any>(apiUrl, {})
+          .pipe(
+            catchError((error) => {
+              // Handle errors
+              console.error('Error fetching data:', error);
+              return throwError('Error fetching data. Please try again later.');
+            })
+          )
+          .subscribe(
+            (resp) => {
+              this.grid = Object.values(resp?.message);
+              // Handle successful response
+              console.log('this is grid:', this.grid);
+              this.getDescription(formValues['dateOfBirth']);
+              this.formStep = 12;
+              // this.loadSpinner = false;
+            },
+            (error) => {
+              // Handle HTTP error
+              console.error('HTTP Error:', error);
+              this.loadSpinner = false;
 
-        this.formStep = 4;
-      });
+              this.answerText = 'HTTP Error: ' + error.message;
+            }
+          );
+      }
     } else {
-      this.deductBalanceFromUserAccount(
-        this.authService?.activeUserValue?.uid,
-        29
-      ).then(async (data) => {
-        this.userService.fetchUserData(this.authService.activeUserValue?.uid);
-        await this.userService.createEntryInSession({
-          amount: 29,
-          astrologerId: null,
-          astrologerName: null,
-          astrologerPic: '',
-          callDuration: '',
-          callerId: '',
-          callerName:
-            this.currentUser.firstName + ' ' + this.currentUser?.lastName,
-          callerPic: '',
-          sessionType: this.questionSet.category,
-          sessionId,
-        });
+      if (this.questionSet.category != 'loshu_grid') {
+        this.deductBalanceFromUserAccount(
+          this.authService?.activeUserValue?.uid,
+          29
+        ).then(async (data) => {
+          this.userService.fetchUserData(this.authService.activeUserValue?.uid);
+          await this.userService.createEntryInSession({
+            amount: 29,
+            astrologerId: null,
+            astrologerName: null,
+            astrologerPic: '',
+            callDuration: '',
+            callerId: '',
+            callerName:
+              this.currentUser?.firstName + ' ' + this.currentUser?.lastName,
+            callerPic: '',
+            sessionType: this.questionSet?.category,
+            sessionId,
+          });
 
-        this.formStep = 1;
-      });
+          this.formStep = 1;
+          this.loadSpinner = false;
+        });
+      } else {
+        let apiUrl = `https://backend.raksa.xyz/loshu_grid?birthdate=${encodeURIComponent(
+          formValues['dateOfBirth']
+        )}`;
+        this.http
+          .post<any>(apiUrl, {})
+          .pipe(
+            catchError((error) => {
+              // Handle errors
+              console.error('Error fetching data:', error);
+              return throwError('Error fetching data. Please try again later.');
+            })
+          )
+          .subscribe(
+            (resp) => {
+              this.grid = Object.values(resp?.message);
+              // Handle successful response
+              this.getDescription(formValues['dateOfBirth']);
+              this.formStep = 12;
+              // this.loadSpinner = false;
+            },
+            (error) => {
+              // Handle HTTP error
+              console.error('HTTP Error:', error);
+              this.loadSpinner = false;
+              this.answerText = 'HTTP Error: ' + error.message;
+            }
+          );
+      }
     }
   }
 
@@ -774,9 +884,9 @@ export class BookComponent implements OnInit {
         )}&birthtime=${encodeURIComponent(
           data.birthTime
         )}&birthlocation=${encodeURIComponent(
-          data.birthPlace
+          data?.birthPlace
         )}&birthname=${encodeURIComponent(
-          data.firstName
+          data?.firstName
         )}&gender=${encodeURIComponent(
           data.gender
         )}&category=${encodeURIComponent(
@@ -795,47 +905,83 @@ export class BookComponent implements OnInit {
             data.fromDate
           )}&end_date=${encodeURIComponent(data.toDate)}`;
         }
-        // Send a POST request with the data in the query string
-        this.http
-          .post<any>(apiUrl, {})
-          .pipe(
-            catchError((error) => {
-              // Handle errors
-              console.error('Error fetching data:', error);
-              return throwError('Error fetching data. Please try again later.');
-            })
-          )
-          .subscribe(
-            (resp) => {
-              // Handle successful response
-              if (resp.Error) {
-                console.error('Server returned an error:', resp.Error);
-                this.answerText = 'Error: ' + resp.Error;
-              } else {
-                if (this.questionSet.category == 'muhurta_auspicious') {
-                  this.answerText = resp;
-                  this.cacheAnswers[index] = resp;
-                } else {
-                  this.answerText = resp.message;
-                  this.cacheAnswers[index] = resp.message;
-                }
-                this.loadSpinner = false;
-              }
-            },
-            (error) => {
-              // Handle HTTP error
-              console.error('HTTP Error:', error);
-              this.loadSpinner = false;
+        if (this.setCategoryInApi == 'love') {
+          const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            Accept: 'text/html', // This indicates we expect an HTML response
+          });
+          this.http
+            .post<string>(
+              apiUrl,
+              {},
+              { headers, responseType: 'text' as 'json' }
+            )
+            .subscribe(
+              (resphtmlResponse: string) => {
+                this.safeHtml =
+                  this.sanitizer.bypassSecurityTrustHtml(resphtmlResponse);
+                this.cacheAnswers[index] = this.safeHtml;
 
-              this.answerText = 'HTTP Error: ' + error.message;
-            }
-          );
+                // this.formStep = 12;
+                this.loadSpinner = false;
+              },
+              (error) => {
+                // Handle HTTP error
+                console.error('HTTP Error:', error);
+                this.loadSpinner = false;
+
+                this.answerText = 'HTTP Error: ' + error.message;
+              }
+            );
+        } else {
+          // Send a POST request with the data in the query string
+          this.http
+            .post<any>(apiUrl, {})
+            .pipe(
+              catchError((error) => {
+                // Handle errors
+                console.error('Error fetching data:', error);
+                return throwError(
+                  'Error fetching data. Please try again later.'
+                );
+              })
+            )
+            .subscribe(
+              (resp) => {
+                // Handle successful response
+                if (resp.Error) {
+                  console.error('Server returned an error:', resp.Error);
+                  this.answerText = 'Error: ' + resp.Error;
+                } else {
+                  if (this.questionSet.category == 'muhurta_auspicious') {
+                    this.answerText = resp;
+                    this.cacheAnswers[index] = resp;
+                  } else {
+                    this.answerText = resp.message;
+                    this.cacheAnswers[index] = resp.message;
+                  }
+                  this.loadSpinner = false;
+                }
+              },
+              (error) => {
+                // Handle HTTP error
+                console.error('HTTP Error:', error);
+                this.loadSpinner = false;
+
+                this.answerText = 'HTTP Error: ' + error.message;
+              }
+            );
+        }
       } else {
         console.error('Invalid dateOfBirth:', data?.dateOfBirth);
         this.answerText = 'Invalid dateOfBirth';
       }
     } else {
-      this.answerText = this.cacheAnswers[index];
+      if (this.setCategoryInApi == 'love') {
+        this.safeHtml = this.cacheAnswers[index];
+      } else {
+        this.answerText = this.cacheAnswers[index];
+      }
       this.loadSpinner = false;
     }
   }

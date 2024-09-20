@@ -197,6 +197,254 @@ select option {
   font-size: 1rem;
   font-weight: bold;
 }
+.loshu-grid-continer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100vh;
+}
+
+.turtle {
+  width: 500px;
+  height: 500px;
+  animation: walking-turtle-03 2s ease-in-out infinite alternate;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+
+  &__head {
+    width: 80px;
+    height: 95px;
+    border-radius: 50%;
+    background-color: #82c49f;
+    position: relative;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    &::before,
+    &::after {
+      top: 20px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #6a757a;
+      content: "";
+      position: absolute;
+    }
+
+    &::before {
+      left: 13px;
+    }
+    &::after {
+      right: 13px;
+    }
+  }
+
+  &__shell {
+    width: 320px;
+    height: 350px;
+    background-color: #6a757a;
+    border-radius: 50%;
+    overflow: hidden;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+    }
+
+    &::before {
+      width: 200px;
+      height: 235px;
+      background-color: #5d666b;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+    }
+
+    &::after {
+      width: 50%;
+      height: 100%;
+      background-color: white;
+      opacity: 0.1;
+      top: 0;
+    }
+
+    div {
+      width: 120px;
+      height: 80px;
+      background: #636e72;
+      position: relative;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      &::before,
+      &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+      }
+
+      &::before {
+        top: -30px;
+        border-left: 60px solid transparent;
+        border-right: 60px solid transparent;
+        border-bottom: 30px solid #636e72;
+      }
+
+      &::after {
+        bottom: -30px;
+        left: 0;
+        border-left: 60px solid transparent;
+        border-right: 60px solid transparent;
+        border-top: 30px solid #636e72;
+      }
+    }
+  }
+
+  &__tail {
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 35px solid #84c3a0;
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &__legs {
+    width: 60px;
+    height: 490px;
+    border-radius: 45%;
+    background-color: #82c49f;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    &.-left {
+      transform: translate(-50%, -50%) rotate(-45deg);
+      animation: walking-turtle-01 2s ease-in-out infinite alternate;
+    }
+
+    &.-right {
+      transform: translate(-50%, -50%) rotate(45deg);
+      animation: walking-turtle-02 2s ease-in-out infinite alternate;
+    }
+  }
+
+  &__number_grid {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    position: absolute;
+    top: 30%;
+    left: 23%;
+    height: 180px;
+    row-gap: 1rem;
+
+    .number-container {
+      background-color: #d9d9d9;
+      height: 60px;
+      width: 75px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 15px;
+      border: 1px solid black;
+      color: #190f37;
+    }
+  }
+}
+.description {
+  width: 500px;
+  height: 500px;
+  position: relative;
+  top: 10%;
+  left: 10%;
+  background-color: #ffffffe1;
+  overflow-y: scroll;
+  border: 5px solid purple;
+  &::-webkit-scrollbar {
+    width: 10px; /* Width of the scrollbar */
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Track color */
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #888; /* Thumb color */
+    border-radius: 6px; /* Rounded corners */
+  }
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  background-color: #def4e5;
+}
+
+@keyframes walking-turtle-01 {
+  0% {
+    transform: translate(-50%, -50%) rotate(-40deg);
+  }
+  25% {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(-30deg);
+  }
+  75% {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(-40deg);
+  }
+}
+
+@keyframes walking-turtle-02 {
+  0% {
+    transform: translate(-50%, -50%) rotate(40deg);
+  }
+  25% {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(35deg);
+  }
+  75% {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(30deg);
+  }
+}
+
+@keyframes walking-turtle-03 {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  25% {
+    transform: translate(-50%, -50%) rotate(3deg);
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(-1deg);
+  }
+  75% {
+    transform: translate(-50%, -50%) rotate(2deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(-1deg);
+  }
+}
 // .needs-validation {
 //   background: red;
 
@@ -217,6 +465,25 @@ select option {
 }
 
 .answer-textarea {
+  &::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+  }
+
+  &::-webkit-scrollbar-track {
+    background: linear-gradient(150.77deg, #d700ff 0%, #7000ff 80.92%);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(to right, #43c6ac, #f8ffae);
+    border-radius: 6px; /* Rounded corners */
+  }
+}
+
+.answer-textarea-love {
+  background-color: rgba(255, 255, 255, 0.929);
+  border-radius: 5px;
+  padding: 1rem;
   &::-webkit-scrollbar {
     width: 8px; /* Width of the scrollbar */
   }

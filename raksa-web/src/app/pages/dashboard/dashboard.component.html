@@ -1,4 +1,93 @@
-<div class="dashboard" *ngIf="selectedCategory == null">
+<div class="start-breathing" *ngIf="steps == 2">
+  <div>
+    <p class="anim-circle"></p>
+    <div class="breath-status">{{ breathStatus }}</div>
+  </div>
+  <div class="dashboard-button">
+    <button class="btn gradient-button" type="button" (click)="goToDashBoard()">
+      Go To dashboard
+    </button>
+  </div>
+</div>
+<div class="start-breathing" *ngIf="steps == 1">
+  <h2>Time Left</h2>
+  <div class="timer animatable">
+    <svg>
+      <circle cx="50%" cy="50%" r="90"></circle>
+      <circle cx="50%" cy="50%" r="90" pathLength="1"></circle>
+      <text x="100" y="100" text-anchor="middle">
+        <tspan style="color: white">{{ timeLeft }}</tspan>
+      </text>
+      <text x="100" y="120" text-anchor="middle">seconds</text>
+    </svg>
+  </div>
+</div>
+<div class="hero-wrap-new" *ngIf="steps == 0">
+  <h4 style="text-align: center; font-weight: 800; padding-bottom: 1.5rem">
+    You are entering sacred space!
+  </h4>
+  <div class="hero-page-v2">
+    <div class="hero-text-left-section">
+      <div class="hero-text">
+        <img
+          src="../../../assets/images/dashboard_entry.png"
+          alt="testimonial['text']"
+          title="testimonial['text']"
+          height="61%"
+          width="130%"
+          style="object-fit: contain"
+        />
+      </div>
+    </div>
+
+    <div class="corsell-continer">
+      <owl-carousel-o [options]="heroImageOwlOptions">
+        <ng-container *ngFor="let testimonial of heroImage">
+          <ng-template carouselSlide [id]="testimonial['_id'].toString()">
+            <div class="hero-card">
+              <h4 style="text-align: center; font-weight: 600; font-size: 1rem">
+                TIPS TO IMPROVE YOUR READINGS
+              </h4>
+              <div
+                class="d-flex justify-content-center align-items-center flex-column"
+              >
+                <h4 style="text-align: center; font-weight: 600">
+                  {{ testimonial["text"] }}
+                </h4>
+                <p
+                  style="font-size: 1rem; font-weight: 600; width: 100%"
+                  *ngFor="let p of testimonial['para']"
+                >
+                  {{ p }}
+                </p>
+              </div>
+
+              <div class="text-center">
+                <button class="btn button" type="button" (click)="runTimer()">
+                  Breathe
+                </button>
+              </div>
+            </div>
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
+    </div>
+
+    <div class="hero-ab">
+      <div class="hero-text-left-section w-l-25">
+        <button
+          class="btn gradient-button"
+          type="button"
+          (click)="goToDashBoard()"
+        >
+          Start
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="dashboard" *ngIf="selectedCategory == null && steps == 3">
   <h2 class="fw-bold">I want answers in ...</h2>
   <div class="menu-section">
     <div
@@ -7,6 +96,7 @@
       (mouseover)="showTooltip($event, menu?.menu)"
     >
       <div (click)="selectedCategoryClick(menu?.menu)" class="menus">
+        <div *ngIf="menu?.freeToUse" class="free-to-use">Free To Use</div>
         <img [src]="menu.logo" alt="" />
         <div>{{ menu?.menu }}</div>
 
@@ -23,7 +113,7 @@
   </div>
 </div>
 
-<div class="dashboard" *ngIf="selectedCategory == 'Self / You'">
+<div class="dashboard" *ngIf="selectedCategory == 'Self / You' && steps == 3">
   <div class="">
     <div class="mb-2">
       <div class="bool-cat">
@@ -129,7 +219,7 @@
 
 <div
   class="dashboard"
-  *ngIf="selectedCategory == 'Know' && selectedCategory != null"
+  *ngIf="selectedCategory == 'Know' && selectedCategory != null && steps == 3"
 >
   <h2 class="fw-bold">{{ selectedCategory }}</h2>
   <div class="menu-section">
