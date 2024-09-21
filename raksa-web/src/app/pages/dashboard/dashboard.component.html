@@ -1,28 +1,4 @@
-<div class="start-breathing" *ngIf="steps == 2">
-  <div>
-    <p class="anim-circle"></p>
-    <div class="breath-status">{{ breathStatus }}</div>
-  </div>
-  <div class="dashboard-button">
-    <button class="btn gradient-button" type="button" (click)="goToDashBoard()">
-      Go To dashboard
-    </button>
-  </div>
-</div>
-<div class="start-breathing" *ngIf="steps == 1">
-  <h2>Time Left</h2>
-  <div class="timer animatable">
-    <svg>
-      <circle cx="50%" cy="50%" r="90"></circle>
-      <circle cx="50%" cy="50%" r="90" pathLength="1"></circle>
-      <text x="100" y="100" text-anchor="middle">
-        <tspan style="color: white">{{ timeLeft }}</tspan>
-      </text>
-      <text x="100" y="120" text-anchor="middle">seconds</text>
-    </svg>
-  </div>
-</div>
-<div class="hero-wrap-new" *ngIf="steps == 0">
+<div class="hero-wrap-new" *ngIf="steps != 3">
   <h4 style="text-align: center; font-weight: 800; padding-bottom: 1.5rem">
     You are entering sacred space!
   </h4>
@@ -63,7 +39,11 @@
               </div>
 
               <div class="text-center">
-                <button class="btn button" type="button" (click)="runTimer()">
+                <button
+                  class="btn button"
+                  type="button"
+                  (click)="runTimer(breath)"
+                >
                   Breathe
                 </button>
               </div>
@@ -249,3 +229,41 @@
     </div>
   </div>
 </div>
+
+<ng-template #breath let-modal>
+  <div
+    class="modal-body d-flex justify-content-center align-items-center flex-column p-5"
+  >
+    <div class="start-breathing" *ngIf="steps == 2">
+      <div>
+        <p class="anim-circle"></p>
+        <div class="breath-status">{{ breathStatus }}</div>
+      </div>
+    </div>
+    <div class="start-breathing" *ngIf="steps == 1">
+      <h2>Your breathing excercise will start in</h2>
+      <div class="timer animatable">
+        <svg>
+          <circle cx="50%" cy="50%" r="90"></circle>
+          <circle cx="50%" cy="50%" r="90" pathLength="1"></circle>
+          <text x="100" y="100" text-anchor="middle">
+            <tspan style="color: white">{{ timeLeft }}</tspan>
+          </text>
+          <text x="100" y="120" text-anchor="middle">seconds</text>
+        </svg>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center align-items-center gap-3">
+      <div class="dashboard-button">
+        <button
+          class="btn gradient-button"
+          type="button"
+          *ngIf="steps == 2"
+          (click)="goToDashBoard()"
+        >
+          Go To dashboard
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

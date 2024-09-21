@@ -790,7 +790,6 @@ export class BookComponent implements OnInit {
             (resp) => {
               this.grid = Object.values(resp?.message);
               // Handle successful response
-              console.log('this is grid:', this.grid);
               this.getDescription(formValues['dateOfBirth']);
               this.formStep = 12;
               // this.loadSpinner = false;

@@ -4,6 +4,7 @@ import { USER_DASHBOARD } from '../../constants/userconstants';
 import { Router } from '@angular/router';
 import confetti from 'canvas-confetti';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { UserService, AuthService } from 'src/app/core/services';
 
@@ -16,7 +17,8 @@ export class DashboardComponent {
   constructor(
     public router: Router,
     public userService: UserService,
-    public authService: AuthService
+    public authService: AuthService,
+    private modalService: NgbModal
   ) {
     if (localStorage.getItem('userScreen') == 'true') {
       localStorage.removeItem('userScreen');
@@ -39,10 +41,12 @@ export class DashboardComponent {
 
   goToDashBoard() {
     this.steps = 3;
+    clearTimeout(this.breathCyle);
+    this.modalService.dismissAll();
   }
-
+  breathCyle;
   startBreathingCycle() {
-    setTimeout(() => {
+    this.breathCyle = setTimeout(() => {
       const totalDuration = 17; // 17 seconds total (4 in, 5 hold, 8 out)
       const breathInDuration = 4;
       const holdDuration = 5;
@@ -68,8 +72,21 @@ export class DashboardComponent {
     return this.timeLeft >= 0;
   }
 
-  runTimer() {
+  runTimer(breath) {
     this.steps = 1;
+    this.modalService
+      .open(breath, {
+        ariaLabelledBy: 'modal-basic-title',
+        backdrop: 'static',
+        keyboard: false,
+        centered: true,
+        size: 'lg',
+        scrollable: true,
+      })
+      .result.then((data) => {})
+      .catch((err) => {
+        console.log(err);
+      });
 
     setTimeout(() => {
       const timerElement = document.querySelector('.timer') as HTMLElement;
@@ -96,7 +113,7 @@ export class DashboardComponent {
           timerElement.classList.remove('animatable');
         }
       }, 1000);
-    }, 0);
+    }, 10);
   }
 
   launchConfetti(): void {

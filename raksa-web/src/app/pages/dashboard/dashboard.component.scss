@@ -369,7 +369,7 @@
   position: absolute;
   bottom: 100px;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   right: 30px;
   width: 100%;
   @media only screen and (min-width: 320px) and (max-width: 767px) {
@@ -528,6 +528,8 @@
   color: white;
   bottom: 0;
   top: 0;
+  text-align: center;
+  width: 10vw;
 }
 
 .anim-circle {
