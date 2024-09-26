@@ -80,7 +80,7 @@ export class DashboardComponent {
         backdrop: 'static',
         keyboard: false,
         centered: true,
-        size: 'lg',
+        // size: 'lg',
         scrollable: true,
       })
       .result.then((data) => {})
@@ -218,5 +218,8 @@ export class DashboardComponent {
     stagePadding: 136,
     navText: ['', ''],
     autoWidth: true,
+    smartSpeed: 3000,
+    autoplayTimeout: 15000, // Time between each slide change (3000ms = 3 seconds)
+    autoplayHoverPause: true,
   };
 }

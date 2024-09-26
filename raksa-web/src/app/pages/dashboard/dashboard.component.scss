@@ -467,6 +467,7 @@
   align-items: center;
   flex-direction: column;
   position: relative;
+  text-align: center;
 }
 
 .dashboard-button {
@@ -534,8 +535,8 @@
 
 .anim-circle {
   transform: translate(-50%, -50%);
-  width: 70px;
-  height: 70px;
+  width: 15px;
+  height: 15px;
   border-radius: 100%;
   background: rgba(188, 237, 243, 0.889);
   animation: breathe 17s linear infinite; /* Total duration: 17 seconds (4+5+8) */

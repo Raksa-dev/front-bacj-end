@@ -234,12 +234,6 @@
   <div
     class="modal-body d-flex justify-content-center align-items-center flex-column p-5"
   >
-    <div class="start-breathing" *ngIf="steps == 2">
-      <div>
-        <p class="anim-circle"></p>
-        <div class="breath-status">{{ breathStatus }}</div>
-      </div>
-    </div>
     <div class="start-breathing" *ngIf="steps == 1">
       <h2>Your breathing excercise will start in</h2>
       <div class="timer animatable">
@@ -253,6 +247,15 @@
         </svg>
       </div>
     </div>
+
+    <div class="start-breathing" *ngIf="steps == 2">
+      <div class="">
+        <div class="breath-status">{{ breathStatus }}</div>
+
+        <div class="anim-circle"></div>
+      </div>
+    </div>
+
     <div class="d-flex justify-content-center align-items-center gap-3">
       <div class="dashboard-button">
         <button
