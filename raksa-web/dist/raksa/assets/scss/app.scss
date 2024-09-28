@@ -957,3 +957,29 @@ small {
 .grecaptcha-badge {
   visibility: hidden;
 }
+
+.custom-popover-class .driver-popover-title {
+  font-weight: bold;
+  color: #f2f1f1;
+}
+
+.custom-popover-class .driver-popover-description {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #f2f1f1;
+}
+
+.custom-popover-class .driver-popover-next-btn,
+.custom-popover-class .driver-popover-next-btn {
+  background-color: #4caf50; /* Custom button background */
+  color: white;
+  border: none;
+  padding: 10px;
+}
+
+.driver-popover {
+  border: 2px solid #831b9d; /* Custom popover border */
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #190f37;
+}

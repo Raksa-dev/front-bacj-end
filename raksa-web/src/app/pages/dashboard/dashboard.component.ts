@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { USER_DASHBOARD } from '../../constants/userconstants';
 import { Router } from '@angular/router';
@@ -8,12 +8,15 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { UserService, AuthService } from 'src/app/core/services';
 
+import { driver, Config, DriveStep } from 'driver.js';
+
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
   constructor(
     public router: Router,
     public userService: UserService,
@@ -32,6 +35,68 @@ export class DashboardComponent {
       }
     }
   }
+  steps1: DriveStep[] = [
+    {
+      element: '#highlighted', // Targeting the text by its ID
+      popover: {
+        title: 'Enjoy The Page Tour',
+        description: '',
+        side: 'bottom',
+        align: 'center',
+        showButtons: ['next', 'close'],
+        popoverClass: 'custom-popover-class', // Custom class applied here
+      },
+    },
+    {
+      element: '#highlighted-text', // Targeting the text by its ID
+      popover: {
+        title: 'Hello',
+        description: 'You are entering sacred space!',
+        side: 'bottom',
+        align: 'center',
+        showButtons: ['next', 'close'],
+        popoverClass: 'custom-popover-class', // Custom class applied here
+      },
+    },
+    {
+      element: '#breath-button', // Targeting the text by its ID
+      popover: {
+        title: 'Go To Dashboard',
+        description: 'Your Answers Are Here',
+        side: 'bottom',
+        align: 'center',
+        showButtons: ['next', 'close'],
+        popoverClass: 'custom-popover-class', // Custom class applied here
+      },
+    },
+    {
+      element: 'hello', // Targeting the text by its ID
+      popover: {
+        title: 'Breathe',
+        description: 'Click On Breathe To Exercise',
+        side: 'bottom',
+        align: 'center',
+        showButtons: ['next', 'close'],
+        popoverClass: 'custom-popover-class', // Custom class applied here
+      },
+    },
+    {
+      element: 'hello', // Targeting the text by its ID
+      popover: {
+        title: 'Thank You',
+        description: 'Enjoy!!',
+        side: 'bottom',
+        align: 'center',
+        showButtons: ['next', 'close'],
+        popoverClass: 'custom-popover-class', // Custom class applied here
+      },
+    },
+
+    // Add more steps as needed
+  ];
+  ngOnInit(): void {
+    this.startTour();
+  }
 
   steps = 0;
 
@@ -39,7 +104,26 @@ export class DashboardComponent {
   countdownTimer: any;
   breathStatus: string = 'Breath In';
 
+  tourDriver;
+  startTour() {
+    const config: Config = {
+      steps: this.steps1,
+      animate: true,
+      overlayOpacity: 0.75,
+      allowClose: true,
+      stagePadding: 10,
+      stageRadius: 5,
+      doneBtnText: 'Finish',
+      nextBtnText: 'Next',
+      prevBtnText: 'Previous',
+    };
+
+    this.tourDriver = driver(config);
+    this.tourDriver.drive(); // Start the tour
+  }
+
   goToDashBoard() {
+    this.tourDriver.destroy();
     this.steps = 3;
     clearTimeout(this.breathCyle);
     this.modalService.dismissAll();

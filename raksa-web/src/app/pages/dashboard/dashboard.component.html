@@ -1,5 +1,8 @@
 <div class="hero-wrap-new" *ngIf="steps != 3">
-  <h4 style="text-align: center; font-weight: 800; padding-bottom: 1.5rem">
+  <h4
+    id="highlighted-text"
+    style="text-align: center; font-weight: 800; padding-bottom: 1.5rem"
+  >
     You are entering sacred space!
   </h4>
   <div class="hero-page-v2">
@@ -60,6 +63,7 @@
           type="button"
           (click)="goToDashBoard()"
           style="z-index: 50"
+          id="breath-button"
         >
           Start
         </button>
