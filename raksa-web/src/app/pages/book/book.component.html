@@ -1144,7 +1144,13 @@
           src="../../../assets/images/bg-foreground.png"
           alt=""
         />
+        <h5 class="text">
+          Take a deep breath and find your center. The more calm and focused you
+          are, the quicker the insights will arrive. If the answers seem
+          delayed, it’s a sign to pause, breathe, and regain your focus.
+        </h5>
       </div>
+
       <div
         class="table-container"
         *ngIf="
@@ -1185,7 +1191,7 @@
         </table>
       </div>
       <!-- text area -->
-      <textarea
+      <!-- <textarea
         id="summary"
         class="form-control answer-textarea"
         [(ngModel)]="answerText"
@@ -1194,7 +1200,7 @@
           !loadSpinner && questionSelected != null && setCategoryInApi != 'love'
         "
         disabled
-      ></textarea>
+      ></textarea> -->
       <div
         class="answer-textarea-love"
         [innerHTML]="safeHtml"
@@ -1204,9 +1210,7 @@
           margin-top: 100px;
           overflow-y: scroll;
         "
-        *ngIf="
-          !loadSpinner && questionSelected != null && setCategoryInApi == 'love'
-        "
+        *ngIf="!loadSpinner && questionSelected != null"
       ></div>
     </div>
 

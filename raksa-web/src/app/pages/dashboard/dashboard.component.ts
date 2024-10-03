@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { USER_DASHBOARD } from '../../constants/userconstants';
+import { USER_DASHBOARD, TAROT } from '../../constants/userconstants';
 import { Router } from '@angular/router';
 import confetti from 'canvas-confetti';
 import { OwlOptions } from 'ngx-owl-carousel-o';
@@ -10,13 +10,20 @@ import { UserService, AuthService } from 'src/app/core/services';
 
 import { driver, Config, DriveStep } from 'driver.js';
 
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
+  shuffledCards: number[] = [];
+  shuffleCards() {
+    this.shuffledCards = this.cards.sort(() => Math.random() - 0.5); // Shuffle cards randomly
+  }
+  getRandomLeftPosition(): string {
+    // Assuming there are 22 cards, adjust this based on the actual positions needed
+    return `${Math.floor(Math.random() * 22) * 50}px`; // Random left position
+  }
   constructor(
     public router: Router,
     public userService: UserService,
@@ -39,18 +46,21 @@ export class DashboardComponent implements OnInit {
     {
       element: '#highlighted', // Targeting the text by its ID
       popover: {
-        title: 'Enjoy The Page Tour',
-        description: '',
+        title: 'Welcome Aboard! 🎉',
+        description:
+          'This tour will guide you through the key features and functionalities we offer, ensuring you have a smooth and successful start.',
         side: 'bottom',
         align: 'center',
         showButtons: ['next', 'close'],
         popoverClass: 'custom-popover-class', // Custom class applied here
+        doneBtnText: 'done button',
+        nextBtnText: 'Give me a walkthrough',
       },
     },
     {
       element: '#highlighted-text', // Targeting the text by its ID
       popover: {
-        title: 'Hello',
+        title: 'Hello!!',
         description: 'You are entering sacred space!',
         side: 'bottom',
         align: 'center',
@@ -73,10 +83,11 @@ export class DashboardComponent implements OnInit {
       element: 'hello', // Targeting the text by its ID
       popover: {
         title: 'Breathe',
-        description: 'Click On Breathe To Exercise',
+        description:
+          'Discover the power of breath, relaxation, and focus with Raksa! The deeper you breathe, the more centered you become, and the clearer the insights will be. Astrology is a sacred art, guiding us through the cosmic dance of life.',
         side: 'bottom',
         align: 'center',
-        showButtons: ['next', 'close'],
+        showButtons: ['next'],
         popoverClass: 'custom-popover-class', // Custom class applied here
       },
     },
@@ -306,4 +317,47 @@ export class DashboardComponent implements OnInit {
     autoplayTimeout: 15000, // Time between each slide change (3000ms = 3 seconds)
     autoplayHoverPause: true,
   };
+
+  cards = Array(22).fill({ lifted: false }); // Adjust the number of cards as needed.
+  isSpread = false; // A flag to determine the current state (stacked or spread).
+
+  // Stack function: Resets the classes to just 'card' with a delay.
+  stackCards() {
+    this.isSpread = false;
+    this.liftedCard = [];
+    this.cards.forEach((_, i) => {
+      setTimeout(() => {
+        // No extra class added when stacked (i.e., no aniX class)
+        this.cards[i] = 0;
+      }, i * 150);
+    });
+  }
+
+  getCardNew() {
+    this.cards.forEach((_, i) => {
+      setTimeout(() => {
+        // Adds class 'aniX' for each card
+        this.cards[i] = i;
+        return `card-1 ani${i}`;
+      }, i * 150);
+    });
+  }
+
+  // Spread function: Adds 'aniX' class for each card with a delay.
+  spreadCards() {
+    this.isSpread = true;
+  }
+
+  getCardClass(index: number) {
+    return 'card-1';
+  }
+
+  liftedCard = [];
+  liftCard(index) {
+    if (this.liftedCard.length == 6) {
+      return;
+    }
+    this.cards[index] = { lifted: true };
+    this.liftedCard.push(index);
+  }
 }

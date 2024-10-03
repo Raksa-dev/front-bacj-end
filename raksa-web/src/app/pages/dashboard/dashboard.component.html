@@ -82,7 +82,7 @@
     >
       <div (click)="selectedCategoryClick(menu?.menu)" class="menus">
         <div *ngIf="menu?.freeToUse" class="free-to-use">Free To Use</div>
-        <img [src]="menu.logo" alt="" />
+        <img class="img-dashbord" [src]="menu.logo" alt="" />
         <div>{{ menu?.menu }}</div>
 
         <div *ngIf="menu?.comingSoon" class="coming-soon">Coming Soon</div>
@@ -98,7 +98,10 @@
   </div>
 </div>
 
-<div class="dashboard" *ngIf="selectedCategory == 'Self / You' && steps == 3">
+<div
+  class="dashboard dashboard-full-view"
+  *ngIf="selectedCategory == 'Self / You' && steps == 3"
+>
   <div class="">
     <div class="mb-2">
       <div class="bool-cat">
@@ -203,12 +206,37 @@
 </div>
 
 <div
+  class="dashboard dashboard-full-view"
+  *ngIf="selectedCategory == 'Tarot' && selectedCategory != null && steps == 3"
+>
+  <div>
+    <div class="grid-custome">
+      <ul class="list">
+        <li
+          *ngFor="let card of cards; let i = index"
+          [ngClass]="[
+            'card-1',
+            isSpread && liftedCard.length == 0 ? 'spread' : '',
+            isSpread ? 'ani' + i : '',
+            card?.lifted ? 'lift' : ''
+          ]"
+          (click)="isSpread ? liftCard(i) : spreadCards()"
+        ></li>
+        <button (click)="stackCards()">Stack</button>
+      </ul>
+      <button (click)="stackCards()">Stack</button>
+      <button (click)="spreadCards()">Spread</button>
+    </div>
+  </div>
+</div>
+
+<div
   class="dashboard"
   *ngIf="selectedCategory == 'Know' && selectedCategory != null && steps == 3"
 >
   <h2 class="fw-bold">{{ selectedCategory }}</h2>
   <div class="menu-section">
-    <div *ngFor="let menu of section" class="menu-gradient">
+    <div *ngFor="let menu of section" class="menu-gradient-border">
       <div (click)="selectCategory(menu?.menu)" class="menus">
         <img [src]="menu.logo" alt="" />
         <div>{{ menu?.menu }}</div>

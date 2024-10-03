@@ -904,7 +904,7 @@ export class BookComponent implements OnInit {
             data.fromDate
           )}&end_date=${encodeURIComponent(data.toDate)}`;
         }
-        if (this.setCategoryInApi == 'love') {
+        if (true) {
           const headers = new HttpHeaders({
             'Content-Type': 'application/json',
             Accept: 'text/html', // This indicates we expect an HTML response
@@ -917,11 +917,15 @@ export class BookComponent implements OnInit {
             )
             .subscribe(
               (resphtmlResponse: string) => {
-                this.safeHtml =
-                  this.sanitizer.bypassSecurityTrustHtml(resphtmlResponse);
-                this.cacheAnswers[index] = this.safeHtml;
-
-                // this.formStep = 12;
+                if (this.questionSet.category == 'muhurta_auspicious') {
+                  let parse = JSON.parse(resphtmlResponse);
+                  this.answerText = parse;
+                  this.cacheAnswers[index] = resphtmlResponse;
+                } else {
+                  this.safeHtml =
+                    this.sanitizer.bypassSecurityTrustHtml(resphtmlResponse);
+                  this.cacheAnswers[index] = resphtmlResponse;
+                }
                 this.loadSpinner = false;
               },
               (error) => {
@@ -976,11 +980,9 @@ export class BookComponent implements OnInit {
         this.answerText = 'Invalid dateOfBirth';
       }
     } else {
-      if (this.setCategoryInApi == 'love') {
-        this.safeHtml = this.cacheAnswers[index];
-      } else {
-        this.answerText = this.cacheAnswers[index];
-      }
+      this.safeHtml = this.sanitizer.bypassSecurityTrustHtml(
+        this.cacheAnswers[index]
+      );
       this.loadSpinner = false;
     }
   }

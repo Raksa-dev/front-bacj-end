@@ -960,26 +960,43 @@ small {
 
 .custom-popover-class .driver-popover-title {
   font-weight: bold;
-  color: #f2f1f1;
+  color: #000000;
+  text-align: center;
 }
 
 .custom-popover-class .driver-popover-description {
   font-size: 16px;
   line-height: 1.5;
-  color: #f2f1f1;
+  color: #252424;
+  text-align: center;
 }
 
-.custom-popover-class .driver-popover-next-btn,
+
+.driver-popover-close-btn{
+  background-color: white;
+  border-radius: 50%;
+  width: 9%;
+}
+
+.driver-popover-navigation-btns {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
 .custom-popover-class .driver-popover-next-btn {
-  background-color: #4caf50; /* Custom button background */
+  background-color: #3898fc; /* Custom button background */
   color: white;
   border: none;
   padding: 10px;
+  font-weight: 400;
 }
 
 .driver-popover {
   border: 2px solid #831b9d; /* Custom popover border */
   border-radius: 10px;
   padding: 20px;
-  background-color: #190f37;
+  background: linear-gradient(to bottom, #7cbcfe, #fff);
 }

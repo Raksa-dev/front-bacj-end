@@ -1117,6 +1117,13 @@ body {
   justify-content: center;
   height: 100%;
   align-items: center;
+  .text {
+    position: absolute;
+    top: 100px;
+    text-align: center;
+    font-size: 1rem;
+    color: #d9d9d9d0;
+  }
   img {
     position: absolute;
     height: 300px;
