@@ -15,7 +15,7 @@ import { driver, Config, DriveStep } from 'driver.js';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
   shuffledCards: number[] = [];
   shuffleCards() {
     this.shuffledCards = this.cards.sort(() => Math.random() - 0.5); // Shuffle cards randomly
@@ -88,7 +88,7 @@ export class DashboardComponent implements OnInit {
         side: 'bottom',
         align: 'center',
         showButtons: ['next'],
-        popoverClass: 'custom-popover-class', // Custom class applied here
+        popoverClass: 'custom-popover-class-breath', // Custom class applied here
       },
     },
     {
@@ -100,14 +100,14 @@ export class DashboardComponent implements OnInit {
         align: 'center',
         showButtons: ['next', 'close'],
         popoverClass: 'custom-popover-class', // Custom class applied here
+        onNextClick: () => {
+          window.location.reload();
+        },
       },
     },
 
     // Add more steps as needed
   ];
-  ngOnInit(): void {
-    this.startTour();
-  }
 
   steps = 0;
 
@@ -134,7 +134,7 @@ export class DashboardComponent implements OnInit {
   }
 
   goToDashBoard() {
-    this.tourDriver.destroy();
+    // this.tourDriver.destroy();
     this.steps = 3;
     clearTimeout(this.breathCyle);
     this.modalService.dismissAll();
@@ -233,7 +233,7 @@ export class DashboardComponent implements OnInit {
   }
   hideConfitee() {
     this.confitee = false;
-    window.location.reload();
+    this.startTour();
   }
   hideTooltip() {
     this.tooltipVisible = null;

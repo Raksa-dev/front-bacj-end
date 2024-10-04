@@ -11,19 +11,19 @@ export class SessionsComponent implements OnInit {
   MAPPED_DASHBOARD = {
     foreign_settlement: {
       key: 'Foreign Settlement',
-      logo: '../../../assets/images/dashboard/Foreign_Settlement.png',
+      logo: '../../../assets/images/dashboard/Foreign_Settlement_new.png',
     },
     remedies: {
       key: 'Remedies',
-      logo: '../../../assets/images/dashboard/Remedies.png',
+      logo: '../../../assets/images/dashboard/Remedies_new.png',
     },
     job_vs_business: {
       key: 'Job VS Business',
-      logo: '../../../assets/images/dashboard/Job_VS_Business.png',
+      logo: '../../../assets/images/dashboard/Job_VS_Business_new.png',
     },
     love: {
       key: 'Love',
-      logo: '../../../assets/images/dashboard/Love.png',
+      logo: '../../../assets/images/dashboard/Love_new.png',
     },
     horoscope_match: {
       key: 'Horoscope Match',
@@ -31,11 +31,11 @@ export class SessionsComponent implements OnInit {
     },
     students: {
       key: 'Students',
-      logo: '../../../assets/images/dashboard/Students.png',
+      logo: '../../../assets/images/dashboard/Students_new.png',
     },
     improving_sex_life: {
       key: 'Improving Sex Life',
-      logo: '../../../assets/images/dashboard/Improving_Sex_Life.png',
+      logo: '../../../assets/images/dashboard/Improving_Sex_Life_new.png',
     },
     career_insights_problems: {
       key: 'Career Insights Problems',
@@ -43,19 +43,19 @@ export class SessionsComponent implements OnInit {
     },
     who_am_i: {
       key: 'Who Am I',
-      logo: '../../../assets/images/dashboard/who_am_i.png',
+      logo: '../../../assets/images/dashboard/who_am_i_new.png',
     },
     muhurta_auspicious: {
       key: 'Muhurtha',
-      logo: '../../../assets/images/dashboard/Muhurtha.png',
+      logo: '../../../assets/images/dashboard/Muhurtha_new.png',
     },
     panchanga: {
       key: 'Today’s Panchanga',
-      logo: '../../../assets/images/dashboard/Today_Panchanga.png',
+      logo: '../../../assets/images/dashboard/Today_Panchanga_new.png',
     },
     today_prediction: {
       key: 'Today’s prediction',
-      logo: '../../../assets/images/dashboard/Today’_prediction.png',
+      logo: '../../../assets/images/dashboard/Today’_prediction_new.png',
     },
     know_your_child: {
       key: 'Know your child',

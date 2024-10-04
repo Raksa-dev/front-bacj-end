@@ -60,22 +60,6 @@ export const USER_DASHBOARD = {
       freeToUse: false,
     },
     {
-      logo: '../../../assets/images/dashboard/Horoscope_Match.png',
-      menu: 'Horoscope Match',
-      comingSoon: true,
-      toolTip:
-        'Compare horoscopes to evaluate compatibility with your partner.',
-      freeToUse: false,
-    },
-    {
-      logo: '../../../assets/images/dashboard/Family_Dynamics.png',
-      menu: 'Family Dynamics',
-      comingSoon: true,
-      toolTip:
-        "Gain insights into your family's astrological influences and relationships.",
-      freeToUse: false,
-    },
-    {
       logo: '../../../assets/images/dashboard/Muhurtha_new.png',
       menu: 'Muhurtha',
       toolTip:
@@ -145,6 +129,22 @@ export const USER_DASHBOARD = {
       logo: '../../../assets/images/dashboard/career_insights.png',
       menu: 'Career Insights Problems',
       toolTip: 'Discover astrological guidance for your career path.',
+      freeToUse: false,
+    },
+    {
+      logo: '../../../assets/images/dashboard/Horoscope_Match.png',
+      menu: 'Horoscope Match',
+      comingSoon: true,
+      toolTip:
+        'Compare horoscopes to evaluate compatibility with your partner.',
+      freeToUse: false,
+    },
+    {
+      logo: '../../../assets/images/dashboard/Family_Dynamics.png',
+      menu: 'Family Dynamics',
+      comingSoon: true,
+      toolTip:
+        "Gain insights into your family's astrological influences and relationships.",
       freeToUse: false,
     },
   ],
