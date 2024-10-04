@@ -223,13 +223,9 @@ export class DashboardComponent {
 
   tooltipVisible = null;
   confitee = false;
-  // tooltipX = '0px';
-  // tooltipY = '0px';
 
   showTooltip(event: MouseEvent, menu) {
     this.tooltipVisible = menu;
-    // this.tooltipX = event.clientX + 10 + 'px';
-    // this.tooltipY = event.clientY + 10 + 'px';
   }
   hideConfitee() {
     this.confitee = false;
@@ -342,8 +338,31 @@ export class DashboardComponent {
       }, i * 150);
     });
   }
+  CARDS = [
+    'The Fool',
+    'The Magician',
+    'The High Priestess',
+    'The Empress',
+    'The Emperor',
+    'The Hierophant',
+    'The Lovers',
+    'The Chariot',
+    'Strength',
+    'The Hermit',
+    'The Wheel of Fortune',
+    'Justice',
+    'The Hanged Man',
+    'Death',
+    'Temperance',
+    'The Devil',
+    'The Tower',
+    'The Star',
+    'The Moon',
+    'The Sun',
+    'Judgement',
+    'The World',
+  ];
 
-  // Spread function: Adds 'aniX' class for each card with a delay.
   spreadCards() {
     this.isSpread = true;
   }
@@ -352,9 +371,48 @@ export class DashboardComponent {
     return 'card-1';
   }
 
+  getRandomUniqueItems(arr, numItems) {
+    const result = [];
+    const tempArr = [...arr]; // Create a copy of the original array
+
+    while (result.length < numItems && tempArr.length > 0) {
+      // Get a random index
+      const randomIndex = Math.floor(Math.random() * tempArr.length);
+
+      // Remove the item from tempArr and add it to the result
+      result.push(tempArr.splice(randomIndex, 1)[0]);
+    }
+
+    return result;
+  }
+
+  randomCardData = [];
+
+  questions = [
+    `Card 1:  How you feel about yourself`,
+    `Card 2:  What you want most right now`,
+    `Card 3:  Your fears`,
+    `Card 4:  What is going for you`,
+    `Card 5:  What is going against you`,
+    `Card 6:  The likely outcome`,
+  ];
+
+  seletecCards(arr) {
+    arr.map((data, i) => {
+      this.randomCardData.push({
+        cardName: data,
+        image: TAROT[data]?.image,
+        des: TAROT[data][(i + 1).toString()],
+        cardTitle: this.questions[i],
+      });
+    });
+  }
+
   liftedCard = [];
   liftCard(index) {
     if (this.liftedCard.length == 6) {
+      let a = this.getRandomUniqueItems(this.CARDS, 6);
+      this.seletecCards(a);
       return;
     }
     this.cards[index] = { lifted: true };

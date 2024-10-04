@@ -196,7 +196,7 @@ export const TAROT = {
     '4': 'What is going for you is your openness and willingness to embrace new experiences. You have the courage to take risks and the optimism to trust that things will work out. Your adventurous spirit and enthusiasm will help you attract new opportunities and navigate any challenges that come your way.',
     '5': 'What is going against you could be recklessness or a lack of planning. You might be so eager to jump into something new that you forget to consider the potential risks or consequences. There’s also the risk of acting impulsively or being too idealistic, assuming that everything will fall into place without any effort or preparation.',
     '6': 'The likely outcome, if you continue to embrace the adventure with a sense of openness and curiosity, is that you will embark on a journey filled with new opportunities and experiences. While there may be challenges along the way, your willingness to take risks and embrace the unknown will lead to personal growth and exciting possibilities.',
-    image: '/tarotdeck/thefool.jpeg',
+    image: '../../../assets/images/dashboard/tarotdeck/thefool.jpeg',
   },
 
   'The Magician': {
@@ -206,7 +206,7 @@ export const TAROT = {
     '4': 'What is going for you is your resourcefulness and your ability to harness your inner power. You have everything you need to succeed, and your focus and determination will help you achieve your goals. Your creativity and confidence are strong assets that will guide you toward positive outcomes.',
     '5': 'What is going against you could be overconfidence or the temptation to manipulate situations to your advantage. You might be spreading yourself too thin by taking on too many tasks at once, or you could be relying too heavily on your abilities without considering the need for proper planning and strategy.',
     '6': 'The likely outcome, if you continue to focus your energy and use your resources wisely, is that you will successfully manifest your goals. Your ability to turn ideas into reality is strong, but it’s important to remain grounded and stay clear in your intentions. Success is achievable, but it requires balanced effort and focus.',
-    image: '/tarotdeck/themagician.jpeg',
+    image: '../../../assets/images/dashboard/tarotdeck/themagician.jpeg',
   },
 
   'The High Priestess': {
@@ -216,7 +216,7 @@ export const TAROT = {
     '4': 'What is going for you is your strong connection to your intuition and inner wisdom. You have the ability to tap into deeper knowledge and understanding, allowing you to navigate uncertain situations with grace. Your calm demeanor and trust in the process will guide you toward the clarity you seek.',
     '5': 'What is going against you could be confusion or a lack of clarity. You may be struggling to interpret your intuition or to make sense of hidden influences in your life. There could also be external factors clouding your judgment, making it harder to trust your instincts and act decisively.',
     '6': 'The likely outcome, if you continue to trust your intuition and seek inner guidance, is that you will gain the clarity and understanding you desire. While the path may seem unclear now, patience and trust in your own wisdom will reveal the truths you need. By remaining open to your inner voice, you will find the answers you seek.',
-    image: '/tarotdeck/thehighpriestess.jpeg',
+    image: '../../../assets/images/dashboard/tarotdeck/thehighpriestess.jpeg',
   },
 
   'The Empress': {
@@ -226,7 +226,7 @@ export const TAROT = {
     '4': 'What is going for you is your natural ability to attract abundance and nurture growth. You have a deep connection to creativity, and your caring, nurturing energy allows you to support others and cultivate success. Whether in relationships or projects, your influence brings harmony and abundance into the situation.',
     '5': 'What is going against you could be a tendency to over-nurture or to take on too much responsibility for others. You may be neglecting your own needs in favor of caring for others, or you could be struggling with issues related to overindulgence. It’s important to find balance and not lose sight of your own well-being in the process.',
     '6': 'The likely outcome, if you continue to nurture your ideas and relationships with care and attention, is that you will see growth and abundance. The outcome is likely to be positive, with creative or material success on the horizon. However, it’s essential to maintain balance and ensure that you’re not overextending yourself or neglecting your own needs in the process.',
-    image: '/tarotdeck/theempress.jpeg',
+    image: '../../../assets/images/dashboard/tarotdeck/theempress.jpeg',
   },
 
   'The Emperor': {
@@ -236,7 +236,7 @@ export const TAROT = {
     '4': 'What is going for you is your ability to bring order and structure to any situation. You have the skills and discipline needed to achieve your goals, and your leadership qualities will help you navigate challenges. Your focus, determination, and sense of responsibility are significant strengths that will lead to success.',
     '5': 'What is going against you could be an overemphasis on control or authority. You may be struggling with being too rigid or inflexible, which could lead to resistance from others or missed opportunities for growth. You might also be taking on too much responsibility, which could lead to burnout if not managed carefully.',
     '6': 'The likely outcome, if you continue with your current approach, is that you will establish the stability and structure you seek. Success is achievable if you maintain a balance between authority and flexibility. However, it’s important to be mindful of not becoming too rigid in your leadership style, as adaptability will be key to long-term success.',
-    image: '/tarotdeck/theemperor.jpeg',
+    image: '../../../assets/images/dashboard/tarotdeck/theemperor.jpeg',
   },
 
   'The Hierophant': {
@@ -246,7 +246,7 @@ export const TAROT = {
     '4': 'What is going for you is your access to established wisdom and support from traditional structures. Whether it’s through education, religion, or a mentor, you have a strong foundation to rely on. Your respect for order and tradition will guide you through challenges and provide stability as you move forward.',
     '5': 'What is going against you could be a resistance to new ideas or a fear of breaking away from tradition. You might be too focused on following the rules or conforming to societal expectations, which could limit your ability to grow. Alternatively, you may be feeling restricted by outdated structures or systems that no longer serve your needs.',
     '6': "The likely outcome, if you follow the traditional path or seek guidance from trusted sources, is that you will find clarity and stability. However, it's essential to remain open to new ideas and not let rigid thinking limit your potential. By balancing tradition with innovation, you will find success and growth.",
-    image: '/tarotdeck/thehierophant.jpeg',
+    image: '../../../assets/images/dashboard/tarotdeck/thehierophant.jpeg',
   },
 
   'The Lovers': {
@@ -256,7 +256,7 @@ export const TAROT = {
     '4': 'What is going for you is the strong connections you have with others and your ability to attract love and partnership. You may have support from loved ones or a deep sense of harmony in your relationships. If faced with a decision, you have the ability to make choices that align with your values and lead to mutual fulfillment.',
     '5': 'What is going against you could be indecision or conflict in your relationships. You may be struggling with choices that require balancing your desires with the expectations of others. There could be tension between following your heart and the practical considerations of your situation. Fear of making the wrong decision may be holding you back.',
     '6': 'The likely outcome, if you make choices that are true to your heart and values, is that you will find harmony and fulfillment in your relationships. Whether you’re choosing between paths or deepening a connection, trusting your instincts will lead to a positive resolution. However, clear communication and commitment are key to achieving the desired outcome.',
-    image: '/tarotdeck/TheLovers.jpg',
+    image: '../../../assets/images/dashboard/tarotdeck/TheLovers.jpg',
   },
 
   'The Chariot': {
@@ -266,7 +266,7 @@ export const TAROT = {
     '4': 'What is going for you is your strong sense of determination and your ability to remain focused on your goals. You have the inner strength and discipline to overcome challenges and push forward. Your confidence and ability to stay on course will help you achieve your desired outcome.',
     '5': "What is going against you could be overconfidence or stubbornness. You might be so focused on your goals that you neglect to consider other perspectives or the needs of those around you. There's also the risk of burnout from pushing too hard without taking time to rest or reflect.",
     '6': "The likely outcome, if you continue with your current approach, is that you will overcome obstacles and achieve success. Your determination and focus will lead to victory, but it's important to remain adaptable and consider the needs of others along the way. Balance and self-awareness are key to long-term success.",
-    image: '/tarotdeck/thechariot.jpeg',
+    image: '../../../assets/images/dashboard/tarotdeck/thechariot.jpeg',
   },
 
   Strength: {
@@ -276,7 +276,7 @@ export const TAROT = {
     '4': 'What is going for you is your inner strength and self-confidence. You have the ability to approach challenges with patience and resilience, allowing you to navigate difficulties without losing control. Your calm demeanor and compassion will help you earn respect and guide you toward successful outcomes.',
     '5': 'What is going against you could be self-doubt or a tendency to underestimate your strength. You may also be struggling with controlling your emotions or finding it difficult to stay calm in stressful situations. There could also be a fear of appearing vulnerable or not being assertive enough.',
     '6': "The likely outcome, if you continue to trust your inner strength and remain patient, is that you will overcome the challenges you face. Your ability to handle situations with grace and composure will lead to success. However, it's important to remember that true strength comes from balance, not force.",
-    image: '/tarotdeck/thestrength.jpeg',
+    image: '../../../assets/images/dashboard/tarotdeck/thestrength.jpeg',
   },
 
   'The Hermit': {
@@ -286,7 +286,7 @@ export const TAROT = {
     '4': 'What is going for you is your ability to reflect deeply and seek wisdom within yourself. You have the inner strength to withdraw from distractions and focus on finding clarity and understanding. Your introspection and desire for personal growth will lead you to valuable insights that can guide your path forward.',
     '5': 'What is going against you could be a tendency to isolate yourself too much or to withdraw from important relationships. You may also be struggling with finding the right balance between solitude and connection with others. There’s a risk of overthinking or becoming too absorbed in your own thoughts.',
     '6': 'The likely outcome, if you continue to seek wisdom from within and reflect on your situation, is that you will gain the clarity and understanding you seek. However, it’s important to find a balance between solitude and connection with others to avoid feeling isolated or overwhelmed by introspection.',
-    image: '/tarotdeck/thehermit.jpeg',
+    image: '../../../assets/images/dashboard/tarotdeck/thehermit.jpeg',
   },
 
   'The Wheel of Fortune': {
@@ -296,7 +296,7 @@ export const TAROT = {
     '4': 'What is going for you is the fact that life is in constant motion, and change is inevitable. You have the ability to adapt and ride the waves of change, whether they are positive or challenging. The energy around you is shifting, and with it, new opportunities are likely to arise.',
     '5': 'What is going against you could be resistance to change or fear of the unknown. You may be struggling with letting go of control and allowing life to take its natural course. There’s also the risk of being too passive and not taking action when opportunities arise, waiting for luck to do all the work.',
     '6': 'The likely outcome, if you embrace the changes ahead, is that you will find yourself in a new cycle of life. Whether the shift is positive or challenging, the key is to remain adaptable and trust that everything is unfolding as it should. New opportunities are likely to emerge, and with them, the chance to grow and evolve.',
-    image: '/tarotdeck/wheeloffortune.jpeg',
+    image: '../../../assets/images/dashboard/tarotdeck/wheeloffortune.jpeg',
   },
 
   Justice: {
@@ -306,7 +306,7 @@ export const TAROT = {
     '4': 'What is going for you is your sense of fairness and your commitment to doing what is right. You have the ability to see both sides of a situation and to act with integrity. This will help you navigate challenges and find solutions that are balanced and just. Your honesty and sense of responsibility will guide you toward a positive outcome.',
     '5': 'What is going against you could be a tendency to be overly critical or judgmental, either of yourself or others. You might also be struggling with indecision, particularly if you’re weighing two options or trying to balance conflicting demands. There’s a risk of getting stuck in overanalyzing a situation rather than taking action.',
     '6': 'The likely outcome, if you continue to act with integrity and seek balance, is that justice will prevail. The situation will resolve in a way that is fair and in line with the truth. However, it’s important to be patient and trust that the right outcome will come in due time. Balance and fairness will be restored.',
-    image: '/tarotdeck/justice.jpeg',
+    image: '../../../assets/images/dashboard/tarotdeck/justice.jpeg',
   },
 
   'The Hanged Man': {
@@ -316,7 +316,7 @@ export const TAROT = {
     '4': 'What is going for you is your ability to see things from a new perspective. You have the strength to let go of control and trust in the process, allowing life to guide you in the right direction. Your patience and willingness to surrender will help you gain the clarity and insight you need to move forward.',
     '5': 'What is going against you could be resistance to letting go or a fear of being vulnerable. You may be struggling with accepting that some things are beyond your control, or you might be clinging to old ways of thinking that are no longer serving you. There’s also a risk of feeling stuck or paralyzed by indecision.',
     '6': 'The likely outcome, if you continue to trust in the process and seek new perspectives, is that you will gain the clarity and insight you need to move forward. The period of suspension will eventually pass, and you will emerge with a deeper understanding of your situation. Patience and surrender are key to finding the answers you seek.',
-    image: '/tarotdeck/thehangedman.jpeg',
+    image: '../../../assets/images/dashboard/tarotdeck/thehangedman.jpeg',
   },
 
   Death: {
@@ -326,7 +326,7 @@ export const TAROT = {
     '4': 'What is going for you is your willingness to embrace change and let go of what no longer serves you. You have the inner strength to navigate transitions and to trust that the endings you are experiencing are paving the way for new beginnings. Your resilience will help you move through this period of transformation with grace.',
     '5': 'What is going against you could be resistance to change or fear of the unknown. You may be clinging to the past or struggling to let go of situations or relationships that have run their course. There’s also the risk of avoiding necessary endings, which could prevent you from fully embracing the transformation that’s needed.',
     '6': 'The likely outcome, if you continue to embrace the process of transformation, is that you will experience a rebirth or renewal in your life. While the transition may be challenging, it will lead to personal growth and new opportunities. By letting go of the old, you are making space for the new to emerge.',
-    image: '/tarotdeck/death.jpeg',
+    image: '../../../assets/images/dashboard/tarotdeck/death.jpeg',
   },
 
   Temperance: {
@@ -336,7 +336,7 @@ export const TAROT = {
     '4': 'What is going for you is your ability to remain calm and balanced, even in the face of challenges. You have the patience and inner peace to navigate difficult situations without losing your sense of harmony. Your approach to life is measured, and this helps you integrate different aspects of yourself and your circumstances.',
     '5': 'What is going against you could be a tendency to avoid conflict or difficult emotions in an effort to maintain peace. You might be too focused on keeping the peace, which could lead to suppressing your true feelings or avoiding necessary confrontations. There’s also a risk of becoming complacent in your efforts to maintain balance.',
     '6': 'The likely outcome, if you continue to maintain balance and approach life with patience, is that you will achieve the harmony you seek. Challenges will be met with grace, and you will be able to integrate different elements of your life in a way that promotes peace and stability. However, it’s important to ensure that you are not avoiding necessary actions in the name of peace.',
-    image: '/tarotdeck/temperance.jpeg',
+    image: '../../../assets/images/dashboard/tarotdeck/temperance.jpeg',
   },
 
   'The Devil': {
@@ -346,7 +346,7 @@ export const TAROT = {
     '4': 'What is going for you is the awareness that something needs to change. You have the insight to recognize what’s holding you back, and this awareness is the first step toward freedom. Your strength lies in your ability to confront your fears and work toward breaking free from what no longer serves you.',
     '5': 'What is going against you could be the temptation to remain stuck in familiar, yet unhealthy patterns. There may be a fear of letting go or a belief that change is impossible. You might also be struggling with feelings of guilt or shame that prevent you from moving forward. There is also the risk of denial, where you refuse to acknowledge the negative influences in your life.',
     '6': 'The likely outcome, if you continue to confront and break free from what’s holding you back, is that you will experience liberation and empowerment. However, it’s important to acknowledge that the process may be challenging and require facing uncomfortable truths. By freeing yourself from negative attachments, you open the door to growth and transformation.',
-    image: '/tarotdeck/thedevil.jpeg',
+    image: '../../../assets/images/dashboard/tarotdeck/thedevil.jpeg',
   },
 
   'The Tower': {
@@ -356,7 +356,7 @@ export const TAROT = {
     '4': 'What is going for you is the opportunity to rebuild stronger foundations after the chaos. The upheaval you’re experiencing is clearing away what no longer serves you, making room for growth and renewal. This is a chance to start fresh, free from the constraints of old beliefs or structures that were not stable.',
     '5': 'What is going against you could be resistance to change or the fear of letting go of what’s familiar. You may be holding on to old ways of thinking or living, even though they are no longer working. There’s also a risk of being overwhelmed by the suddenness of the changes and feeling paralyzed by fear.',
     '6': 'The likely outcome, if you embrace the change and work toward rebuilding, is that you will come out of this period stronger and more resilient. The upheaval is clearing the way for new opportunities, but it’s essential to remain adaptable and open to the process of transformation. What feels like destruction now will eventually lead to renewal.',
-    image: '/tarotdeck/thetower.jpeg',
+    image: '../../../assets/images/dashboard/tarotdeck/thetower.jpeg',
   },
 
   'The Star': {
@@ -366,7 +366,7 @@ export const TAROT = {
     '4': 'What is going for you is your renewed sense of hope and optimism. You have the inner strength and inspiration needed to move forward, and you trust that better times are ahead. Your connection to your spiritual path or your sense of purpose is guiding you toward healing and renewal.',
     '5': 'What is going against you could be self-doubt or a lack of patience. You may be struggling to maintain your optimism in the face of challenges or worrying that your dreams will not come to fruition. There’s also the risk of being too passive, waiting for things to happen rather than taking action toward your goals.',
     '6': 'The likely outcome, if you continue to hold on to hope and work toward healing, is that you will experience a period of renewal and peace. The challenges you’ve faced are leading to greater clarity and growth, and you will move forward with a sense of purpose. Trust that the universe is guiding you in the right direction.',
-    image: '/tarotdeck/thestar.jpeg',
+    image: '../../../assets/images/dashboard/tarotdeck/thestar.jpeg',
   },
 
   'The Moon': {
@@ -376,7 +376,7 @@ export const TAROT = {
     '4': 'What is going for you is your heightened intuition and ability to navigate the unseen realms. You have the inner strength to explore your subconscious and uncover the truths that lie beneath the surface. Your sensitivity and connection to your inner world will help you find the clarity you seek, even if the answers are not immediately clear.',
     '5': 'What is going against you could be confusion or fear of facing the unknown. You may be struggling with trust, either in yourself or in the situation at hand. There’s a risk of being overwhelmed by emotions or allowing fear to cloud your judgment. You might also be grappling with illusions or deceptive influences in your life.',
     '6': 'The likely outcome, if you continue to trust your intuition and explore the unknown, is that you will gain clarity and understanding. While the path may be uncertain now, you will eventually uncover the truths you seek. Patience and trust in your inner guidance will lead you through this period of uncertainty toward greater insight.',
-    image: '/tarotdeck/themoon.jpeg',
+    image: '../../../assets/images/dashboard/tarotdeck/themoon.jpeg',
   },
 
   'The Sun': {
@@ -386,7 +386,7 @@ export const TAROT = {
     '4': 'What is going for you is your positive outlook and your ability to attract success. You are radiating confidence and joy, which is drawing others to you and opening doors for new opportunities. Your optimism and energy are powerful assets that will help you achieve your goals.',
     '5': 'What is going against you could be overconfidence or ignoring potential challenges. You might be so focused on the positives that you miss important details or fail to prepare for any obstacles. There’s also the risk of taking your current success for granted and not continuing the hard work that got you here.',
     '6': 'The likely outcome, if you continue to embrace positivity and stay focused, is that you will experience lasting success and fulfillment. Your optimism and energy will lead to positive outcomes, but it’s important to remain grounded and mindful of the work still required. Overall, the future looks bright.',
-    image: '/tarotdeck/thesun.jpeg',
+    image: '../../../assets/images/dashboard/tarotdeck/thesun.jpeg',
   },
 
   Judgement: {
@@ -396,7 +396,7 @@ export const TAROT = {
     '4': 'What is going for you is your ability to reflect honestly on your past and learn from it. You are in a strong position to make positive changes because you are willing to take responsibility for your actions. Your self-awareness and desire for growth are key strengths that will help guide you toward a better future.',
     '5': 'What is going against you could be self-doubt or a fear of letting go of the past. You may be holding on to old guilt or regret, which is preventing you from fully embracing the new opportunities ahead. There’s also the risk of avoiding necessary changes because they feel too daunting or overwhelming.',
     '6': 'The likely outcome, if you continue with your self-reflection and take responsibility for your actions, is that you will experience a powerful transformation. You are on the brink of a fresh start, and by letting go of the past, you will be able to embrace new opportunities with clarity and confidence.',
-    image: '/tarotdeck/judgement.jpeg',
+    image: '../../../assets/images/dashboard/tarotdeck/judgement.jpeg',
   },
 
   'The World': {
@@ -406,6 +406,6 @@ export const TAROT = {
     '4': 'What is going for you is the sense of achievement and the strong foundation you’ve built. You’ve worked hard, and now you are in a position to reap the rewards. Your determination and perseverance have brought you to a place of success, and this will continue to serve you as you move forward.',
     '5': 'What is going against you could be a reluctance to move on from this phase. You might be clinging to what’s familiar, even though it’s time to embrace new challenges. There’s also the risk of becoming complacent, assuming that your success will continue without the need for further effort.',
     '6': 'The likely outcome, if you continue to focus on your goals and remain open to new opportunities, is that you will achieve the completion and fulfillment you seek. This is a time of celebration and reflection on your achievements, but it’s also important to remain open to the next phase of your journey.',
-    image: '/tarotdeck/theworld.jpeg',
+    image: '../../../assets/images/dashboard/tarotdeck/theworld.jpeg',
   },
 };

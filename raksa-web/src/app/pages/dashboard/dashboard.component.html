@@ -205,9 +205,30 @@
   </div>
 </div>
 
+<div *ngIf="randomCardData.length" class="dashboard">
+  <h3 style="width: 100%; margin-left: 25px; font-weight: 900">
+    Universal 6 Card Spread
+  </h3>
+  <div *ngFor="let data of randomCardData" class="card-section">
+    <img [src]="data?.image" alt="image" height="400px" width="250px" />
+    <div>
+      <h2>{{ data?.cardTitle }}</h2>
+      <h3>{{ data?.cardName }}</h3>
+      <p>
+        {{ data?.des }}
+      </p>
+    </div>
+  </div>
+</div>
+
 <div
   class="dashboard dashboard-full-view"
-  *ngIf="selectedCategory == 'Tarot' && selectedCategory != null && steps == 3"
+  *ngIf="
+    selectedCategory == 'Tarot' &&
+    selectedCategory != null &&
+    steps == 3 &&
+    randomCardData?.length == 0
+  "
 >
   <div>
     <div class="grid-custome">
@@ -222,10 +243,32 @@
           ]"
           (click)="isSpread ? liftCard(i) : spreadCards()"
         ></li>
-        <button (click)="stackCards()">Stack</button>
+        <div *ngIf="!isSpread" class="instruction">
+          We shuffled the cards 8 times. Now please tap on the deck and choose 6
+          cards,
+        </div>
+        <button
+          [ngClass]="[
+            'card-select',
+            liftedCard.length >= 6 ? 'gradient-button' : ''
+          ]"
+          (click)="
+            liftedCard.length == 0
+              ? spreadCards()
+              : liftedCard.length >= 6
+              ? liftCard(1)
+              : ''
+          "
+        >
+          {{
+            liftedCard.length == 0
+              ? "Start"
+              : "Selected" + " " + liftedCard.length
+          }}
+        </button>
       </ul>
-      <button (click)="stackCards()">Stack</button>
-      <button (click)="spreadCards()">Spread</button>
+      <!-- <button (click)="stackCards()">Stack</button>
+      <button (click)="spreadCards()">Spread</button> -->
     </div>
   </div>
 </div>
