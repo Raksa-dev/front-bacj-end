@@ -40,6 +40,7 @@ import { TypewrittereffectComponent } from '../shared/typewrittereffect/typewrit
 import { WhyraksaComponent } from './whyraksa/whyraksa.component';
 import { OurstoryComponent } from './ourstory/ourstory.component';
 import { OurphilosophyComponent } from './ourphilosophy/ourphilosophy.component';
+import { PricingComponent } from './pricing/pricing.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { OurphilosophyComponent } from './ourphilosophy/ourphilosophy.component'
     WhyraksaComponent,
     OurstoryComponent,
     OurphilosophyComponent,
+    PricingComponent,
   ],
   imports: [
     CommonModule,

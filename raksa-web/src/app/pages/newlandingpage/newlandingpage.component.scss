@@ -128,6 +128,10 @@
     justify-items: center;
   }
 }
+.guide-card {
+  height: 200px;
+  display: flex;
+}
 
 .testimonial-cards-section > :nth-child(even) {
   background: linear-gradient(150.77deg, #d900ff42 0%, #6f00ff 98.92%);
@@ -155,10 +159,7 @@
 //   height: 200px;
 //   width: 290px;
 // }
-.guide-card {
-  height: 200px;
-  display: flex;
-}
+
 .hero-text-left-section {
   display: flex;
   justify-content: center;

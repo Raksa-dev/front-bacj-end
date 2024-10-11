@@ -804,3 +804,23 @@
   // animation: slideIn 1s forwards; /* Apply animation */
   top: 0;
 }
+
+.card-spread-container {
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+  position: absolute;
+  width: 75%;
+  top: 55%;
+}
+h3 {
+  color: #944cf3;
+}
+.card-positions {
+  margin: 1px 0;
+}
+.card-positions li {
+  font-size: 1rem;
+  margin: 0;
+}
+

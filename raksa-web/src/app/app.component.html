@@ -1,6 +1,6 @@
 <header class="header fixed-top" *ngIf="showHeader">
   <nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container">
+    <div class="container position-relative">
       <a
         class="navbar-brand"
         [routerLink]="isAstrologerPage ? ['/astrologer'] : ['/']"
@@ -17,6 +17,18 @@
         />
         <span>Raksa</span>
       </a>
+      <div *ngIf="showNotificationNavs" class="Go-to-dashboard">
+        <a
+          class=""
+          [routerLink]="['/']"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          data-bs-toggle="collapse"
+          data-bs-target=".navbar-collapse.show"
+        >
+          Dashboard
+        </a>
+      </div>
 
       <button
         class="navbar-toggler"
@@ -102,6 +114,17 @@
               data-bs-target=".navbar-collapse.show"
               >Our Story</a
             >
+          </li>
+          <li class="nav-item" *ngIf="!showNotificationNavs">
+            <a
+              class="nav-link"
+              routerLink="/pricing"
+              routerLinkActive="active"
+              data-bs-toggle="collapse"
+              data-bs-target=".navbar-collapse.show"
+            >
+              Pricing
+            </a>
           </li>
           <li class="nav-item" *ngIf="!showNotificationNavs">
             <a
@@ -207,7 +230,7 @@
   </div>
 </main>
 
-<footer class="footer" *ngIf="showFooter">
+<footer class="footer" *ngIf="!showNotificationNavs">
   <div class="copy-right-plus-social-icons">
     <div class="footer-widget">
       <h4 class="fw-semi-bold mb-2">Company</h4>

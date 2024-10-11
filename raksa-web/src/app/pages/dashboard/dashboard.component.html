@@ -81,7 +81,9 @@
       (mouseover)="showTooltip($event, menu?.menu)"
     >
       <div (click)="selectedCategoryClick(menu?.menu)" class="menus">
-        <div *ngIf="menu?.freeToUse" class="free-to-use">Free To Use</div>
+        <div *ngIf="menu?.freeToUse" class="free-to-use">
+          {{ menu?.freeToUse }}
+        </div>
         <img class="img-dashbord" [src]="menu.logo" alt="" />
         <div>{{ menu?.menu }}</div>
 
@@ -222,7 +224,7 @@
 </div>
 
 <div
-  class="dashboard dashboard-full-view"
+  class="dashboard"
   *ngIf="
     selectedCategory == 'Tarot' &&
     selectedCategory != null &&
@@ -270,6 +272,48 @@
       <!-- <button (click)="stackCards()">Stack</button>
       <button (click)="spreadCards()">Spread</button> -->
     </div>
+  </div>
+</div>
+<div
+  class="dashboard"
+  *ngIf="
+    selectedCategory == 'Tarot' &&
+    selectedCategory != null &&
+    steps == 3 &&
+    randomCardData?.length == 0
+  "
+>
+  <div class="card-spread-container">
+    <h3>LT's World Famous Universal 6 Card Spread</h3>
+    <p>
+      This is a good reading to simply 'get a snapshot' of how things are with
+      you generally, at this moment in time. It can also be used to answer
+      specific questions, and has been consulted over 200 million times since
+      Lotus Tarot was launched in 2002.
+    </p>
+
+    <div class="card-positions">
+      <h3>The card positions represent:</h3>
+      <ul>
+        <li><strong>1. How you feel about yourself now</strong></li>
+        <li><strong>2. What you most want at this moment</strong></li>
+        <li><strong>3. Your fears</strong></li>
+        <li><strong>4. What is going for you</strong></li>
+        <li><strong>5. What is going against you</strong></li>
+        <li>
+          <strong
+            >6. The outcome according to your current situation or the question
+            you asked</strong
+          >
+        </li>
+      </ul>
+    </div>
+
+    <p>
+      Don't be fooled by the brevity and simplicity of the responses or by the
+      fact it is a Major Arcana only reading, this reading has stood the test of
+      time and proven itself again and again to millions of users.
+    </p>
   </div>
 </div>
 

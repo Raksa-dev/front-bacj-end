@@ -35,6 +35,19 @@
   justify-content: center;
   // display: block;
 }
+.Go-to-dashboard {
+  position: absolute;
+  top: 5rem;
+  right: 98%;
+  border: #6f00ffeb 1px solid;
+  border-radius: 10px;
+  text-align: center;
+  padding: 0.5rem;
+  font-size: 1rem;
+  a {
+    color: #d6dfe88e;
+  }
+}
 .with-count {
   display: flex;
   gap: 5px;

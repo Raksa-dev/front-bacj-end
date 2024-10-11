@@ -93,6 +93,10 @@ export class SessionsComponent implements OnInit {
       key: 'Know your friend',
       logo: '../../../assets/images/dashboard/Remedies.png',
     },
+    loshu_grid: {
+      key: 'Loshu Grid',
+      logo: '../../../assets/images/dashboard/Loshu_Grid_new.png',
+    },
   };
   allTrasactions = [];
   isAstrologer;
@@ -109,9 +113,12 @@ export class SessionsComponent implements OnInit {
       this.userService
         .getAllAstroSessions(this.authService.activeUserValue?.uid)
         .then((data) => {
+          console.log('data', data?.docs);
           data.docs.forEach((doc) => {
             console.log(doc);
             let data1 = doc.data() as Object;
+            console.log('data12345', data1);
+
             this.allTrasactions.push(data1);
           });
         })
@@ -124,8 +131,11 @@ export class SessionsComponent implements OnInit {
       this.userService
         .getAllSessions(this.authService.activeUserValue?.uid)
         .then((data) => {
+          console.log('data', data?.docs);
           data.docs.forEach((doc) => {
             let data1 = doc.data() as Object;
+            console.log('data1234567890', data1);
+
             this.allTrasactions.push(data1);
           });
         })

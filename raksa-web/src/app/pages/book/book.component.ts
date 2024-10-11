@@ -749,11 +749,13 @@ export class BookComponent implements OnInit {
     const max = 9999999999;
     const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
     let sessionId = `session_${randomNum}`;
+
     if (formValues['birthTime']) {
       if (this.questionSet.category != 'loshu_grid') {
+        let amount = this.questionSet.category == 'who_am_i' ? 0 : 29;
         this.deductBalanceFromUserAccount(
           this.authService?.activeUserValue?.uid,
-          29
+          amount
         ).then(async (data) => {
           this.userService.fetchUserData(this.authService.activeUserValue?.uid);
 
@@ -787,9 +789,24 @@ export class BookComponent implements OnInit {
             })
           )
           .subscribe(
-            (resp) => {
+            async (resp) => {
               this.grid = Object.values(resp?.message);
               // Handle successful response
+              await this.userService.createEntryInSession({
+                amount: 0,
+                astrologerId: this.authService.activeUserValue?.uid,
+                astrologerName: null,
+                astrologerPic: '',
+                callDuration: new Date(),
+                callerId: this.authService.activeUserValue?.uid,
+                callerName:
+                  this.currentUser?.firstName +
+                  ' ' +
+                  this.currentUser?.lastName,
+                callerPic: '',
+                sessionType: this.questionSet.category,
+                sessionId,
+              });
               this.getDescription(formValues['dateOfBirth']);
               this.formStep = 12;
               // this.loadSpinner = false;
@@ -805,9 +822,10 @@ export class BookComponent implements OnInit {
       }
     } else {
       if (this.questionSet.category != 'loshu_grid') {
+        let amount = this.questionSet.category == 'who_am_i' ? 0 : 29;
         this.deductBalanceFromUserAccount(
           this.authService?.activeUserValue?.uid,
-          29
+          amount
         ).then(async (data) => {
           this.userService.fetchUserData(this.authService.activeUserValue?.uid);
           await this.userService.createEntryInSession({

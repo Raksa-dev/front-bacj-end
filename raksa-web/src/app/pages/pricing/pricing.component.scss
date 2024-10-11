@@ -1,0 +1,61 @@
+.h-full {
+  height: 100vh;
+}
+.hero-card {
+  background: #06050b72;
+  border: 1px solid #6f00ff;
+  display: flex;
+  flex-direction: column;
+  padding: 3rem;
+  border-radius: 20px;
+  height: 10vh;
+}
+.guide-card {
+  height: 50vh;
+  display: flex;
+}
+
+.gradient-button {
+  background: linear-gradient(
+    to right,
+    #2895ff 0%,
+    #a528ff 98.92%
+  ); /* Adjust colors as needed */
+
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 10px 5px 5px red;
+}
+
+.gradient-button:hover {
+  background: linear-gradient(
+    to right,
+    #d700ff 0%,
+    #7000ff 80.92%
+  ); /* Reverse the gradient colors on hover */
+  box-shadow: 10px 5px 5px red;
+}
+.nav-card {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  left: 0;
+  top: 0;
+  padding: 1rem;
+}
+
+.web-card {
+  background-color: rgb(26, 18, 52);
+  height: 80vh;
+  padding: 3rem;
+  //   box-shadow: rgb(77, 38, 71) 0px 20px 30px -10px;
+
+  box-shadow: rgb(103, 31, 121) 0px 2px 4px, rgb(74, 42, 123) 0px 7px 13px -3px,
+    rgb(77, 38, 71) 0px -3px 0px inset;
+}
+
+
