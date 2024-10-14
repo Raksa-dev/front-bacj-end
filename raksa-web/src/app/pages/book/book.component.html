@@ -1,3 +1,15 @@
+<div class="Go-to-dashboard" *ngIf="formStep != 4">
+  <a
+    class=""
+    [routerLink]="['/']"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+    data-bs-toggle="collapse"
+    data-bs-target=".navbar-collapse.show"
+  >
+    Dashboard
+  </a>
+</div>
 <div class="w-100 overflow-hidden">
   <!-- <div style="height: 100vh">
     <iframe
@@ -979,7 +991,7 @@
           class="question-title gradient-button-new"
           (click)="backToCategory()"
         >
-          More Category
+          Dashboard
         </div>
       </div>
     </div>
@@ -991,7 +1003,7 @@
           style="font-size: 1rem"
           (click)="backToCategory()"
         >
-          More Category
+          Dashboard
         </div>
         <div class="question-title">
           <h5>Questions</h5>
@@ -1014,8 +1026,14 @@
     </div>
 
     <div class="main-panel">
-      <div
+      <!-- <div
         class="web-view-visible question-title gradient-button-new float-end"
+        (click)="backToCategory()"
+      >
+        Dashboard
+      </div> -->
+      <div
+        class="web-view-visible question-title gradient-button-new float-end me-1"
         (click)="consultAstrologer()"
       >
         Consult Astrologer

@@ -11,19 +11,13 @@ import { UserService, AuthService } from 'src/app/core/services';
 import { driver, Config, DriveStep } from 'driver.js';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
+  selector: 'app-userlandingpage',
+  templateUrl: './userlandingpage.component.html',
+  styleUrls: ['./userlandingpage.component.scss'],
 })
-export class DashboardComponent {
-  shuffledCards: number[] = [];
-  shuffleCards() {
-    this.shuffledCards = this.cards.sort(() => Math.random() - 0.5); // Shuffle cards randomly
-  }
-  getRandomLeftPosition(): string {
-    // Assuming there are 22 cards, adjust this based on the actual positions needed
-    return `${Math.floor(Math.random() * 22) * 50}px`; // Random left position
-  }
+export class UserlandingpageComponent {
+  confitee = false;
+
   constructor(
     public router: Router,
     public userService: UserService,
@@ -109,7 +103,7 @@ export class DashboardComponent {
     // Add more steps as needed
   ];
 
-  steps = 3;
+  steps = 0;
 
   timeLeft: number = 5;
   countdownTimer: any;
@@ -137,9 +131,12 @@ export class DashboardComponent {
     // this.tourDriver.destroy();
     this.steps = 3;
     clearTimeout(this.breathCyle);
-    this.router.navigateByUrl('/');
-
     this.modalService.dismissAll();
+    this.router.navigateByUrl('/');
+  }
+  hideConfitee() {
+    this.confitee = false;
+    this.startTour();
   }
   breathCyle;
   startBreathingCycle() {
@@ -220,54 +217,6 @@ export class DashboardComponent {
       origin: { x: 0.5, y: 0.5 },
     });
   }
-  public section: any = USER_DASHBOARD.main;
-  public selectedCategory = null;
-
-  tooltipVisible = null;
-  confitee = false;
-
-  showTooltip(event: MouseEvent, menu) {
-    this.tooltipVisible = menu;
-  }
-  hideConfitee() {
-    this.confitee = false;
-    this.startTour();
-  }
-  hideTooltip() {
-    this.tooltipVisible = null;
-  }
-
-  selectedCategoryClick(cat) {
-    let list = [
-      'Foreign Settlement',
-      'Remedies',
-      'Job VS Business',
-      'Love',
-      'Students',
-      'Improving Sex Life',
-      'Career Insights Problems',
-      'Who Am I',
-      'Muhurtha',
-      'Today’s Panchanga',
-      'Today’s prediction',
-      'Horoscope Match',
-      'Loshu Grid',
-    ];
-    this.userService.fetchUserData(this.authService.activeUserValue?.uid);
-    if (list.includes(cat)) {
-      this.router.navigate([`/book`], { queryParams: { cat } });
-      return;
-    }
-
-    this.selectedCategory = cat;
-    if (cat == 'Know') {
-      this.section = USER_DASHBOARD['know'];
-    }
-  }
-
-  selectCategory(cat: string): void {
-    this.router.navigate([`/book`], { queryParams: { cat } });
-  }
 
   public heroImage = [
     {
@@ -315,109 +264,4 @@ export class DashboardComponent {
     autoplayTimeout: 15000, // Time between each slide change (3000ms = 3 seconds)
     autoplayHoverPause: true,
   };
-
-  cards = Array(22).fill({ lifted: false }); // Adjust the number of cards as needed.
-  isSpread = false; // A flag to determine the current state (stacked or spread).
-
-  // Stack function: Resets the classes to just 'card' with a delay.
-  stackCards() {
-    this.isSpread = false;
-    this.liftedCard = [];
-    this.cards.forEach((_, i) => {
-      setTimeout(() => {
-        // No extra class added when stacked (i.e., no aniX class)
-        this.cards[i] = 0;
-      }, i * 150);
-    });
-  }
-
-  getCardNew() {
-    this.cards.forEach((_, i) => {
-      setTimeout(() => {
-        // Adds class 'aniX' for each card
-        this.cards[i] = i;
-        return `card-1 ani${i}`;
-      }, i * 150);
-    });
-  }
-  CARDS = [
-    'The Fool',
-    'The Magician',
-    'The High Priestess',
-    'The Empress',
-    'The Emperor',
-    'The Hierophant',
-    'The Lovers',
-    'The Chariot',
-    'Strength',
-    'The Hermit',
-    'The Wheel of Fortune',
-    'Justice',
-    'The Hanged Man',
-    'Death',
-    'Temperance',
-    'The Devil',
-    'The Tower',
-    'The Star',
-    'The Moon',
-    'The Sun',
-    'Judgement',
-    'The World',
-  ];
-
-  spreadCards() {
-    this.isSpread = true;
-  }
-
-  getCardClass(index: number) {
-    return 'card-1';
-  }
-
-  getRandomUniqueItems(arr, numItems) {
-    const result = [];
-    const tempArr = [...arr]; // Create a copy of the original array
-
-    while (result.length < numItems && tempArr.length > 0) {
-      // Get a random index
-      const randomIndex = Math.floor(Math.random() * tempArr.length);
-
-      // Remove the item from tempArr and add it to the result
-      result.push(tempArr.splice(randomIndex, 1)[0]);
-    }
-
-    return result;
-  }
-
-  randomCardData = [];
-
-  questions = [
-    `Card 1:  How you feel about yourself`,
-    `Card 2:  What you want most right now`,
-    `Card 3:  Your fears`,
-    `Card 4:  What is going for you`,
-    `Card 5:  What is going against you`,
-    `Card 6:  The likely outcome`,
-  ];
-
-  seletecCards(arr) {
-    arr.map((data, i) => {
-      this.randomCardData.push({
-        cardName: data,
-        image: TAROT[data]?.image,
-        des: TAROT[data][(i + 1).toString()],
-        cardTitle: this.questions[i],
-      });
-    });
-  }
-
-  liftedCard = [];
-  liftCard(index) {
-    if (this.liftedCard.length == 6) {
-      let a = this.getRandomUniqueItems(this.CARDS, 6);
-      this.seletecCards(a);
-      return;
-    }
-    this.cards[index] = { lifted: true };
-    this.liftedCard.push(index);
-  }
 }

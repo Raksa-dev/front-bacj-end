@@ -41,6 +41,7 @@ import { WhyraksaComponent } from './whyraksa/whyraksa.component';
 import { OurstoryComponent } from './ourstory/ourstory.component';
 import { OurphilosophyComponent } from './ourphilosophy/ourphilosophy.component';
 import { PricingComponent } from './pricing/pricing.component';
+import { UserlandingpageComponent } from './userlandingpage/userlandingpage.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { PricingComponent } from './pricing/pricing.component';
     OurstoryComponent,
     OurphilosophyComponent,
     PricingComponent,
+    UserlandingpageComponent,
   ],
   imports: [
     CommonModule,

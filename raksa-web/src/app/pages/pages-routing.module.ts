@@ -30,6 +30,7 @@ import { WhyraksaComponent } from './whyraksa/whyraksa.component';
 import { OurstoryComponent } from './ourstory/ourstory.component';
 import { OurphilosophyComponent } from './ourphilosophy/ourphilosophy.component';
 import { PricingComponent } from './pricing/pricing.component';
+import { UserlandingpageComponent } from './userlandingpage/userlandingpage.component';
 
 const routes: Routes = [
   {
@@ -114,6 +115,10 @@ const routes: Routes = [
   {
     path: 'contact-ous',
     component: ContactousComponent,
+  },
+  {
+    path: 'userlandingpage',
+    component: UserlandingpageComponent,
   },
   {
     path: 'pricing',

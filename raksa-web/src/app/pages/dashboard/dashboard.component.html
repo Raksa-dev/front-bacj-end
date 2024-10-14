@@ -1,4 +1,4 @@
-<div class="hero-wrap-new" *ngIf="steps != 3">
+<!-- <div class="hero-wrap-new" *ngIf="steps != 3">
   <h4
     id="highlighted-text"
     style="text-align: center; font-weight: 800; padding-bottom: 1.5rem"
@@ -70,8 +70,23 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
+<a
+  class=""
+  [routerLink]="['/']"
+  routerLinkActive="active"
+  [routerLinkActiveOptions]="{ exact: true }"
+  data-bs-toggle="collapse"
+  data-bs-target=".navbar-collapse.show"
+>
+  <div
+    class="Go-to-dashboard"
+    *ngIf="selectedCategory == 'Know' || selectedCategory == 'Tarot'"
+  >
+    Dashboard
+  </div>
+</a>
 <div class="dashboard" *ngIf="selectedCategory == null && steps == 3">
   <h2 class="fw-bold">I want answers in ...</h2>
   <div class="menu-section">

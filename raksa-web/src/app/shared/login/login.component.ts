@@ -340,7 +340,7 @@ export class LoginComponent implements OnInit {
                 );
                 localStorage.setItem('userScreen', 'true');
                 localStorage.setItem('newuser', 'true');
-                this.router.navigateByUrl('/dashboard');
+                this.router.navigateByUrl('/userlandingpage');
                 this.activeModal.close({ response: true });
               })
               .catch((error: any) => {
@@ -353,7 +353,7 @@ export class LoginComponent implements OnInit {
             );
             localStorage.setItem('userScreen', 'true');
 
-            this.router.navigateByUrl('/dashboard');
+            this.router.navigateByUrl('/userlandingpage');
             this.activeModal.close({ response: true });
           }
         });
@@ -386,7 +386,7 @@ export class LoginComponent implements OnInit {
                 );
                 localStorage.setItem('userScreen', 'true');
                 localStorage.setItem('newuser', 'true');
-                this.router.navigateByUrl('/dashboard');
+                this.router.navigateByUrl('/userlandingpage');
                 this.activeModal.close({ response: true });
               })
               .catch((error: any) => {
@@ -398,7 +398,7 @@ export class LoginComponent implements OnInit {
               this.authService.activeUserValue['uid']
             );
             localStorage.setItem('userScreen', 'true');
-            this.router.navigateByUrl('/dashboard');
+            this.router.navigateByUrl('/userlandingpage');
             this.activeModal.close({ response: true });
           }
         });
@@ -511,7 +511,7 @@ export class LoginComponent implements OnInit {
                   // if astrologer vavigate astrologer screen
                 }
                 localStorage.setItem('userScreen', 'true');
-                this.router.navigateByUrl('/dashboard');
+                this.router.navigateByUrl('/userlandingpage');
                 this.activeModal.close({ response: true });
               }
             });
@@ -636,7 +636,7 @@ export class LoginComponent implements OnInit {
         this.userService.fetchUserData(this.authService.activeUserValue['uid']);
         localStorage.setItem('userScreen', 'true');
         localStorage.setItem('newuser', 'true');
-        this.router.navigateByUrl('/dashboard');
+        this.router.navigateByUrl('/userlandingpage');
         this.activeModal.close({ response: true });
       })
       .catch((error: any) => {

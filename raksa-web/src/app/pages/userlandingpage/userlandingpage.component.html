@@ -1,0 +1,146 @@
+<div class="hero-wrap-new" *ngIf="steps != 3">
+  <h4
+    id="highlighted-text"
+    style="text-align: center; font-weight: 800; padding-bottom: 1.5rem"
+  >
+    You are entering sacred space!
+  </h4>
+  <div class="hero-page-v2">
+    <div class="hero-text-left-section">
+      <div class="hero-text">
+        <img
+          src="../../../assets/images/dashboard_entry.png"
+          alt="testimonial['text']"
+          title="testimonial['text']"
+          height="61%"
+          width="130%"
+          style="object-fit: contain"
+        />
+      </div>
+    </div>
+
+    <div class="corsell-continer">
+      <owl-carousel-o [options]="heroImageOwlOptions">
+        <ng-container *ngFor="let testimonial of heroImage">
+          <ng-template carouselSlide [id]="testimonial['_id'].toString()">
+            <div class="hero-card">
+              <h4 style="text-align: center; font-weight: 600; font-size: 1rem">
+                TIPS TO IMPROVE YOUR READINGS
+              </h4>
+              <div
+                class="d-flex justify-content-center align-items-center flex-column"
+              >
+                <h4 style="text-align: center; font-weight: 600">
+                  {{ testimonial["text"] }}
+                </h4>
+                <p
+                  style="font-size: 1rem; font-weight: 600; width: 100%"
+                  *ngFor="let p of testimonial['para']"
+                >
+                  {{ p }}
+                </p>
+              </div>
+
+              <div class="text-center">
+                <button
+                  class="btn button"
+                  type="button"
+                  (click)="runTimer(breath)"
+                >
+                  Breathe
+                </button>
+              </div>
+            </div>
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
+    </div>
+
+    <div class="hero-ab">
+      <div class="hero-text-left-section w-l-25">
+        <button
+          class="btn gradient-button"
+          type="button"
+          style="z-index: 100"
+          id="breath-button"
+        >
+          <a
+            class=""
+            [routerLink]="['/']"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            data-bs-toggle="collapse"
+            data-bs-target=".navbar-collapse.show"
+          >
+            Start
+          </a>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="paywall-overlay" *ngIf="confitee">
+  <div class="paywall-message-box">
+    <img
+      src="../../../assets/images/welcome_screen.png"
+      width="280px"
+      height="250px"
+    />
+    <div class="paywall-action-area">
+      <h5 style="text-align: center">
+        🎉 Congratulations! 🎉We've added ₹29 to your account. Enjoy exploring
+        our premium astrology features! 💸✨
+      </h5>
+      <button class="recharge-button" (click)="hideConfitee()">Claim</button>
+    </div>
+  </div>
+</div>
+
+<ng-template #breath let-modal>
+  <div
+    class="modal-body d-flex justify-content-center align-items-center flex-column p-5"
+  >
+    <div class="start-breathing" *ngIf="steps == 1">
+      <h2>Your breathing excercise will start in</h2>
+      <div class="timer animatable">
+        <svg>
+          <circle cx="50%" cy="50%" r="90"></circle>
+          <circle cx="50%" cy="50%" r="90" pathLength="1"></circle>
+          <text x="100" y="100" text-anchor="middle">
+            <tspan style="color: white">{{ timeLeft }}</tspan>
+          </text>
+          <text x="100" y="120" text-anchor="middle">seconds</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="start-breathing" *ngIf="steps == 2">
+      <div class="">
+        <div class="breath-status">{{ breathStatus }}</div>
+
+        <div class="anim-circle"></div>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center align-items-center gap-3">
+      <div class="dashboard-button">
+        <button
+          class="btn gradient-button"
+          type="button"
+          (click)="goToDashBoard()"
+        >
+          <a
+            class=""
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            data-bs-toggle="collapse"
+            data-bs-target=".navbar-collapse.show"
+          >
+            Go To dashboard
+          </a>
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
