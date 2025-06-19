@@ -293,4 +293,37 @@ export class NewlandingpageComponent {
       },
     },
   };
+
+  public experts = [
+    {
+      name: 'Sannidhi',
+      title: 'Clarity That Changed My Life',
+      rating: 5,
+      message:
+        "Raksa's questions were exactly what I needed. The insights gave me direction in both my work and personal life.",
+    },
+    {
+      name: 'Lallima',
+      title: 'My Go-To Astrology Guide',
+      rating: 4.5,
+      message:
+        'Every reading has been accurate and insightful. Raksa helps me navigate tough decisions with clarity.',
+    },
+    {
+      name: 'Shali',
+      title: 'Accurate and Insightful',
+      rating: 5,
+      message:
+        'The readings from Raksa were spot-on. I couldn’t believe how affordable and accurate the guidance was.',
+    },
+  ];
+
+  getInitials(name: string): string {
+    if (!name) return '';
+    return name
+      .split(' ')
+      .map((n) => n[0])
+      .join('')
+      .toUpperCase();
+  }
 }

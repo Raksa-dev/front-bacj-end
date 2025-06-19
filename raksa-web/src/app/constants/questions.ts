@@ -6,7 +6,7 @@ export const QUESTIONS = {
     'How do the planets housed in my ascendant house impact my personality?',
     'How does my Sun sign contribute to my personality traits?',
     'What insights can you provide about my personality from the planetary positions in different " \
-      "houses in my vedic horoscope? ',
+    "houses in my vedic horoscope? ',
     'How do I typically appear to others upon first impression  ?',
     'What are my primary motivations and desires in life  ?',
     'How do I typically respond to new situations and challenges ?',

@@ -3,7 +3,7 @@
     <div class="hero-text-left-section">
       <div class="hero-text">
         Find Answers
-        <div>To Life’s Most</div>
+        <div>To Life's Most</div>
         Difficult
         <div>Questions</div>
         <h5>Guaranteed Accurate and Consistent Guidance.</h5>
@@ -110,7 +110,7 @@
   </div>
 </div>
 
-<section class="section text-center">
+<!-- <section class="section text-center">
   <div class="container">
     <div class="comparision">
       <div class="text-with-flame">
@@ -122,7 +122,6 @@
           alt=""
         />
       </div>
-      <!-- <h2 class="fw-semi-bold mb-3">Other apps</h2> -->
     </div>
 
     <div class="comparision">
@@ -150,7 +149,7 @@
       </div>
     </div>
   </div>
-</section>
+</section> -->
 
 <section class="section text-center">
   <div class="container">
@@ -179,11 +178,11 @@
 
 <section class="section text-center">
   <div class="container">
-    <h2 class="fw-semi-bold mb-3">Why Raksha ?</h2>
+    <h2 class="fw-semi-bold mb-3">Why Raksa?</h2>
     <h4>
       Choose Raksa as your trusted guide on your cosmic journey. Our platform
       offers accurate and reliable horoscope readings, providing detailed
-      insights into all aspects of your life.  Let Raksa be your companion,
+      insights into all aspects of your life. Let Raksa be your companion,
       mentor, and pathfinder, helping you find clarity and direction in the
       wisdom of the cosmos.
     </h4>
@@ -204,7 +203,7 @@
   </div>
 </section>
 
-<section class="section text-center">
+<!-- <section class="section text-center">
   <div class="container">
     <h2 class="fw-semi-bold mb-5">What our users say about Raksa?</h2>
   </div>
@@ -246,7 +245,238 @@
       </ng-container>
     </owl-carousel-o>
   </div>
+</section> -->
+
+<!-- Expert Recommendations Section -->
+<section class="section text-center">
+  <div class="container">
+    <h2 class="fw-semi-bold mb-3">Clients Love Our Services</h2>
+    <div class="expert-stars">
+      4.8 rating
+      <ngb-rating
+        [rate]="4.8"
+        [max]="5"
+        readonly="true"
+        style="color: gold; font-size: 1.5rem"
+      ></ngb-rating>
+    </div>
+    <div class="expert-cards-section">
+      <div class="expert-card" *ngFor="let expert of experts">
+        <div class="expert-header">
+          <div class="d-flex justify-content-center align-items-center">
+            <div
+              class="avatar-sm d-flex align-items-center justify-content-center me-2"
+            >
+              {{ getInitials(expert.name) }}
+            </div>
+            <div class="expert-name">{{ expert.name }}</div>
+          </div>
+
+          <div class="expert-stars">
+            <ngb-rating
+              [rate]="expert.rating"
+              [max]="5"
+              readonly="true"
+              style="color: gold; font-size: 1.5rem"
+            ></ngb-rating>
+          </div>
+        </div>
+        <div class="expert-title">{{ expert.title }}</div>
+        <div class="expert-message-row">
+          <span class="quote-icon">&#10077;</span>
+          <span class="expert-message">{{ expert.message }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
+<!-- End Expert Recommendations Section -->
+
+<section class="section text-center raksa-benefits-section">
+  <div class="container">
+    <div class="benefits-row">
+      <div class="benefit-card">
+        <div class="benefit-header">
+          <div class="benefit-icon icon-lowprice"></div>
+        </div>
+        <div class="benefit-title">Only ₹29 per Insight</div>
+        <div class="benefit-desc">
+          Get personalized astrology answers — Career, Relationships, Health &
+          more<br />
+          Health & more All insights, just ₹29 each.📍 Affordable. Accurate.
+          Instant.
+        </div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-header">
+          <div class="benefit-icon icon-bonus"></div>
+        </div>
+        <div class="benefit-title">Welcome Bonus:<br />Just ₹29</div>
+        <div class="benefit-desc">
+          Your first reading at a flat ₹29 Start your journey with clarity<br />
+          ✨ No hidden fees. Just truth.
+        </div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-header">
+          <div class="benefit-icon icon-rewards"></div>
+        </div>
+        <div class="benefit-title">No Subscriptions. No Hassles.</div>
+        <div class="benefit-desc">
+          <ul class="benefit-list">
+            <li>
+              <span class="star">&#9733;</span>Pay per feature — only when you
+              need it
+            </li>
+            <li>
+              <span class="star">&#9733;</span>100% chat-based, simple interface
+            </li>
+            <li>
+              <span class="star">&#9733;</span>Designed for busy souls with big
+              questions
+            </li>
+          </ul>
+          Use it like a friend. Trust it like a guide.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section text-center video-section">
+  <div class="container">
+    <h2 class="fw-semi-bold mb-3">Learn More about Raksa Psychics</h2>
+    <div class="video-wrapper">
+      <div class="laptop-frame">
+        <div class="laptop-screen">
+          <iframe
+            src="https://player.vimeo.com/video/1093621329"
+            width="100%"
+            height="400"
+            frameborder="0"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowfullscreen
+            title="Nebula Psychics Video"
+          ></iframe>
+        </div>
+        <div class="laptop-base"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section text-center getting-started-section">
+  <div class="container">
+    <h2 class="fw-semi-bold mb-4">Getting Started is Simple</h2>
+    <div class="steps-row">
+      <div class="step-card step1">
+        <div class="step-number">1</div>
+        <div class="step-title">Enter Your Birth Details</div>
+        <div class="step-desc">
+          Just your date, time, and place of birth – that's it! No quiz, no
+          fluff.
+        </div>
+      </div>
+      <div class="step-card step2">
+        <div class="step-number">2</div>
+        <div class="step-title">Activate for ₹29</div>
+        <div class="step-desc">
+          Make a one-time payment of ₹29 to unlock your Raksa profile and
+          remedies.
+        </div>
+      </div>
+      <div class="step-card step3">
+        <div class="step-number">3</div>
+        <div class="step-title">Receive Your Soul Blueprint</div>
+        <div class="step-desc">
+          Get instant access to your career, mind, karma, relationship, and
+          healing profile.
+        </div>
+      </div>
+      <div class="step-card step4">
+        <div class="step-number">4</div>
+        <div class="step-title">Begin Your Transformation</div>
+        <div class="step-desc">
+          Explore insights, start using your personalized mantras and rituals,
+          and walk the path of inner growth.
+        </div>
+      </div>
+    </div>
+    <button class="get-started-btn" (click)="onClick()">Get Started!</button>
+  </div>
+</section>
+
+<section class="section text-center raksa-system-section">
+  <div class="info-box">
+    <h2 class="info-heading">
+      Discover the Raksa System of Astrology and Healing
+    </h2>
+    <p class="info-desc">
+      Raksa isn't just about prediction — it's a path to self-realization.<br />
+      Through a unique blend of Vedic astrology, energy guidance, and practical
+      remedies, Raksa helps you decode your chart and reconnect with your truth.
+    </p>
+    <h3 class="info-subheading">Explore Ancient Tools, Made Personal</h3>
+    <p class="info-desc">
+      Your birth chart is more than signs and planets — it's a map of memory,
+      karma, and possibility. At Raksa, we help you understand the real meaning
+      behind your Moon, Saturn, Jupiter, and the cycles of your life.
+    </p>
+    <div class="info-list-title">You'll receive access to:</div>
+    <ul class="info-list">
+      <li>
+        <strong>Career & Karma Guidance:</strong> Understand your work path,
+        hidden blocks, and the timing of promotions, shifts, or burnout.
+      </li>
+      <li>
+        <strong>Relationship Blueprint:</strong> Decode the emotional patterns
+        that shape your love life — whether single, healing, or committed.
+      </li>
+      <li>
+        <strong>Rituals, Remedies, and Mantras:</strong> Based on your chart, we
+        recommend powerful yet simple actions like a mantra, mudra, or
+        meditation to restore balance.
+      </li>
+      <li>
+        <strong>Tarot & Numerology Add-ons:</strong> For extra layers of
+        insight, you can explore tarot cards, numerology, and dream analysis
+        through Raksa's healing lens.
+      </li>
+    </ul>
+    <h3 class="info-subheading">
+      Feeling Lost or Blocked? Start with Your Birth Chart
+    </h3>
+    <p class="info-desc">
+      Whether you're struggling with direction, overwhelmed in your job, or
+      stuck in a relationship loop — your chart holds the clues.
+    </p>
+    <div class="info-list-title">Raksa offers:</div>
+    <ul class="info-list">
+      <li>Deep analysis of the planets shaping your identity</li>
+      <li>Easy-to-understand guidance</li>
+      <li>No gimmicks — just ancient clarity with modern insight</li>
+    </ul>
+    <h3 class="info-subheading">Find Your Frequency, Not Just a Forecast</h3>
+    <p class="info-desc">
+      This isn't about telling you what will happen.<br />
+      This is about helping you understand why it's happening, what patterns are
+      repeating, and how to shift your energy consciously.
+    </p>
+    <h3 class="info-subheading">How to Begin</h3>
+    <ol class="info-list">
+      <li>Enter your birth details (Date, Time, Place)</li>
+      <li>Pay ₹29 to unlock your full Raksa profile</li>
+      <li>Get instant access to your soul blueprint, remedies, and insights</li>
+      <li>Start healing from the inside out — with awareness, not anxiety</li>
+    </ol>
+    <div class="info-cta" (click)="onClick()">Start Now – Just ₹29</div>
+    <div class="info-final">
+      Your inner clarity is just one click away.<br />This isn't a session. It's
+      a system. This is Raksa.
+    </div>
+  </div>
+</section>
+
 <div class="cta-container">
   <img src="../../../assets/images/cta_bg.png" alt="" />
   <div class="cta-action-section">

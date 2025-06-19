@@ -98,3 +98,122 @@
   display: flex;
   gap: 2rem;
 }
+
+.footer {
+  background: linear-gradient(120deg, #2d0b4e 0%, #4b0b6b 100%);
+  padding: 2.5rem 0 1.5rem 0;
+  color: #fff;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.footer-widget {
+  min-width: 220px;
+}
+
+.footer-widget h4 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+}
+
+.footer-widget ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.footer-widget li {
+  margin-bottom: 1rem;
+}
+
+.footer-widget a {
+  color: #fff;
+  font-size: 1.08rem;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-widget a:hover {
+  color: #a528ff;
+}
+
+.pt-1 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.7rem;
+  min-width: 220px;
+}
+
+.pt-1 h6 {
+  font-size: 1rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+
+.icons {
+  display: flex;
+  gap: 1.2rem;
+  margin-top: 0.5rem;
+}
+
+.icons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  width: 38px;
+  height: 38px;
+  transition: background 0.2s;
+}
+.icons a:hover {
+  background: #a528ff;
+}
+
+.footer .gradient-button {
+  margin-left: auto;
+  margin-right: 0;
+  margin-top: 1.5rem;
+  font-size: 1.15rem;
+  min-width: 170px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 900px) {
+  .copy-right-plus-social-icons {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2.5rem;
+  }
+  .footer .gradient-button {
+    margin: 2rem 0 0 0;
+    align-self: flex-start;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer {
+    padding: 1.2rem 0 0.7rem 0;
+  }
+  .copy-right-plus-social-icons {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.5rem;
+  }
+  .footer-widget,
+  .pt-1 {
+    min-width: unset;
+  }
+  .footer .gradient-button {
+    width: 100%;
+    min-width: unset;
+    margin: 1.5rem 0 0 0;
+    font-size: 1rem;
+  }
+  .icons {
+    gap: 0.7rem;
+  }
+}
