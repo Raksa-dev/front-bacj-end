@@ -130,3 +130,172 @@ select option {
 //     background: green;
 //   }
 // }
+
+@media only screen and (max-width: 767px) {
+  .raksa-mobile-login {
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #6f00ff 0%, #d700ff 100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+  }
+  .raksa-mobile-login-bg {
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .raksa-mobile-login-card {
+    background: #2d0a4b;
+    border-radius: 18px;
+    box-shadow: 0 4px 32px 0 rgba(44, 34, 90, 0.13);
+    padding: 2.5rem 1.5rem 2rem 1.5rem;
+    width: 92vw;
+    max-width: 370px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    color: #fff;
+    position: relative;
+  }
+  .raksa-mobile-logo {
+    max-width: 110px;
+    width: 32vw;
+    margin-bottom: 1.2rem;
+    margin-top: 0.5rem;
+  }
+  .raksa-mobile-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  .raksa-mobile-login-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin-bottom: 1.2rem;
+  }
+  .raksa-mobile-label {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #fff;
+  }
+  .raksa-mobile-login-form input,
+  .raksa-mobile-login-form .form-control {
+    width: 100%;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    min-height: 48px;
+    border-radius: 8px;
+    border: 1px solid #6f00ff;
+    background: #3d1766;
+    color: #fff;
+  }
+  .raksa-mobile-login-form input::placeholder,
+  .raksa-mobile-login-form .form-control::placeholder {
+    color: #cbb4e8;
+    opacity: 1;
+  }
+  .raksa-mobile-checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  .raksa-mobile-checkbox input[type="checkbox"] {
+    accent-color: #a259ff;
+    width: 18px;
+    height: 18px;
+    margin-right: 0.5rem;
+  }
+  .raksa-mobile-checkbox label {
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 400;
+    margin-bottom: 0;
+  }
+  .raksa-mobile-btn {
+    width: 100%;
+    min-height: 48px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 8px 0 rgba(44, 34, 90, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: none;
+    transition: background 0.2s, color 0.2s;
+  }
+  .gradient-button {
+    background: linear-gradient(90deg, #a259ff 0%, #6f00ff 100%);
+    color: #fff;
+  }
+  .raksa-facebook-btn {
+    background: #4267b2;
+    color: #fff;
+    border: none;
+  }
+  .raksa-google-btn {
+    background: #fff;
+    color: #2d225a;
+    border: none;
+    font-weight: 600;
+  }
+  .raksa-google-btn .raksa-social-icon {
+    margin-right: 0.5rem;
+    background: none;
+  }
+  .raksa-facebook-btn .raksa-social-icon {
+    margin-right: 0.5rem;
+    background: none;
+  }
+  .raksa-social-icon {
+    height: 28px;
+    width: 28px;
+    vertical-align: middle;
+  }
+  .raksa-mobile-or {
+    text-align: center;
+    color: #fff;
+    font-weight: 600;
+    margin: 0.5rem 0 1rem 0;
+    font-size: 1.1rem;
+  }
+  .invalid-feedback {
+    color: #ffb3b3;
+    font-size: 0.9rem;
+    margin-top: -0.7rem;
+    margin-bottom: 0.7rem;
+  }
+  .raksa-mobile-close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    background: transparent;
+    border: none;
+    padding: 0.2rem;
+    z-index: 10;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+  }
+  .raksa-mobile-close:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+  }
+}

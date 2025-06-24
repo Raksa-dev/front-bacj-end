@@ -1,3 +1,152 @@
+<!-- Mobile-only login screen -->
+<div class="raksa-mobile-login d-block d-md-none">
+  <div class="raksa-mobile-login-bg">
+    <div class="raksa-mobile-login-card">
+      <!-- Close icon -->
+      <button
+        class="raksa-mobile-close"
+        (click)="onCancel()"
+        aria-label="Close"
+      >
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M18 6L6 18"
+            stroke="#fff"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M6 6L18 18"
+            stroke="#fff"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </button>
+      <img
+        src="../../../assets/images/logo_new.png"
+        alt="Raksa Logo"
+        class="raksa-mobile-logo"
+      />
+      <h2 class="raksa-mobile-title">Sign In to Raksa</h2>
+      <form
+        class="raksa-mobile-login-form"
+        (ngSubmit)="sendLoginCode()"
+        [formGroup]="phoneForm"
+        autocomplete="off"
+      >
+        <label for="phoneNumber" class="raksa-mobile-label"
+          >Mobile Number</label
+        >
+        <ngx-intl-tel-input
+          [cssClass]="'form-control'"
+          [ngClass]="{
+            'is-invalid': phoneSubmitted && phoneFrm['phoneNumber'].errors
+          }"
+          [searchCountryField]="[
+            SearchCountryField.Iso2,
+            SearchCountryField.Name
+          ]"
+          [onlyCountries]="[CountryISO.India]"
+          [selectedCountryISO]="CountryISO.India"
+          [enableAutoCountrySelect]="true"
+          [enablePlaceholder]="false"
+          [searchCountryFlag]="true"
+          [selectFirstCountry]="false"
+          [maxLength]="15"
+          [phoneValidation]="true"
+          [separateDialCode]="true"
+          [numberFormat]="PhoneNumberFormat.National"
+          [inputId]="'phoneNumber'"
+          name="phoneNumber"
+          formControlName="phoneNumber"
+          customPlaceholder="Enter your contact number"
+        >
+        </ngx-intl-tel-input>
+        <div
+          *ngIf="phoneSubmitted && phoneFrm['phoneNumber'].errors"
+          class="invalid-feedback"
+        >
+          <span
+            *ngIf="
+              !phoneFrm['phoneNumber'].errors['required'] &&
+              phoneFrm['phoneNumber'].invalid
+            "
+            >Please provide a valid mobile number</span
+          >
+          <span *ngIf="phoneFrm['phoneNumber'].errors['required']"
+            >Mobile Number can't be empty</span
+          >
+        </div>
+        <!-- Terms and Conditions Checkbox -->
+        <div class="raksa-mobile-checkbox">
+          <input
+            type="checkbox"
+            id="acceptTermsMobile"
+            formControlName="acceptTerms"
+            required
+          />
+          <label for="acceptTermsMobile">
+            I have read and agree with
+            <a
+              href="/terms-and-conditions"
+              target="_blank"
+              style="color: #a259ff; text-decoration: underline"
+              >terms & conditions*</a
+            >
+          </label>
+        </div>
+        <button
+          type="submit"
+          class="raksa-mobile-btn gradient-button"
+          [disabled]="phoneForm.invalid"
+        >
+          Get OTP
+        </button>
+      </form>
+      <div class="raksa-mobile-or">OR</div>
+      <button
+        (click)="signInWithGoogle()"
+        class="raksa-mobile-btn raksa-google-btn"
+      >
+        <img
+          src="../../../assets/images/google_logo.png"
+          alt="Google"
+          class="raksa-social-icon"
+        />
+        Sign In With Google
+      </button>
+      <button
+        (click)="signInWithFacebook()"
+        class="raksa-mobile-btn raksa-facebook-btn"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="24"
+          width="24"
+          viewBox="0 0 512 512"
+          class="raksa-social-icon"
+        >
+          <path
+            fill="#ffffff"
+            d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256C0 376 82.7 476.8 194.2 504.5V334.2H141.4V256h52.8V222.3c0-87.1 39.4-127.5 125-127.5c16.2 0 44.2 3.2 55.7 6.4V172c-6-.6-16.5-1-29.6-1c-42 0-58.2 15.9-58.2 57.2V256h83.6l-14.4 78.2H287V510.1C413.8 494.8 512 386.9 512 256h0z"
+          />
+        </svg>
+        Sign In With Facebook
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Existing login for desktop/tablet -->
 <div class="modal-body p-0">
   <div class="container-fluid">
     <div class="row d-flex align-content-center justify-content-center">
@@ -7,6 +156,17 @@
       ></div>
 
       <div class="col-md-7 login-form">
+        <!-- Raksa logo for mobile -->
+        <div
+          class="raksa-logo-mobile d-block d-md-none"
+          style="width: 100%; text-align: center; margin-bottom: 1.5rem"
+        >
+          <img
+            src="../../../assets/images/logo_new.png"
+            alt="Raksa Logo"
+            style="max-width: 120px; width: 40vw; height: auto; margin: 0 auto"
+          />
+        </div>
         <div class="d-flex login-signup">
           <!-- <div *ngIf="formStep == 1" class="row">
             <button
@@ -85,9 +245,9 @@
               >Sign Up</label
             >
             <label
-              for="Let’s Create an Account!"
+              for="Let's Create an Account!"
               class="form-sub-heading d-flex justify-content-center"
-              >Let’s Create an Account!</label
+              >Let's Create an Account!</label
             >
 
             <div class="mb-2">
@@ -359,9 +519,9 @@
               >Sign Up</label
             >
             <label
-              for="Let’s Create an Account!"
+              for="Let's Create an Account!"
               class="form-sub-heading d-flex justify-content-center"
-              >Let’s Create an Account!</label
+              >Let's Create an Account!</label
             >
 
             <div class="mb-2">
