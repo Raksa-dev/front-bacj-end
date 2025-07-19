@@ -537,4 +537,51 @@ export class UserService {
     const data = await getDocs(q);
     return data;
   }
+
+  // Get userList from Firestore
+  async getUserList(userId: string): Promise<any[]> {
+    try {
+      const userRef = doc(this.firestore, 'users', userId);
+      const userDoc = await getDoc(userRef);
+      const userData = userDoc.data();
+
+      if (userData && userData.userList) {
+        return userData.userList;
+      }
+      return [];
+    } catch (error) {
+      console.error('Error getting userList:', error);
+      return [];
+    }
+  }
+
+  // Save user data to userList in Firestore
+  async saveUserToList(userId: string, userData: any): Promise<void> {
+    try {
+      const userRef = doc(this.firestore, 'users', userId);
+      const userDoc = await getDoc(userRef);
+      const currentUserData = userDoc.data();
+
+      let userList = currentUserData?.userList || [];
+
+      // Check if user already exists in the list
+      const existingUserIndex = userList.findIndex(
+        (user: any) => user.firstName === userData.firstName
+      );
+
+      if (existingUserIndex !== -1) {
+        // Update existing user
+        userList[existingUserIndex] = userData;
+      } else {
+        // Add new user
+        userList.push(userData);
+      }
+
+      // Update the userList in Firestore
+      await updateDoc(userRef, { userList });
+    } catch (error) {
+      console.error('Error saving user to list:', error);
+      throw error;
+    }
+  }
 }

@@ -102,11 +102,65 @@ export class BookComponent implements OnInit {
 
   public userList;
 
+  // Variables for top birthday fields
+  public topBirthMonth: string = '';
+  public topBirthDay: string = '';
+  public topBirthYear: string = '';
+
+  // Function handler for top birth month
+  onTopBirthMonthChange(month: string) {
+    this.topBirthMonth = month;
+    this.updateDateOfBirth();
+  }
+
+  // Function handler for top birth day
+  onTopBirthDayChange(day: string) {
+    this.topBirthDay = day;
+    this.updateDateOfBirth();
+  }
+
+  // Function handler for top birth year
+  onTopBirthYearChange(year: string) {
+    this.topBirthYear = year;
+    this.updateDateOfBirth();
+  }
+
+  // Method to update dateOfBirth when top birthday fields change
+  updateDateOfBirth() {
+    console.log(
+      'this.topBirthMonth && this.topBirthDay && this.topBirthYear',
+      this.topBirthMonth,
+      this.topBirthDay,
+      this.topBirthYear
+    );
+
+    if (this.topBirthMonth && this.topBirthDay && this.topBirthYear) {
+      // Format: "1990-05-15"
+      const formattedDate = `${this.topBirthYear}-${String(
+        this.topBirthMonth
+      ).padStart(2, '0')}-${String(this.topBirthDay).padStart(2, '0')}`;
+      console.log('this is formated date:', formattedDate);
+      this.signUpForm.get('dateOfBirth').setValue(formattedDate);
+      console.log('signUpForm', this.signUpForm);
+    }
+  }
+
   getUserList() {
     let userList = localStorage.getItem('userList');
     this.userList = JSON.parse(userList);
   }
   populateForm(user) {
+    if (typeof user?.showDateOfBirth == 'object') {
+      this.topBirthMonth = '' + user?.showDateOfBirth?.month;
+      this.topBirthDay = '' + user?.showDateOfBirth?.day;
+      this.topBirthYear = '' + user?.showDateOfBirth?.year;
+    }
+    if (typeof user?.showDateOfBirth == 'string') {
+      let date = new Date(user?.showDateOfBirth);
+      this.topBirthMonth = '' + (date?.getMonth() + 1);
+      this.topBirthDay = '' + date?.getDate();
+      this.topBirthYear = '' + date?.getFullYear();
+    }
     if (user?.birthTime) {
       this.signUpForm.addControl(
         'birthTime',
@@ -117,7 +171,9 @@ export class BookComponent implements OnInit {
       this.signUpForm.patchValue({
         firstName: user?.firstName,
         gender: user?.gender,
-        dateOfBirth: user?.showDateOfBirth,
+        dateOfBirth: `${this.topBirthYear}-${String(
+          this.topBirthMonth
+        ).padStart(2, '0')}-${String(this.topBirthDay).padStart(2, '0')}`,
         birthPlace: user?.birthPlace,
         birthTime: user['rawFormatbirthTime'],
       });
@@ -125,7 +181,9 @@ export class BookComponent implements OnInit {
       this.signUpForm.patchValue({
         firstName: user?.firstName,
         gender: user?.gender,
-        dateOfBirth: user?.showDateOfBirth,
+        dateOfBirth: `${this.topBirthYear}-${String(
+          this.topBirthMonth
+        ).padStart(2, '0')}-${String(this.topBirthDay).padStart(2, '0')}`,
         birthPlace: user?.birthPlace,
       });
     }
@@ -143,9 +201,8 @@ export class BookComponent implements OnInit {
     const minute = this.selectedTimeIfYouKnow?.minute
       ?.toString()
       .padStart(2, '0');
-    const second = this.selectedTimeIfYouKnow?.second
-      ?.toString()
-      .padStart(2, '0');
+    const second =
+      this.selectedTimeIfYouKnow?.second?.toString().padStart(2, '0') || '00';
     if (
       this.selectedTimeIfYouKnow == null ||
       this.selectedTimeIfYouKnow == undefined
@@ -155,6 +212,7 @@ export class BookComponent implements OnInit {
     } else {
       this.youKnowYourTimeButton = false;
     }
+
     const formattedTime = `${hour}:${minute}:${second}`;
     let data = JSON.parse(localStorage.getItem('basic_details'));
     data['birthTime'] = formattedTime;
@@ -700,12 +758,12 @@ export class BookComponent implements OnInit {
     }
 
     formValues['showDateOfBirth'] = formValues['dateOfBirth'];
-    formValues['dateOfBirth'] =
-      formValues['dateOfBirth'].year +
-      '-' +
-      String(formValues['dateOfBirth'].month).padStart(2, '0') +
-      '-' +
-      String(formValues['dateOfBirth'].day).padStart(2, '0');
+    // formValues['dateOfBirth'] =
+    //   formValues['dateOfBirth'].year +
+    //   '-' +
+    //   String(formValues['dateOfBirth'].month).padStart(2, '0') +
+    //   '-' +
+    //   String(formValues['dateOfBirth'].day).padStart(2, '0');
     formValues['birthPlace'] =
       formValues['birthPlace']?.description || formValues['birthPlace'];
     formValues['currentLocation'] =

@@ -122,7 +122,7 @@
           alt="Google"
           class="raksa-social-icon"
         />
-        Sign In With Google
+        <span> Sign In With Google</span>
       </button>
       <button
         (click)="signInWithFacebook()"
@@ -1072,44 +1072,44 @@
               </button>
             </div>
             <h3 style="text-align: center">OR</h3>
-          </form>
-          <div class="sign-in-buttons">
-            <div class="">
-              <button
-                (click)="signInWithFacebook()"
-                id="sign-in-button"
-                class="btn sign-in-with-google-button"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="35"
-                  width="35"
-                  viewBox="0 0 512 512"
+            <div class="sign-in-buttons" *ngIf="formStep == 1">
+              <div class="">
+                <button
+                  (click)="signInWithFacebook()"
+                  id="sign-in-button"
+                  class="btn sign-in-with-google-button"
                 >
-                  <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-                  <path
-                    fill="#ffffff"
-                    d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256C0 376 82.7 476.8 194.2 504.5V334.2H141.4V256h52.8V222.3c0-87.1 39.4-127.5 125-127.5c16.2 0 44.2 3.2 55.7 6.4V172c-6-.6-16.5-1-29.6-1c-42 0-58.2 15.9-58.2 57.2V256h83.6l-14.4 78.2H287V510.1C413.8 494.8 512 386.9 512 256h0z"
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="35"
+                    width="35"
+                    viewBox="0 -180 612 900"
+                  >
+                    <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                    <path
+                      fill="#ffffff"
+                      d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256C0 376 82.7 476.8 194.2 504.5V334.2H141.4V256h52.8V222.3c0-87.1 39.4-127.5 125-127.5c16.2 0 44.2 3.2 55.7 6.4V172c-6-.6-16.5-1-29.6-1c-42 0-58.2 15.9-58.2 57.2V256h83.6l-14.4 78.2H287V510.1C413.8 494.8 512 386.9 512 256h0z"
+                    />
+                  </svg>
+                  <span style="width: 100%">Sign In With FaceBook</span>
+                </button>
+              </div>
+              <div class="">
+                <button
+                  (click)="signInWithGoogle()"
+                  id="sign-in-button"
+                  class="btn sign-in-with-google-button"
+                >
+                  <img
+                    src="../../../assets/images/google_logo.png"
+                    height="30px"
+                    width="30px"
                   />
-                </svg>
-                <span style="margin-left: 10px">Sign In With FaceBook</span>
-              </button>
+                  <span style="width: 100%">Sign In With Google</span>
+                </button>
+              </div>
             </div>
-            <div class="">
-              <button
-                (click)="signInWithGoogle()"
-                id="sign-in-button"
-                class="btn sign-in-with-google-button"
-              >
-                <img
-                  src="../../../assets/images/google_logo.png"
-                  height="50px"
-                  width="50px"
-                />
-                <span>Sign In With Google</span>
-              </button>
-            </div>
-          </div>
+          </form>
 
           <!-- verify otp form -->
           <form
