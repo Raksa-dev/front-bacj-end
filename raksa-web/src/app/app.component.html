@@ -88,12 +88,20 @@
           <li class="nav-item" *ngIf="showThreeNavs">
             <a
               class="nav-link"
-              routerLink="/blogs"
-              routerLinkActive="active"
-              data-bs-toggle="collapse"
-              data-bs-target=".navbar-collapse.show"
-              >Blogs</a
+              href="https://blog.astroraksa.com/"
+              target="_blank"
             >
+              Blogs
+            </a>
+          </li>
+          <li class="nav-item" *ngIf="showThreeNavs">
+            <a
+              class="nav-link"
+              href="https://gurukul.astroraksa.com/"
+              target="_blank"
+            >
+              Gurukul
+            </a>
           </li>
           <li class="nav-item" *ngIf="!showNotificationNavs">
             <a

@@ -1,40 +1,98 @@
-<div class="Go-to-dashboard" *ngIf="formStep != 4">
-  <a
-    class=""
-    [routerLink]="['/']"
-    routerLinkActive="active"
-    [routerLinkActiveOptions]="{ exact: true }"
-    data-bs-toggle="collapse"
-    data-bs-target=".navbar-collapse.show"
-  >
-    Dashboard
-  </a>
+<div
+  class="booking-layout d-flex flex-row"
+  style="height: 100vh; min-height: 600px"
+>
+  <!-- User List Sidebar -->
   <div
-    class="select-users"
-    *ngIf="
-      formStep == 0 &&
-      userList != undefind &&
-      userList.length > 0 &&
-      questionSet.category != 'panchanga'
+    class="user-list-panel"
+    *ngIf="formStep == 0"
+    style="
+      width: 45%;
+      min-width: 180px;
+      height: 100%;
+      overflow-y: auto;
+      border-radius: 0 18px 18px 0;
+      box-shadow: 2px 0 12px rgba(0, 0, 0, 0.08);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: end;
     "
-    (mouseover)="showUsers()"
-    (mouseout)="hideUsers()"
   >
-    <div class="time-button d-inline-block">
-      <h6>USERS LIST ({{ userList.length }})</h6>
-    </div>
-    <div [class.show]="isHovered" class="users">
-      <div *ngFor="let user of userList">
-        <div class="time-button" (click)="populateForm(user)">
-          <h5>{{ user?.firstName }}</h5>
+    <!-- <button
+      (click)="route.navigate(['dashboard'])"
+      style="
+        width: 80%;
+        margin: 18px auto 18px auto;
+        display: block;
+        /* background: linear-gradient(90deg, #a770ef 0%, #f6d365 100%); */
+        color: #000000;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 0;
+        font-weight: 800;
+        font-size: 1rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        cursor: pointer;
+        letter-spacing: 1px;
+      "
+    >
+      Choose One From Saved Birth Info
+    </button> -->
+    <div class="saved-profiles-card">
+      <div class="saved-profiles-header">
+        <h2>Saved Profiles</h2>
+        <p>Quickly select a saved birth profile.</p>
+      </div>
+      <div class="profile-list">
+        <div
+          class="profile-item"
+          *ngFor="let user of userList"
+          (click)="populateForm(user)"
+        >
+          <div class="profile-avatar"><i class="bx bx-user"></i></div>
+          <div class="profile-info">
+            <div class="profile-name">{{ user.firstName }}</div>
+            <div
+              class="profile-meta"
+              *ngIf="user?.showDateOfBirth || user?.dateOfBirth"
+            >
+              <div>{{ user?.dateOfBirth | date : "d MMM y, h:mm a" }}</div>
+              <div>{{ user?.birthPlace }}</div>
+            </div>
+          </div>
+          <div class="profile-arrow"><i class="bx bx-chevron-right"></i></div>
         </div>
       </div>
+      <!-- <button class="add-profile-btn" (click)="addNewProfile()">
+      <i class="bx bx-plus"></i> Add New Profile
+    </button> -->
     </div>
   </div>
-</div>
 
-<div class="w-100">
-  <!-- <div style="height: 100vh">
+  <!-- Main Booking Content (form, etc.) -->
+  <div
+    class="flex-grow-1"
+    [ngStyle]="
+      formStep == 0
+        ? {
+            display: 'flex',
+            'justify-content': 'start',
+            'align-items': 'center'
+          }
+        : {}
+    "
+  >
+    <div>
+      <!-- All existing booking content starts here -->
+      <div
+        [ngClass]="{
+          'w-100': formStep != 0,
+          'w-90': formStep == 0
+        }"
+      >
+        <!-- <div style="height: 100vh">
     <iframe
       src="https://calendly.com/raksafirebase/astrology-session"
       style="border: 0; width: 100%; height: 100%"
@@ -42,178 +100,181 @@
       scrolling="no"
     ></iframe>
   </div> -->
-  <div
-    class="row d-flex align-content-center justify-content-center apitest"
-    *ngIf="formStep != 4 && formStep != 12"
-  >
-    <div class="col-md-9">
-      <div class="position-relative">
-        <div class="dark-form-container" *ngIf="formStep == 0">
-          <!-- Dark Purple Header Section -->
-          <div class="dark-form-header">
-            <h2 class="header-title">
-              {{ currentUser?.firstName + " " + currentUser?.lastName }}👋!!
-              {{ "   " }}What is your date of birth?
-            </h2>
-            <p class="header-subtitle">
-              Your date of birth helps to determine your sun sign and
-              compatibility with others.
-            </p>
-            <!-- Horizontal Date Dropdowns -->
-            <div class="date-dropdowns">
-              <select
-                class="date-select"
-                [ngModel]="topBirthMonth"
-                (change)="onTopBirthMonthChange($event.target.value)"
-              >
-                <option value="" selected disabled>Month</option>
-                <option value="1">Jan</option>
-                <option value="2">Feb</option>
-                <option value="3">Mar</option>
-                <option value="4">Apr</option>
-                <option value="5">May</option>
-                <option value="6">Jun</option>
-                <option value="7">Jul</option>
-                <option value="8">Aug</option>
-                <option value="9">Sep</option>
-                <option value="10">Oct</option>
-                <option value="11">Nov</option>
-                <option value="12">Dec</option>
-              </select>
-              <select
-                class="date-select"
-                (change)="onTopBirthDayChange($event.target.value)"
-                [ngModel]="topBirthDay"
-              >
-                <option value="" selected disabled>Day</option>
-                <option
-                  *ngFor="let day of [].constructor(31); let i = index"
-                  [value]="i + 1"
-                >
-                  {{ i + 1 }}
-                </option>
-              </select>
-              <select
-                class="date-select"
-                (change)="onTopBirthYearChange($event.target.value)"
-                [ngModel]="topBirthYear"
-              >
-                <option value="">Year</option>
-                <option
-                  *ngFor="let year of [].constructor(80); let i = index"
-                  [value]="1948 + i"
-                >
-                  {{ 1948 + i }}
-                </option>
-              </select>
-            </div>
-          </div>
-          <form
-            class="needs-validation form-fill"
-            (ngSubmit)="createProfileInRegistration()"
-            [formGroup]="signUpForm"
-            autocomplete="off"
-            *ngIf="formStep == 0"
-          >
-            <div *ngIf="questionSet.category == 'panchanga'">
-              <div class="mb-2">
-                <label for="event_date" class="form-fields-label">Date</label>
-                <div class="input-group clockpicker mt-1">
-                  <input
-                    ngbDatepicker
-                    readonly
-                    class="form-control"
-                    id="event_date"
-                    formControlName="event_date"
-                    #dateOfBirth="ngbDatepicker"
-                    style="font-size: 0.7rem"
-                    [minDate]="{ year: 1948, month: 1, day: 1 }"
-                    [maxDate]="maxDate"
-                  />
-
-                  <div
-                    class="input-group-append"
-                    (click)="dateOfBirth.toggle()"
-                  >
-                    <span class="input-group-text">
-                      <img src="../assets/images/calendar.png" />
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <!-- birth place -->
-              <div class="mb-2">
-                <label for="location" class="form-fields-label"
-                  >Enter currentYear Location</label
-                >
-                <ng-select
-                  [items]="movies$ | async"
-                  bindLabel="description"
-                  [trackByFn]="trackByFn"
-                  [minTermLength]="minLengthTerm"
-                  [loading]="moviesLoading"
-                  typeToSearchText="Please enter {{
-                    minLengthTerm
-                  }} or more characters"
-                  [typeahead]="moviesInput$"
-                  [(ngModel)]="selectedMovie"
-                  formControlName="location"
-                  [virtualScroll]="true"
-                  class="custom"
-                >
-                </ng-select>
-              </div>
-
-              <div class="d-flex mt-3">
-                <button
-                  type="submit"
-                  id="sign-in-button"
-                  class="btn gradient-button"
-                  [disabled]="signUpForm.invalid"
-                >
-                  <span>Get Answers</span>
-                  <i
-                    *ngIf="!signUpFormSubmitted"
-                    class="bx bx-right-arrow-alt align-middle ms-1"
-                  ></i>
-                  <i
-                    *ngIf="signUpFormSubmitted"
-                    class="bx bx-loader bx-spin align-middle ms-1"
-                  ></i>
-                </button>
-              </div>
-            </div>
-            <!-- for other categories -->
-            <div *ngIf="questionSet.category != 'panchanga'">
-              <div class="mb-2">
-                <label for="firstName" class="form-fields-label"
-                  >Full Name</label
-                >
-                <div>
-                  <input
-                    type="text"
-                    id="firstName"
-                    formControlName="firstName"
-                    class="form-control"
-                    placeholder="Enter your full name"
-                  />
-                  <div style="padding-top: 5px; color: darkgray">
-                    <h6>*Accurate Name required for numerology</h6>
-                  </div>
-                  <div
-                    *ngIf="profileSubmitted && signUpFrm['firstName'].errors"
-                    class="invalid-feedback"
-                  >
-                    <span *ngIf="signUpFrm['firstName'].errors['required']"
-                      >First Name can't be empty</span
+        <div
+          class="row d-flex align-content-center justify-content-center apitest"
+          *ngIf="formStep != 4 && formStep != 12"
+        >
+          <div class="col-md-9">
+            <div class="position-relative">
+              <div class="dark-form-container" *ngIf="formStep == 0">
+                <!-- Dark Purple Header Section -->
+                <div class="dark-form-header">
+                  <h2 class="header-title">What is your date of birth?</h2>
+                  <p class="header-subtitle">
+                    Your date of birth helps to determine your sun sign and
+                    compatibility with others.
+                  </p>
+                  <!-- Horizontal Date Dropdowns -->
+                  <div class="date-dropdowns">
+                    <select
+                      class="date-select"
+                      [ngModel]="topBirthMonth"
+                      (change)="onTopBirthMonthChange($event.target.value)"
                     >
+                      <option value="" selected disabled>Month</option>
+                      <option value="1">Jan</option>
+                      <option value="2">Feb</option>
+                      <option value="3">Mar</option>
+                      <option value="4">Apr</option>
+                      <option value="5">May</option>
+                      <option value="6">Jun</option>
+                      <option value="7">Jul</option>
+                      <option value="8">Aug</option>
+                      <option value="9">Sep</option>
+                      <option value="10">Oct</option>
+                      <option value="11">Nov</option>
+                      <option value="12">Dec</option>
+                    </select>
+                    <select
+                      class="date-select"
+                      (change)="onTopBirthDayChange($event.target.value)"
+                      [ngModel]="topBirthDay"
+                    >
+                      <option value="" selected disabled>Day</option>
+                      <option
+                        *ngFor="let day of [].constructor(31); let i = index"
+                        [value]="i + 1"
+                      >
+                        {{ i + 1 }}
+                      </option>
+                    </select>
+                    <select
+                      class="date-select"
+                      (change)="onTopBirthYearChange($event.target.value)"
+                      [ngModel]="topBirthYear"
+                    >
+                      <option value="">Year</option>
+                      <option
+                        *ngFor="let year of [].constructor(80); let i = index"
+                        [value]="1948 + i"
+                      >
+                        {{ 1948 + i }}
+                      </option>
+                    </select>
                   </div>
                 </div>
-              </div>
+                <form
+                  class="needs-validation form-fill"
+                  (ngSubmit)="createProfileInRegistration()"
+                  [formGroup]="signUpForm"
+                  autocomplete="off"
+                  *ngIf="formStep == 0"
+                >
+                  <div *ngIf="questionSet.category == 'panchanga'">
+                    <div class="mb-2">
+                      <label for="event_date" class="form-fields-label"
+                        >Date</label
+                      >
+                      <div class="input-group clockpicker mt-1">
+                        <input
+                          ngbDatepicker
+                          readonly
+                          class="form-control"
+                          id="event_date"
+                          formControlName="event_date"
+                          #dateOfBirth="ngbDatepicker"
+                          style="font-size: 0.7rem"
+                          [minDate]="{ year: 1948, month: 1, day: 1 }"
+                          [maxDate]="maxDate"
+                        />
 
-              <div class="row">
-                <div class="">
-                  <!-- <div class="mb-2">
+                        <div
+                          class="input-group-append"
+                          (click)="dateOfBirth.toggle()"
+                        >
+                          <span class="input-group-text">
+                            <img src="../assets/images/calendar.png" />
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- birth place -->
+                    <div class="mb-2">
+                      <label for="location" class="form-fields-label"
+                        >Enter currentYear Location</label
+                      >
+                      <ng-select
+                        [items]="movies$ | async"
+                        bindLabel="description"
+                        [trackByFn]="trackByFn"
+                        [minTermLength]="minLengthTerm"
+                        [loading]="moviesLoading"
+                        typeToSearchText="Please enter {{
+                          minLengthTerm
+                        }} or more characters"
+                        [typeahead]="moviesInput$"
+                        [(ngModel)]="selectedMovie"
+                        formControlName="location"
+                        [virtualScroll]="true"
+                        class="custom"
+                      >
+                      </ng-select>
+                    </div>
+
+                    <div class="d-flex mt-3">
+                      <button
+                        type="submit"
+                        id="sign-in-button"
+                        class="btn gradient-button"
+                        [disabled]="signUpForm.invalid"
+                        style="width: 100%"
+                      >
+                        <span>Get Answers</span>
+                        <i
+                          *ngIf="!signUpFormSubmitted"
+                          class="bx bx-right-arrow-alt align-middle ms-1"
+                        ></i>
+                        <i
+                          *ngIf="signUpFormSubmitted"
+                          class="bx bx-loader bx-spin align-middle ms-1"
+                        ></i>
+                      </button>
+                    </div>
+                  </div>
+                  <!-- for other categories -->
+                  <div *ngIf="questionSet.category != 'panchanga'">
+                    <div class="mb-2">
+                      <label for="firstName" class="form-fields-label"
+                        >Full Name</label
+                      >
+                      <div>
+                        <input
+                          type="text"
+                          id="firstName"
+                          formControlName="firstName"
+                          class="form-control"
+                          placeholder="Enter your full name"
+                        />
+                        <div style="padding-top: 5px; color: darkgray">
+                          <h6>*Accurate Name required for numerology</h6>
+                        </div>
+                        <div
+                          *ngIf="
+                            profileSubmitted && signUpFrm['firstName'].errors
+                          "
+                          class="invalid-feedback"
+                        >
+                          <span
+                            *ngIf="signUpFrm['firstName'].errors['required']"
+                            >First Name can't be empty</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="">
+                        <!-- <div class="mb-2">
                     <label for="dateOfBirth" class="form-fields-label"
                       >Birth Date</label
                     >
@@ -240,653 +301,698 @@
                       </div>
                     </div>
                   </div> -->
-                  <div class="mb-2" *ngIf="signUpForm.contains('birthTime')">
-                    <label for="dateOfBirth" class="form-fields-label"
-                      >Birth Time</label
-                    >
-                    <div class="mb-3">
-                      <app-custome-time-picker
-                        [time]="signUpForm.get('birthTime').value"
-                        (timeChange)="
-                          signUpForm.get('birthTime').setValue($event)
-                        "
-                      ></app-custome-time-picker>
+                        <div
+                          class="mb-2"
+                          *ngIf="signUpForm.contains('birthTime')"
+                        >
+                          <label for="dateOfBirth" class="form-fields-label"
+                            >Birth Time</label
+                          >
+                          <div class="mb-3">
+                            <app-custome-time-picker
+                              [time]="signUpForm.get('birthTime').value"
+                              (timeChange)="
+                                signUpForm.get('birthTime').setValue($event)
+                              "
+                            ></app-custome-time-picker>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="">
+                        <div class="mb-2">
+                          <label for="gender" class="form-fields-label"
+                            >Gender</label
+                          >
+                          <select
+                            id="gender"
+                            formControlName="gender"
+                            class="form-control-select-box select-box"
+                          >
+                            <option value="null" disabled selected>
+                              Select your gender
+                            </option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">other</option>
+                          </select>
+                          <div
+                            *ngIf="
+                              profileSubmitted && signUpFrm['gender'].errors
+                            "
+                            class="invalid-feedback"
+                          >
+                            <span *ngIf="signUpFrm['gender'].errors['required']"
+                              >Gender can't be empty</span
+                            >
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-                <div class="">
-                  <div class="mb-2">
-                    <label for="gender" class="form-fields-label">Gender</label>
-                    <select
-                      id="gender"
-                      formControlName="gender"
-                      class="form-control-select-box select-box"
-                    >
-                      <option value="null" disabled selected>
-                        Select your gender
-                      </option>
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                      <option value="other">other</option>
-                    </select>
-                    <div
-                      *ngIf="profileSubmitted && signUpFrm['gender'].errors"
-                      class="invalid-feedback"
-                    >
-                      <span *ngIf="signUpFrm['gender'].errors['required']"
-                        >Gender can't be empty</span
+
+                    <!-- birth place -->
+                    <div class="mb-2">
+                      <label for="birthPlace" class="form-fields-label"
+                        >Birth Location</label
                       >
+                      <ng-select
+                        [items]="movies$ | async"
+                        bindLabel="description"
+                        [trackByFn]="trackByFn"
+                        [minTermLength]="minLengthTerm"
+                        [loading]="moviesLoading"
+                        typeToSearchText="Please enter {{
+                          minLengthTerm
+                        }} or more characters"
+                        [typeahead]="moviesInput$"
+                        formControlName="birthPlace"
+                        [virtualScroll]="true"
+                        class="custom"
+                      >
+                      </ng-select>
+                      <div
+                        *ngIf="
+                          profileSubmitted && signUpFrm['birthPlace'].errors
+                        "
+                        class="invalid-feedback"
+                      >
+                        <span *ngIf="signUpFrm['birthPlace'].errors['required']"
+                          >Birth Place can't be empty</span
+                        >
+                      </div>
+                    </div>
+
+                    <!-- current place -->
+                    <div
+                      class="mb-2"
+                      *ngIf="signUpForm.contains('currentLocation')"
+                    >
+                      <label for="currentLocation" class="form-fields-label"
+                        >Enter Current Location</label
+                      >
+                      <ng-select
+                        [items]="movies$ | async"
+                        bindLabel="description"
+                        [trackByFn]="trackByFn"
+                        [minTermLength]="minLengthTerm"
+                        [loading]="moviesLoading"
+                        typeToSearchText="Please enter {{
+                          minLengthTerm
+                        }} or more characters"
+                        [typeahead]="moviesInput$"
+                        formControlName="currentLocation"
+                        [virtualScroll]="true"
+                        class="custom"
+                      >
+                      </ng-select>
+                    </div>
+
+                    <div class="mb-2" *ngIf="signUpForm.contains('fromDate')">
+                      <label for="event_date" class="form-fields-label"
+                        >From Date</label
+                      >
+                      <div class="input-group clockpicker mt-1">
+                        <input
+                          ngbDatepicker
+                          readonly
+                          class="form-control"
+                          id="fromDate"
+                          formControlName="fromDate"
+                          #dateOfBirth="ngbDatepicker"
+                          style="font-size: 0.7rem"
+                          [minDate]="{ year: 1948, month: 1, day: 1 }"
+                          [maxDate]="maxDate"
+                        />
+
+                        <div
+                          class="input-group-append"
+                          (click)="dateOfBirth.toggle()"
+                        >
+                          <span class="input-group-text">
+                            <img src="../assets/images/calendar.png" />
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="mb-2" *ngIf="signUpForm.contains('toDate')">
+                      <label for="event_date" class="form-fields-label"
+                        >To Date</label
+                      >
+                      <div class="input-group clockpicker mt-1">
+                        <input
+                          ngbDatepicker
+                          readonly
+                          class="form-control"
+                          id="toDate"
+                          formControlName="toDate"
+                          #dateOfBirth="ngbDatepicker"
+                          style="font-size: 0.7rem"
+                          [minDate]="{ year: 1948, month: 1, day: 1 }"
+                          [maxDate]="maxDate"
+                        />
+
+                        <div
+                          class="input-group-append"
+                          (click)="dateOfBirth.toggle()"
+                        >
+                          <span class="input-group-text">
+                            <img src="../assets/images/calendar.png" />
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="d-flex mt-3 justify-content-center">
+                      <button
+                        type="submit"
+                        id="sign-in-button"
+                        class="btn gradient-button"
+                        [disabled]="signUpForm.invalid"
+                        style="width: 100%"
+                      >
+                        <span>Get Answers</span>
+                        <i
+                          *ngIf="!signUpFormSubmitted"
+                          class="bx bx-right-arrow-alt align-middle ms-1"
+                        ></i>
+                        <i
+                          *ngIf="signUpFormSubmitted"
+                          class="bx bx-loader bx-spin align-middle ms-1"
+                        ></i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+              <!-- Pixel-perfect Complete Profile Section -->
+              <div *ngIf="formStep == 1" class="complete-profile-bg">
+                <div class="complete-profile-center">
+                  <div class="dark-form-header">
+                    <h2 class="header-title">Let's Complete Your Profile</h2>
+                    <p class="header-subtitle">
+                      To give you the most accurate insights, please provide
+                      your birth details.
+                    </p>
+                  </div>
+                  <div
+                    class="complete-profile-card"
+                    (mouseenter)="isHovered = true"
+                    (mouseleave)="isHovered = false"
+                    [ngClass]="{ hovered: isHovered }"
+                  >
+                    <!-- <div class="profile-icon">
+                      <span>👋</span>
+                    </div> -->
+                    <h2 class="profile-title">👋Please tell us</h2>
+                    <div class="profile-question">
+                      Do you know the exact time of your birth?
+                    </div>
+                    <button class="profile-btn primary" (click)="userInput(5)">
+                      Yes, I know my birth time
+                    </button>
+                    <button class="profile-btn outline" (click)="userInput(2)">
+                      No, I don't know my birth time
+                    </button>
+                  </div>
+                  <div class="profile-footer">
+                    <div class="profile-footer-title">Why do we need this?</div>
+                    <div class="profile-footer-desc">
+                      Your birth time helps create a more precise astrological
+                      chart.
                     </div>
                   </div>
                 </div>
               </div>
 
-              <!-- birth place -->
-              <div class="mb-2">
-                <label for="birthPlace" class="form-fields-label"
-                  >Birth Location</label
-                >
-                <ng-select
-                  [items]="movies$ | async"
-                  bindLabel="description"
-                  [trackByFn]="trackByFn"
-                  [minTermLength]="minLengthTerm"
-                  [loading]="moviesLoading"
-                  typeToSearchText="Please enter {{
-                    minLengthTerm
-                  }} or more characters"
-                  [typeahead]="moviesInput$"
-                  formControlName="birthPlace"
-                  [virtualScroll]="true"
-                  class="custom"
-                >
-                </ng-select>
-                <div
-                  *ngIf="profileSubmitted && signUpFrm['birthPlace'].errors"
-                  class="invalid-feedback"
-                >
-                  <span *ngIf="signUpFrm['birthPlace'].errors['required']"
-                    >Birth Place can't be empty</span
-                  >
+              <!-- you know birth time -->
+              <div class="dark-form-container" *ngIf="formStep == 5">
+                <div class="dark-form-header">
+                  <h2 class="header-title">
+                    👋!!
+                    {{ "   " }}PLEASE ENTER YOUR BIRTH TIME
+                  </h2>
                 </div>
-              </div>
 
-              <!-- current place -->
-              <div class="mb-2" *ngIf="signUpForm.contains('currentLocation')">
-                <label for="currentLocation" class="form-fields-label"
-                  >Enter Current Location</label
-                >
-                <ng-select
-                  [items]="movies$ | async"
-                  bindLabel="description"
-                  [trackByFn]="trackByFn"
-                  [minTermLength]="minLengthTerm"
-                  [loading]="moviesLoading"
-                  typeToSearchText="Please enter {{
-                    minLengthTerm
-                  }} or more characters"
-                  [typeahead]="moviesInput$"
-                  formControlName="currentLocation"
-                  [virtualScroll]="true"
-                  class="custom"
-                >
-                </ng-select>
-              </div>
-
-              <div class="mb-2" *ngIf="signUpForm.contains('fromDate')">
-                <label for="event_date" class="form-fields-label"
-                  >From Date</label
-                >
-                <div class="input-group clockpicker mt-1">
-                  <input
-                    ngbDatepicker
-                    readonly
-                    class="form-control"
-                    id="fromDate"
-                    formControlName="fromDate"
-                    #dateOfBirth="ngbDatepicker"
-                    style="font-size: 0.7rem"
-                    [minDate]="{ year: 1948, month: 1, day: 1 }"
-                    [maxDate]="maxDate"
-                  />
-
+                <div class="choose-time">
                   <div
-                    class="input-group-append"
-                    (click)="dateOfBirth.toggle()"
+                    class="mb-3 d-flex flex-column align-items-center justify-content-center"
                   >
-                    <span class="input-group-text">
-                      <img src="../assets/images/calendar.png" />
-                    </span>
+                    <h5>We are following 24 hours format</h5>
+
+                    <app-custome-time-picker
+                      (timeChange)="onTimeSelected($event)"
+                    ></app-custome-time-picker>
+                    <h5 *ngIf="youKnowYourTimeButton" style="color: red">
+                      HH : MM : SS Mandatory
+                    </h5>
+
+                    <div
+                      class="examples d-flex flex-column align-items-center justify-content-center"
+                    >
+                      <h5>Examples are as follow:</h5>
+                      <div
+                        class="d-flex gap-0 gap-sm-3 flex-column flex-sm-row"
+                      >
+                        <h6>12 Am = 00:00:00,</h6>
+                        <h6>10 Am = 10:00:00,</h6>
+                        <h6>9 Pm = 21:00:00</h6>
+                      </div>
+                    </div>
+
+                    <div
+                      class="next-button m-5"
+                      style="width: 100%; text-align: center"
+                      (click)="onTimeSelectedClick()"
+                    >
+                      <div style="width: 100%; text-align: center">Next</div>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div class="mb-2" *ngIf="signUpForm.contains('toDate')">
-                <label for="event_date" class="form-fields-label"
-                  >To Date</label
-                >
-                <div class="input-group clockpicker mt-1">
-                  <input
-                    ngbDatepicker
-                    readonly
-                    class="form-control"
-                    id="toDate"
-                    formControlName="toDate"
-                    #dateOfBirth="ngbDatepicker"
-                    style="font-size: 0.7rem"
-                    [minDate]="{ year: 1948, month: 1, day: 1 }"
-                    [maxDate]="maxDate"
-                  />
+              <!-- if user doesn't know time birth slected frame-->
+              <div class="row g-3" *ngIf="formStep == 2">
+                <h2>Please choose your approximate Time of Birth</h2>
 
-                  <div
-                    class="input-group-append"
-                    (click)="dateOfBirth.toggle()"
-                  >
-                    <span class="input-group-text">
-                      <img src="../assets/images/calendar.png" />
-                    </span>
-                  </div>
-                </div>
-              </div>
+                <div class="row mb-5 text-center mt-3">
+                  <h5>Choose any one option from below</h5>
 
-              <div class="d-flex mt-3 justify-content-center">
-                <button
-                  type="submit"
-                  id="sign-in-button"
-                  class="btn gradient-button"
-                  [disabled]="signUpForm.invalid"
-                >
-                  <span>Get Answers</span>
-                  <i
-                    *ngIf="!signUpFormSubmitted"
-                    class="bx bx-right-arrow-alt align-middle ms-1"
-                  ></i>
-                  <i
-                    *ngIf="signUpFormSubmitted"
-                    class="bx bx-loader bx-spin align-middle ms-1"
-                  ></i>
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-
-        <!-- Do you know birth time -->
-        <div class="dark-form-container" *ngIf="formStep == 1">
-          <div class="dark-form-header">
-            <h2 class="header-title">
-              👋!!
-              {{ "   " }}PLEASE TELL US
-            </h2>
-          </div>
-          <div class="choose-time">
-            <div (click)="userInput(5)" class="btn gradient-button col">
-              You know your birth time
-            </div>
-            <div (click)="userInput(2)" class="btn gradient-button col">
-              You don't know your birth time
-            </div>
-          </div>
-        </div>
-
-        <!-- you know birth time -->
-        <div class="dark-form-container" *ngIf="formStep == 5">
-          <div class="dark-form-header">
-            <h2 class="header-title">
-              👋!!
-              {{ "   " }}PLEASE ENTER YOUR BIRTH TIME
-            </h2>
-          </div>
-
-          <div class="choose-time">
-            <div
-              class="mb-3 d-flex flex-column align-items-center justify-content-center"
-            >
-              <h5>We are following 24 hours format</h5>
-
-              <app-custome-time-picker
-                (timeChange)="onTimeSelected($event)"
-              ></app-custome-time-picker>
-              <h5 *ngIf="youKnowYourTimeButton" style="color: red">
-                HH : MM : SS Mandatory
-              </h5>
-
-              <div
-                class="examples d-flex flex-column align-items-center justify-content-center"
-              >
-                <h5>Examples are as follow:</h5>
-                <div class="d-flex gap-0 gap-sm-3 flex-column flex-sm-row">
-                  <h6>12 Am = 00:00:00,</h6>
-                  <h6>10 Am = 10:00:00,</h6>
-                  <h6>9 Pm = 21:00:00</h6>
-                </div>
-              </div>
-
-              <div
-                class="next-button m-5"
-                style="width: 100%; text-align: center"
-                (click)="onTimeSelectedClick()"
-              >
-                <div style="width: 100%; text-align: center">Next</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- if user doesn't know time birth slected frame-->
-        <div class="row g-3" *ngIf="formStep == 2">
-          <h2>Please choose your approximate Time of Birth</h2>
-
-          <div class="row mb-5 text-center mt-3">
-            <h5>Choose any one option from below</h5>
-
-            <div class="col">
-              <div
-                [ngClass]="{
+                  <div class="col">
+                    <div
+                      [ngClass]="{
                   'time-button': timeWindowSelect == 2  ,
                 }"
-                class="d-flex justify-content-center align-items-center text-center"
-                (click)="selectTimeFrame(2)"
-              >
-                <h5>YOUR CUSTOME TIME FRAME</h5>
-              </div>
-            </div>
-            <div class="col d-flex justify-content-between flex-column">
-              <div
-                [ngClass]="{
+                      class="d-flex justify-content-center align-items-center text-center"
+                      (click)="selectTimeFrame(2)"
+                    >
+                      <h5>YOUR CUSTOME TIME FRAME</h5>
+                    </div>
+                  </div>
+                  <div class="col d-flex justify-content-between flex-column">
+                    <div
+                      [ngClass]="{
                   'time-button': timeWindowSelect == 0  ,
                 }"
-                class="d-flex justify-content-center align-items-center"
-                (click)="selectTimeFrame(0)"
-              >
-                <h5>LONG TIME FRAME</h5>
-              </div>
-            </div>
-            <div class="col d-flex justify-content-between flex-column">
-              <div
-                [ngClass]="{
+                      class="d-flex justify-content-center align-items-center"
+                      (click)="selectTimeFrame(0)"
+                    >
+                      <h5>LONG TIME FRAME</h5>
+                    </div>
+                  </div>
+                  <div class="col d-flex justify-content-between flex-column">
+                    <div
+                      [ngClass]="{
                   'time-button': timeWindowSelect == 1  ,
                 }"
-                class="d-flex justify-content-center align-items-center text-center"
-                (click)="selectTimeFrame(1)"
-              >
-                <h5>SHORT TIME FRAME</h5>
+                      class="d-flex justify-content-center align-items-center text-center"
+                      (click)="selectTimeFrame(1)"
+                    >
+                      <h5>SHORT TIME FRAME</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div
+                    class="col d-flex justify-content-center align-items-center flex-column position-relative"
+                  >
+                    <div
+                      *ngIf="timeWindowSelect == 0 || timeWindowSelect == 1"
+                      class="overlay-layer"
+                    ></div>
+                    <form
+                      class="needs-validation"
+                      (ngSubmit)="customeTimeSelection()"
+                      [formGroup]="cutomeTimeForm"
+                      autocomplete="off"
+                    >
+                      <div class="mb-3">
+                        <label for="dateOfBirth" class="form-fields-label"
+                          >From Time</label
+                        >
+                        <app-custome-time-picker
+                          [time]="cutomeTimeForm.get('fromBirthTime').value"
+                          (timeChange)="
+                            cutomeTimeForm.get('fromBirthTime').setValue($event)
+                          "
+                        ></app-custome-time-picker>
+                      </div>
+                      <div class="mb-3">
+                        <label for="dateOfBirth" class="form-fields-label"
+                          >To Time</label
+                        >
+                        <app-custome-time-picker
+                          [time]="cutomeTimeForm.get('toBirthTime').value"
+                          (timeChange)="
+                            cutomeTimeForm.get('toBirthTime').setValue($event)
+                          "
+                        ></app-custome-time-picker>
+                      </div>
+                      <div class="d-flex justify-content-center">
+                        <button
+                          type="submit"
+                          id="sign-in-button"
+                          class="gradient-button"
+                          (click)="customeTimeSelection()"
+                          [disabled]="cutomeTimeForm.invalid"
+                        >
+                          <span>Next</span>
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                  <div
+                    class="col-12 col-sm-4 d-flex justify-content-between flex-column position-relative"
+                  >
+                    <div
+                      *ngIf="timeWindowSelect == 1 || timeWindowSelect == 2"
+                      class="overlay-layer"
+                    ></div>
+                    <div
+                      class="long-time-frame"
+                      (click)="selectedTimeFrame('00:00:00', '12:00:00')"
+                    >
+                      <h5>Morning 00:00 AM - 12:00 PM</h5>
+                    </div>
+                    <div
+                      class="long-time-frame"
+                      (click)="selectedTimeFrame('08:00:00', '18:00:00')"
+                    >
+                      <h5>Day 08:00 AM - 06:00 PM</h5>
+                    </div>
+                    <div
+                      class="long-time-frame"
+                      (click)="selectedTimeFrame('18:00:00', '00:00:00')"
+                    >
+                      <h5>Evening 06:00 PM - 12:00 AM</h5>
+                    </div>
+                  </div>
+                  <div
+                    class="col d-flex justify-content-between flex-column position-relative"
+                  >
+                    <div
+                      *ngIf="timeWindowSelect == 0 || timeWindowSelect == 2"
+                      class="overlay-layer"
+                    ></div>
+                    <div class="short-time-frame">
+                      <div
+                        class="d-flex time-button justify-content-center align-items-center text-center"
+                        (click)="selectedTimeFrame('00:00:00', '05:00:00')"
+                      >
+                        <h5>Early Morning: 12:00 AM - 5:00 AM</h5>
+                      </div>
+                      <div
+                        class="d-flex time-button justify-content-center align-items-center"
+                        (click)="selectedTimeFrame('05:00:00', '12:00:00')"
+                      >
+                        <h5>Morning: 5:00 AM - 12:00 PM</h5>
+                      </div>
+                      <div
+                        class="d-flex time-button justify-content-center align-items-center"
+                        (click)="selectedTimeFrame('12:00:00', '18:00:00')"
+                      >
+                        <h5>Afternoon 12:00 PM - 6:00 PM</h5>
+                      </div>
+                      <div
+                        class="d-flex time-button justify-content-center align-items-center"
+                        (click)="selectedTimeFrame('18:00:00', '21:00:00')"
+                      >
+                        <h5>Evening 6:00 PM - 9:00 PM</h5>
+                      </div>
+                      <div
+                        class="d-flex time-button justify-content-center align-items-center"
+                        (click)="selectedTimeFrame('20:00:00', '00:00:00')"
+                      >
+                        <h5>Night 8:00 PM - 12:00 AM</h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <h3 class="text-center">OR</h3>
+                <div
+                  class="d-flex justify-content-center align-items-center proceed-button"
+                  (click)="selectedTimeFrame('00:00:00', '12:00:00')"
+                >
+                  <h5>IF YOU STILL DON'T KNOW</h5>
+                </div>
               </div>
-            </div>
-          </div>
-          <div class="row">
-            <div
-              class="col d-flex justify-content-center align-items-center flex-column position-relative"
-            >
-              <div
-                *ngIf="timeWindowSelect == 0 || timeWindowSelect == 1"
-                class="overlay-layer"
-              ></div>
+
+              <!-- signup form -->
               <form
                 class="needs-validation"
-                (ngSubmit)="customeTimeSelection()"
-                [formGroup]="cutomeTimeForm"
+                (ngSubmit)="createProfileInRegistration()"
+                [formGroup]="signUpForm"
                 autocomplete="off"
+                *ngIf="formStep == 10"
               >
-                <div class="mb-3">
-                  <label for="dateOfBirth" class="form-fields-label"
-                    >From Time</label
+                <label
+                  *ngIf="!currentUser"
+                  for="Sign Up"
+                  class="form-heading d-flex justify-content-center"
+                  >Basic Details
+                </label>
+
+                <label
+                  for="Sign Up"
+                  class="form-heading d-flex justify-content-center"
+                  *ngIf="currentUser"
+                  >Hi
+                  {{
+                    currentUser?.firstName + " " + currentUser?.lastName
+                  }}</label
+                >
+
+                <div class="mb-2">
+                  <label for="firstName" class="form-fields-label"
+                    >Full Name</label
                   >
-                  <app-custome-time-picker
-                    [time]="cutomeTimeForm.get('fromBirthTime').value"
-                    (timeChange)="
-                      cutomeTimeForm.get('fromBirthTime').setValue($event)
-                    "
-                  ></app-custome-time-picker>
-                </div>
-                <div class="mb-3">
-                  <label for="dateOfBirth" class="form-fields-label"
-                    >To Time</label
+                  <input
+                    type="text"
+                    id="firstName"
+                    formControlName="firstName"
+                    class="form-control"
+                    placeholder="Enter your full name"
+                  />
+                  <div style="padding-top: 5px; color: darkgray">
+                    <h6>*Accurate Name required for numerology</h6>
+                  </div>
+                  <div
+                    *ngIf="profileSubmitted && signUpFrm['firstName'].errors"
+                    class="invalid-feedback"
                   >
-                  <app-custome-time-picker
-                    [time]="cutomeTimeForm.get('toBirthTime').value"
-                    (timeChange)="
-                      cutomeTimeForm.get('toBirthTime').setValue($event)
-                    "
-                  ></app-custome-time-picker>
+                    <span *ngIf="signUpFrm['firstName'].errors['required']"
+                      >First Name can't be empty</span
+                    >
+                  </div>
                 </div>
+
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="mb-2">
+                      <label for="dateOfBirth" class="form-fields-label"
+                        >Birth Date</label
+                      >
+                      <div class="input-group clockpicker mt-1">
+                        <input
+                          ngbDatepicker
+                          readonly
+                          class="form-control"
+                          id="dateOfBirth"
+                          formControlName="dateOfBirth"
+                          #dateOfBirth="ngbDatepicker"
+                          style="font-size: 0.7rem"
+                          [minDate]="{ year: 1948, month: 1, day: 1 }"
+                          [maxDate]="{ year: currentYear, month: 12, day: 31 }"
+                        />
+
+                        <div
+                          class="input-group-append"
+                          (click)="dateOfBirth.toggle()"
+                        >
+                          <span class="input-group-text">
+                            <img src="../assets/images/calendar.png" />
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="mb-2">
+                      <label for="dateOfBirth" class="form-fields-label"
+                        >Birth Time</label
+                      >
+                      <div class="mb-3">
+                        <app-custome-time-picker
+                          [time]="signUpForm.get('birthTime').value"
+                          (timeChange)="
+                            signUpForm.get('birthTime').setValue($event)
+                          "
+                        ></app-custome-time-picker>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-2">
+                  <label for="gender" class="form-fields-label">Gender</label>
+                  <select
+                    id="gender"
+                    formControlName="gender"
+                    class="form-control-select-box select-box"
+                  >
+                    <option value="null" disabled selected>
+                      Select your gender
+                    </option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">other</option>
+                  </select>
+                  <div
+                    *ngIf="profileSubmitted && signUpFrm['gender'].errors"
+                    class="invalid-feedback"
+                  >
+                    <span *ngIf="signUpFrm['gender'].errors['required']"
+                      >Gender can't be empty</span
+                    >
+                  </div>
+                </div>
+                <!-- birth place -->
+                <div class="mb-2">
+                  <label for="birthPlace" class="form-fields-label"
+                    >Birth Location</label
+                  >
+                  <ng-select
+                    [items]="movies$ | async"
+                    bindLabel="description"
+                    [trackByFn]="trackByFn"
+                    [minTermLength]="minLengthTerm"
+                    [loading]="moviesLoading"
+                    typeToSearchText="Please enter {{
+                      minLengthTerm
+                    }} or more characters"
+                    [typeahead]="moviesInput$"
+                    [(ngModel)]="selectedMovie"
+                    formControlName="birthPlace"
+                    [virtualScroll]="true"
+                    class="custom"
+                  >
+                  </ng-select>
+                  <div
+                    *ngIf="profileSubmitted && signUpFrm['birthPlace'].errors"
+                    class="invalid-feedback"
+                  >
+                    <span *ngIf="signUpFrm['birthPlace'].errors['required']"
+                      >Birth Place can't be empty</span
+                    >
+                  </div>
+                </div>
+
                 <div class="d-flex justify-content-center">
                   <button
                     type="submit"
                     id="sign-in-button"
-                    class="gradient-button"
-                    (click)="customeTimeSelection()"
-                    [disabled]="cutomeTimeForm.invalid"
+                    class="btn gradient-button"
+                    [disabled]="signUpForm.invalid"
                   >
                     <span>Next</span>
+                    <i
+                      *ngIf="!signUpFormSubmitted"
+                      class="bx bx-right-arrow-alt align-middle ms-1"
+                    ></i>
+                    <i
+                      *ngIf="signUpFormSubmitted"
+                      class="bx bx-loader bx-spin align-middle ms-1"
+                    ></i>
                   </button>
                 </div>
               </form>
-            </div>
-            <div
-              class="col-12 col-sm-4 d-flex justify-content-between flex-column position-relative"
-            >
-              <div
-                *ngIf="timeWindowSelect == 1 || timeWindowSelect == 2"
-                class="overlay-layer"
-              ></div>
-              <div
-                class="long-time-frame"
-                (click)="selectedTimeFrame('00:00:00', '12:00:00')"
-              >
-                <h5>Morning 00:00 AM - 12:00 PM</h5>
-              </div>
-              <div
-                class="long-time-frame"
-                (click)="selectedTimeFrame('08:00:00', '18:00:00')"
-              >
-                <h5>Day 08:00 AM - 06:00 PM</h5>
-              </div>
-              <div
-                class="long-time-frame"
-                (click)="selectedTimeFrame('18:00:00', '00:00:00')"
-              >
-                <h5>Evening 06:00 PM - 12:00 AM</h5>
-              </div>
-            </div>
-            <div
-              class="col d-flex justify-content-between flex-column position-relative"
-            >
-              <div
-                *ngIf="timeWindowSelect == 0 || timeWindowSelect == 2"
-                class="overlay-layer"
-              ></div>
-              <div class="short-time-frame">
-                <div
-                  class="d-flex time-button justify-content-center align-items-center text-center"
-                  (click)="selectedTimeFrame('00:00:00', '05:00:00')"
-                >
-                  <h5>Early Morning: 12:00 AM - 5:00 AM</h5>
-                </div>
-                <div
-                  class="d-flex time-button justify-content-center align-items-center"
-                  (click)="selectedTimeFrame('05:00:00', '12:00:00')"
-                >
-                  <h5>Morning: 5:00 AM - 12:00 PM</h5>
-                </div>
-                <div
-                  class="d-flex time-button justify-content-center align-items-center"
-                  (click)="selectedTimeFrame('12:00:00', '18:00:00')"
-                >
-                  <h5>Afternoon 12:00 PM - 6:00 PM</h5>
-                </div>
-                <div
-                  class="d-flex time-button justify-content-center align-items-center"
-                  (click)="selectedTimeFrame('18:00:00', '21:00:00')"
-                >
-                  <h5>Evening 6:00 PM - 9:00 PM</h5>
-                </div>
-                <div
-                  class="d-flex time-button justify-content-center align-items-center"
-                  (click)="selectedTimeFrame('20:00:00', '00:00:00')"
-                >
-                  <h5>Night 8:00 PM - 12:00 AM</h5>
-                </div>
-              </div>
-            </div>
-          </div>
-          <h3 class="text-center">OR</h3>
-          <div
-            class="d-flex justify-content-center align-items-center proceed-button"
-            (click)="selectedTimeFrame('00:00:00', '12:00:00')"
-          >
-            <h5>IF YOU STILL DON'T KNOW</h5>
-          </div>
-        </div>
-
-        <!-- signup form -->
-        <form
-          class="needs-validation"
-          (ngSubmit)="createProfileInRegistration()"
-          [formGroup]="signUpForm"
-          autocomplete="off"
-          *ngIf="formStep == 10"
-        >
-          <label
-            *ngIf="!currentUser"
-            for="Sign Up"
-            class="form-heading d-flex justify-content-center"
-            >Basic Details
-          </label>
-
-          <label
-            for="Sign Up"
-            class="form-heading d-flex justify-content-center"
-            *ngIf="currentUser"
-            >Hi
-            {{ currentUser?.firstName + " " + currentUser?.lastName }}</label
-          >
-
-          <div class="mb-2">
-            <label for="firstName" class="form-fields-label">Full Name</label>
-            <input
-              type="text"
-              id="firstName"
-              formControlName="firstName"
-              class="form-control"
-              placeholder="Enter your full name"
-            />
-            <div style="padding-top: 5px; color: darkgray">
-              <h6>*Accurate Name required for numerology</h6>
-            </div>
-            <div
-              *ngIf="profileSubmitted && signUpFrm['firstName'].errors"
-              class="invalid-feedback"
-            >
-              <span *ngIf="signUpFrm['firstName'].errors['required']"
-                >First Name can't be empty</span
-              >
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="mb-2">
-                <label for="dateOfBirth" class="form-fields-label"
-                  >Birth Date</label
-                >
-                <div class="input-group clockpicker mt-1">
-                  <input
-                    ngbDatepicker
-                    readonly
-                    class="form-control"
-                    id="dateOfBirth"
-                    formControlName="dateOfBirth"
-                    #dateOfBirth="ngbDatepicker"
-                    style="font-size: 0.7rem"
-                    [minDate]="{ year: 1948, month: 1, day: 1 }"
-                    [maxDate]="{ year: currentYear, month: 12, day: 31 }"
-                  />
-
-                  <div
-                    class="input-group-append"
-                    (click)="dateOfBirth.toggle()"
-                  >
-                    <span class="input-group-text">
-                      <img src="../assets/images/calendar.png" />
-                    </span>
+              <!-- Select Category -->
+              <div *ngIf="formStep == 3">
+                <div class="mb-2">
+                  <div class="bool-cat">
+                    <div class="cat-continer">
+                      <div class="d-flex">
+                        <h3>Personal</h3>
+                      </div>
+                      <div
+                        class="one-cat d-flex justify-content-around align-items-center"
+                        (click)="selectCategory('self_awareness')"
+                      >
+                        <img
+                          src="../../../assets/images/self-awareness.png"
+                          width="80px"
+                          height="80px"
+                        />
+                        <h5>Staying on track - Self Awareness</h5>
+                      </div>
+                      <div
+                        class="two-cat d-flex justify-content-around align-items-center"
+                        (click)="selectCategory('family')"
+                      >
+                        <img
+                          src="../../../assets/images/family.png"
+                          width="80px"
+                          height="80px"
+                        />
+                        <h5>Family</h5>
+                      </div>
+                      <div
+                        class="three-cat d-flex justify-content-around align-items-center"
+                        (click)="selectCategory('numerology')"
+                      >
+                        <img
+                          src="../../../assets/images/number9.png"
+                          width="50px"
+                          height="70px"
+                        />
+                        <h5>Numerolog</h5>
+                      </div>
+                      <div
+                        class="four-cat d-flex justify-content-around align-items-center"
+                        (click)="selectCategory('wealth')"
+                      >
+                        <img
+                          src="../../../assets/images/wealth.png"
+                          width="80px"
+                          height="80px"
+                        />
+                        <h5>Welath</h5>
+                      </div>
+                      <div
+                        class="five-cat d-flex justify-content-around align-items-center"
+                        (click)="selectCategory('health')"
+                      >
+                        <img
+                          src="../../../assets/images/health.png"
+                          width="150px"
+                          height="80px"
+                        />
+                        <h5>Health</h5>
+                      </div>
+                      <div
+                        class="six-cat d-flex justify-content-around align-items-center"
+                        (click)="selectCategory('travel')"
+                      >
+                        <img
+                          src="../../../assets/images/travel.png"
+                          width="150px"
+                          height="80px"
+                        />
+                        <h5>Travel</h5>
+                      </div>
+                    </div>
+                    <div class="business-cat">
+                      <h3>Business</h3>
+                      <img
+                        src="../../../assets/images/business.png"
+                        width="300px"
+                        height="70%"
+                      />
+                      <h3>Coming Soon</h3>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="mb-2">
-                <label for="dateOfBirth" class="form-fields-label"
-                  >Birth Time</label
-                >
-                <div class="mb-3">
-                  <app-custome-time-picker
-                    [time]="signUpForm.get('birthTime').value"
-                    (timeChange)="signUpForm.get('birthTime').setValue($event)"
-                  ></app-custome-time-picker>
-                </div>
-              </div>
-            </div>
-          </div>
 
-          <div class="mb-2">
-            <label for="gender" class="form-fields-label">Gender</label>
-            <select
-              id="gender"
-              formControlName="gender"
-              class="form-control-select-box select-box"
-            >
-              <option value="null" disabled selected>Select your gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">other</option>
-            </select>
-            <div
-              *ngIf="profileSubmitted && signUpFrm['gender'].errors"
-              class="invalid-feedback"
-            >
-              <span *ngIf="signUpFrm['gender'].errors['required']"
-                >Gender can't be empty</span
-              >
-            </div>
-          </div>
-          <!-- birth place -->
-          <div class="mb-2">
-            <label for="birthPlace" class="form-fields-label"
-              >Birth Location</label
-            >
-            <ng-select
-              [items]="movies$ | async"
-              bindLabel="description"
-              [trackByFn]="trackByFn"
-              [minTermLength]="minLengthTerm"
-              [loading]="moviesLoading"
-              typeToSearchText="Please enter {{
-                minLengthTerm
-              }} or more characters"
-              [typeahead]="moviesInput$"
-              [(ngModel)]="selectedMovie"
-              formControlName="birthPlace"
-              [virtualScroll]="true"
-              class="custom"
-            >
-            </ng-select>
-            <div
-              *ngIf="profileSubmitted && signUpFrm['birthPlace'].errors"
-              class="invalid-feedback"
-            >
-              <span *ngIf="signUpFrm['birthPlace'].errors['required']"
-                >Birth Place can't be empty</span
-              >
-            </div>
-          </div>
-
-          <div class="d-flex justify-content-center">
-            <button
-              type="submit"
-              id="sign-in-button"
-              class="btn gradient-button"
-              [disabled]="signUpForm.invalid"
-            >
-              <span>Next</span>
-              <i
-                *ngIf="!signUpFormSubmitted"
-                class="bx bx-right-arrow-alt align-middle ms-1"
-              ></i>
-              <i
-                *ngIf="signUpFormSubmitted"
-                class="bx bx-loader bx-spin align-middle ms-1"
-              ></i>
-            </button>
-          </div>
-        </form>
-        <!-- Select Category -->
-        <div *ngIf="formStep == 3">
-          <div class="mb-2">
-            <div class="bool-cat">
-              <div class="cat-continer">
-                <div class="d-flex">
-                  <h3>Personal</h3>
-                </div>
-                <div
-                  class="one-cat d-flex justify-content-around align-items-center"
-                  (click)="selectCategory('self_awareness')"
-                >
-                  <img
-                    src="../../../assets/images/self-awareness.png"
-                    width="80px"
-                    height="80px"
-                  />
-                  <h5>Staying on track - Self Awareness</h5>
-                </div>
-                <div
-                  class="two-cat d-flex justify-content-around align-items-center"
-                  (click)="selectCategory('family')"
-                >
-                  <img
-                    src="../../../assets/images/family.png"
-                    width="80px"
-                    height="80px"
-                  />
-                  <h5>Family</h5>
-                </div>
-                <div
-                  class="three-cat d-flex justify-content-around align-items-center"
-                  (click)="selectCategory('numerology')"
-                >
-                  <img
-                    src="../../../assets/images/number9.png"
-                    width="50px"
-                    height="70px"
-                  />
-                  <h5>Numerolog</h5>
-                </div>
-                <div
-                  class="four-cat d-flex justify-content-around align-items-center"
-                  (click)="selectCategory('wealth')"
-                >
-                  <img
-                    src="../../../assets/images/wealth.png"
-                    width="80px"
-                    height="80px"
-                  />
-                  <h5>Welath</h5>
-                </div>
-                <div
-                  class="five-cat d-flex justify-content-around align-items-center"
-                  (click)="selectCategory('health')"
-                >
-                  <img
-                    src="../../../assets/images/health.png"
-                    width="150px"
-                    height="80px"
-                  />
-                  <h5>Health</h5>
-                </div>
-                <div
-                  class="six-cat d-flex justify-content-around align-items-center"
-                  (click)="selectCategory('travel')"
-                >
-                  <img
-                    src="../../../assets/images/travel.png"
-                    width="150px"
-                    height="80px"
-                  />
-                  <h5>Travel</h5>
-                </div>
-              </div>
-              <div class="business-cat">
-                <h3>Business</h3>
-                <img
-                  src="../../../assets/images/business.png"
-                  width="300px"
-                  height="70%"
-                />
-                <h3>Coming Soon</h3>
-              </div>
-            </div>
-
-            <!-- <div class="container">
+                  <!-- <div class="container">
               <div class="box personal">Personal</div>
               <div class="box staying-on-track">
                 Staying on track - Self Awareness
@@ -912,383 +1018,390 @@
                 Travel
               </div>
             </div> -->
-          </div>
-        </div>
+                </div>
+              </div>
 
-        <!-- layer 1 -->
-        <h2 *ngIf="formStep == 100">
-          Whom do you relate to the most(Choose 3 At Most)
-          <input
-            class="form-check-input"
-            type="checkbox"
-            id="flexCheckDefault"
-            checked
-            disabled
-          />
-        </h2>
-        <div class="layer-1" *ngIf="formStep == 100">
-          <div class="row">
-            <div *ngFor="let item of items" class="col-md-6 mb-3">
-              <div
-                class="d-flex justify-content-center p-2 proceed-button flex-column"
-              >
-                <div class="d-flex justify-content-between">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id="flexCheckDefault"
-                    (change)="onCheckboxChange($event, item?.ascendants)"
-                    [disabled]="item.checkbox"
-                  />
-                  <!-- <div class="see-story" (mouseenter)="open(item)">
+              <!-- layer 1 -->
+              <h2 *ngIf="formStep == 100">
+                Whom do you relate to the most(Choose 3 At Most)
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="flexCheckDefault"
+                  checked
+                  disabled
+                />
+              </h2>
+              <div class="layer-1" *ngIf="formStep == 100">
+                <div class="row">
+                  <div *ngFor="let item of items" class="col-md-6 mb-3">
+                    <div
+                      class="d-flex justify-content-center p-2 proceed-button flex-column"
+                    >
+                      <div class="d-flex justify-content-between">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value=""
+                          id="flexCheckDefault"
+                          (change)="onCheckboxChange($event, item?.ascendants)"
+                          [disabled]="item.checkbox"
+                        />
+                        <!-- <div class="see-story" (mouseenter)="open(item)">
                     See Story
                   </div> -->
+                      </div>
+                      <!-- <h5>{{ item.ascendants }}</h5> -->
+                      <div class="layer1-text">
+                        {{ item?.data?.description }}
+                      </div>
+                      <div
+                        class="layer1-text layer-1-background layer-1-headings"
+                      >
+                        Hollywood Characters
+                      </div>
+                      <div
+                        class="layer1-text layer-1-headings"
+                        *ngFor="let data of item?.data?.Hollywood"
+                      >
+                        <li>{{ data }}</li>
+                      </div>
+                      <div
+                        class="layer1-text layer-1-background layer-1-headings"
+                      >
+                        Bollywood Characters
+                      </div>
+                      <div
+                        class="layer1-text layer-1-headings"
+                        *ngFor="let data of item?.data?.Bollywood"
+                      >
+                        <li>{{ data }}</li>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <!-- <h5>{{ item.ascendants }}</h5> -->
-                <div class="layer1-text">
-                  {{ item?.data?.description }}
-                </div>
-                <div class="layer1-text layer-1-background layer-1-headings">
-                  Hollywood Characters
-                </div>
-                <div
-                  class="layer1-text layer-1-headings"
-                  *ngFor="let data of item?.data?.Hollywood"
+              </div>
+              <div
+                *ngIf="
+                  ((3 <= useCheckAnwers.length && items.length > 3) ||
+                    (1 <= useCheckAnwers.length && items.length <= 3)) &&
+                  formStep == 100
+                "
+                class="next-button"
+                (click)="buttonNext()"
+              >
+                <div>Next</div>
+                <div>></div>
+              </div>
+              <!-- layer 2 -->
+              <h2 *ngIf="formStep == 1000">
+                Whom do you relate to the most(choose 1)
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="flexCheckDefault"
+                  checked
+                  disabled
+                />
+              </h2>
+
+              <div class="layer-1" *ngIf="formStep == 1000">
+                <form
+                  class="needs-validation"
+                  (ngSubmit)="createProfileInRegistration()"
+                  [formGroup]="checkboxForm"
+                  autocomplete="off"
                 >
-                  <li>{{ data }}</li>
-                </div>
-                <div class="layer1-text layer-1-background layer-1-headings">
-                  Bollywood Characters
-                </div>
-                <div
-                  class="layer1-text layer-1-headings"
-                  *ngFor="let data of item?.data?.Bollywood"
-                >
-                  <li>{{ data }}</li>
-                </div>
+                  <div class="row">
+                    <div
+                      *ngFor="let item of layer2Question; let i = index"
+                      class="col-md-6 mb-3"
+                    >
+                      <div
+                        class="d-flex justify-content-center p-2 proceed-button flex-column"
+                      >
+                        <div class="d-flex justify-content-between">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            id="flexCheckDefault"
+                            [formControlName]="'checkbox' + i"
+                            (change)="onCheckboxLayerChange('checkbox' + i)"
+                          />
+                        </div>
+                        <!-- <h5>{{ item.ascendants }}</h5> -->
+                        <div class="layer1-text">
+                          <h6>{{ item?.response }}</h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+              <div
+                *ngIf="anyCheckBoxChecked"
+                class="next-button"
+                (click)="buttonNextLayer2()"
+              >
+                <div>Next</div>
+                <div>></div>
               </div>
             </div>
           </div>
         </div>
-        <div
-          *ngIf="
-            ((3 <= useCheckAnwers.length && items.length > 3) ||
-              (1 <= useCheckAnwers.length && items.length <= 3)) &&
-            formStep == 100
-          "
-          class="next-button"
-          (click)="buttonNext()"
-        >
-          <div>Next</div>
-          <div>></div>
-        </div>
-        <!-- layer 2 -->
-        <h2 *ngIf="formStep == 1000">
-          Whom do you relate to the most(choose 1)
-          <input
-            class="form-check-input"
-            type="checkbox"
-            id="flexCheckDefault"
-            checked
-            disabled
-          />
-        </h2>
 
-        <div class="layer-1" *ngIf="formStep == 1000">
-          <form
-            class="needs-validation"
-            (ngSubmit)="createProfileInRegistration()"
-            [formGroup]="checkboxForm"
-            autocomplete="off"
+        <!-- Questions And Promt -->
+        <div class="questions-and-answers" *ngIf="formStep == 4">
+          <div
+            class="side-panel-gradient"
+            *ngIf="questionSet.category != 'panchanga'"
           >
-            <div class="row">
-              <div
-                *ngFor="let item of layer2Question; let i = index"
-                class="col-md-6 mb-3"
-              >
-                <div
-                  class="d-flex justify-content-center p-2 proceed-button flex-column"
-                >
-                  <div class="d-flex justify-content-between">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id="flexCheckDefault"
-                      [formControlName]="'checkbox' + i"
-                      (change)="onCheckboxLayerChange('checkbox' + i)"
-                    />
+            <div class="side-panel">
+              <div class="question-title">
+                <h5>Questions</h5>
+              </div>
+              <div class="side-panel-gradient-question">
+                <div class="side-panel-question-section">
+                  <div *ngFor="let ques of question; let i = index">
+                    <div
+                      class="question-box {{
+                        i == questionSelected ? 'selectedQuestion' : ''
+                      }}"
+                      (click)="selectQuestionOnClick(i)"
+                    >
+                      {{ ques }}
+                    </div>
                   </div>
-                  <!-- <h5>{{ item.ascendants }}</h5> -->
-                  <div class="layer1-text">
-                    <h6>{{ item?.response }}</h6>
+                </div>
+              </div>
+              <div
+                class="question-title gradient-button-new"
+                (click)="backToCategory()"
+              >
+                Dashboard
+              </div>
+            </div>
+          </div>
+
+          <div class="side-panel-gradient-responsive" *ngIf="openQuestion">
+            <div class="side-panel">
+              <div
+                class="question-title gradient-button-new"
+                style="font-size: 1rem"
+                (click)="backToCategory()"
+              >
+                Dashboard
+              </div>
+              <div class="question-title">
+                <h5>Questions</h5>
+              </div>
+              <div class="side-panel-gradient-question">
+                <div class="side-panel-question-section">
+                  <div *ngFor="let ques of question; let i = index">
+                    <div
+                      class="question-box {{
+                        i == questionSelected ? 'selectedQuestion' : ''
+                      }}"
+                      (click)="selectQuestionOnClick(i)"
+                    >
+                      {{ ques }}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </form>
-        </div>
-
-        <div
-          *ngIf="anyCheckBoxChecked"
-          class="next-button"
-          (click)="buttonNextLayer2()"
-        >
-          <div>Next</div>
-          <div>></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Questions And Promt -->
-  <div class="questions-and-answers" *ngIf="formStep == 4">
-    <div
-      class="side-panel-gradient"
-      *ngIf="questionSet.category != 'panchanga'"
-    >
-      <div class="side-panel">
-        <div class="question-title">
-          <h5>Questions</h5>
-        </div>
-        <div class="side-panel-gradient-question">
-          <div class="side-panel-question-section">
-            <div *ngFor="let ques of question; let i = index">
-              <div
-                class="question-box {{
-                  i == questionSelected ? 'selectedQuestion' : ''
-                }}"
-                (click)="selectQuestionOnClick(i)"
-              >
-                {{ ques }}
-              </div>
-            </div>
           </div>
-        </div>
-        <div
-          class="question-title gradient-button-new"
-          (click)="backToCategory()"
-        >
-          Dashboard
-        </div>
-      </div>
-    </div>
 
-    <div class="side-panel-gradient-responsive" *ngIf="openQuestion">
-      <div class="side-panel">
-        <div
-          class="question-title gradient-button-new"
-          style="font-size: 1rem"
-          (click)="backToCategory()"
-        >
-          Dashboard
-        </div>
-        <div class="question-title">
-          <h5>Questions</h5>
-        </div>
-        <div class="side-panel-gradient-question">
-          <div class="side-panel-question-section">
-            <div *ngFor="let ques of question; let i = index">
-              <div
-                class="question-box {{
-                  i == questionSelected ? 'selectedQuestion' : ''
-                }}"
-                (click)="selectQuestionOnClick(i)"
-              >
-                {{ ques }}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="main-panel">
-      <!-- <div
+          <div class="main-panel">
+            <!-- <div
         class="web-view-visible question-title gradient-button-new float-end"
         (click)="backToCategory()"
       >
         Dashboard
       </div> -->
-      <div
-        class="web-view-visible question-title gradient-button-new float-end me-1"
-        (click)="consultAstrologer()"
-      >
-        Consult Astrologer
-      </div>
-      <div class="mobile-view-visible">
-        <div class="d-flex">
-          <div
-            class="question-title"
-            style="flex: 0; font-size: 2rem; margin: 10px"
-            (click)="openQuestions()"
-          >
-            ☰
-          </div>
-          <div
-            class="question-title gradient-button-new"
-            style="flex: 10; font-size: 1rem"
-            (click)="consultAstrologer()"
-          >
-            Consult Astrologer
-          </div>
-        </div>
-      </div>
+            <div
+              class="web-view-visible question-title gradient-button-new float-end me-1"
+              (click)="consultAstrologer()"
+            >
+              Consult Astrologer
+            </div>
+            <div class="mobile-view-visible">
+              <div class="d-flex">
+                <div
+                  class="question-title"
+                  style="flex: 0; font-size: 2rem; margin: 10px"
+                  (click)="openQuestions()"
+                >
+                  ☰
+                </div>
+                <div
+                  class="question-title gradient-button-new"
+                  style="flex: 10; font-size: 1rem"
+                  (click)="consultAstrologer()"
+                >
+                  Consult Astrologer
+                </div>
+              </div>
+            </div>
 
-      <div
-        class="find-answers"
-        *ngIf="questionSelected == null && !openQuestion"
-      >
-        <img
-          class="torch-ligth"
-          src="../../../assets/images/torch_light.png"
-          alt=""
-          *ngIf="questionSet.category != 'panchanga'"
-        />
-        <img
-          src="../../../assets/images/find_answers.png"
-          alt=""
-          *ngIf="questionSet.category != 'panchanga'"
-        />
-        <div
-          class="table-container"
-          *ngIf="questionSet.category == 'panchanga'"
-        >
-          <table class="styled-table">
-            <tbody>
-              <tr>
-                <td>Moon Rise</td>
-                <td>{{ answerText.MoonRise }}</td>
-              </tr>
-              <tr>
-                <td>Moon Set</td>
-                <td>{{ answerText.MoonSet }}</td>
-              </tr>
-              <tr>
-                <td>Sun Rise</td>
-                <td>{{ answerText.SunRise }}</td>
-              </tr>
-              <tr>
-                <td>Sun Set</td>
-                <td>{{ answerText.SunSet }}</td>
-              </tr>
-              <tr>
-                <td>Vaaram</td>
-                <td>{{ answerText.Vaaram }}</td>
-              </tr>
-              <tr>
-                <td>Karna</td>
-                <td>{{ answerText.Karna }}</td>
-              </tr>
-              <tr>
-                <td>Tithi</td>
-                <td>{{ answerText.Tithi }}</td>
-              </tr>
-              <tr>
-                <td>Maasa</td>
-                <td>{{ answerText.Maasa }}</td>
-              </tr>
-              <tr>
-                <td>Ritu</td>
-                <td>{{ answerText.Ritu }}</td>
-              </tr>
-              <tr>
-                <td>Nakshatra</td>
-                <td>{{ answerText.Nakshatra }}</td>
-              </tr>
-              <tr>
-                <td>Yoga</td>
-                <td>{{ answerText.Yoga }}</td>
-              </tr>
-              <tr>
-                <td>Day Duration</td>
-                <td>{{ answerText["Day Duration"] }}</td>
-              </tr>
-              <tr>
-                <td>Night Duration</td>
-                <td>{{ answerText["Night Duration"] }}</td>
-              </tr>
-              <tr>
-                <td>Rahu Kalam</td>
-                <td>{{ answerText["Rahu Kalam"] }}</td>
-              </tr>
-              <tr>
-                <td>Yama Kalam</td>
-                <td>{{ answerText["Yama Kalam"] }}</td>
-              </tr>
-              <tr>
-                <td>Gulika Kalam</td>
-                <td>{{ answerText["Gulika Kalam"] }}</td>
-              </tr>
-              <tr>
-                <td>Durmuhurtam</td>
-                <td>{{ answerText.Durmuhurtam }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+            <div
+              class="find-answers"
+              *ngIf="questionSelected == null && !openQuestion"
+            >
+              <img
+                class="torch-ligth"
+                src="../../../assets/images/torch_light.png"
+                alt=""
+                *ngIf="questionSet.category != 'panchanga'"
+              />
+              <img
+                src="../../../assets/images/find_answers.png"
+                alt=""
+                *ngIf="questionSet.category != 'panchanga'"
+              />
+              <div
+                class="table-container"
+                *ngIf="questionSet.category == 'panchanga'"
+              >
+                <table class="styled-table">
+                  <tbody>
+                    <tr>
+                      <td>Moon Rise</td>
+                      <td>{{ answerText.MoonRise }}</td>
+                    </tr>
+                    <tr>
+                      <td>Moon Set</td>
+                      <td>{{ answerText.MoonSet }}</td>
+                    </tr>
+                    <tr>
+                      <td>Sun Rise</td>
+                      <td>{{ answerText.SunRise }}</td>
+                    </tr>
+                    <tr>
+                      <td>Sun Set</td>
+                      <td>{{ answerText.SunSet }}</td>
+                    </tr>
+                    <tr>
+                      <td>Vaaram</td>
+                      <td>{{ answerText.Vaaram }}</td>
+                    </tr>
+                    <tr>
+                      <td>Karna</td>
+                      <td>{{ answerText.Karna }}</td>
+                    </tr>
+                    <tr>
+                      <td>Tithi</td>
+                      <td>{{ answerText.Tithi }}</td>
+                    </tr>
+                    <tr>
+                      <td>Maasa</td>
+                      <td>{{ answerText.Maasa }}</td>
+                    </tr>
+                    <tr>
+                      <td>Ritu</td>
+                      <td>{{ answerText.Ritu }}</td>
+                    </tr>
+                    <tr>
+                      <td>Nakshatra</td>
+                      <td>{{ answerText.Nakshatra }}</td>
+                    </tr>
+                    <tr>
+                      <td>Yoga</td>
+                      <td>{{ answerText.Yoga }}</td>
+                    </tr>
+                    <tr>
+                      <td>Day Duration</td>
+                      <td>{{ answerText["Day Duration"] }}</td>
+                    </tr>
+                    <tr>
+                      <td>Night Duration</td>
+                      <td>{{ answerText["Night Duration"] }}</td>
+                    </tr>
+                    <tr>
+                      <td>Rahu Kalam</td>
+                      <td>{{ answerText["Rahu Kalam"] }}</td>
+                    </tr>
+                    <tr>
+                      <td>Yama Kalam</td>
+                      <td>{{ answerText["Yama Kalam"] }}</td>
+                    </tr>
+                    <tr>
+                      <td>Gulika Kalam</td>
+                      <td>{{ answerText["Gulika Kalam"] }}</td>
+                    </tr>
+                    <tr>
+                      <td>Durmuhurtam</td>
+                      <td>{{ answerText.Durmuhurtam }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
 
-      <div class="initial-setup" *ngIf="loadSpinner">
-        <img
-          class="bg-meditation"
-          src="../../../assets/images/bg-mediation.png"
-          alt=""
-        />
-        <img
-          class="foreground"
-          src="../../../assets/images/bg-foreground.png"
-          alt=""
-        />
-        <h5 class="text">
-          Take a deep breath and find your center. The more calm and focused you
-          are, the quicker the insights will arrive. If the answers seem
-          delayed, it’s a sign to pause, breathe, and regain your focus.
-        </h5>
-      </div>
+            <div class="initial-setup" *ngIf="loadSpinner">
+              <img
+                class="bg-meditation"
+                src="../../../assets/images/bg-mediation.png"
+                alt=""
+              />
+              <img
+                class="foreground"
+                src="../../../assets/images/bg-foreground.png"
+                alt=""
+              />
+              <h5 class="text">
+                Take a deep breath and find your center. The more calm and
+                focused you are, the quicker the insights will arrive. If the
+                answers seem delayed, it’s a sign to pause, breathe, and regain
+                your focus.
+              </h5>
+            </div>
 
-      <div
-        class="table-container"
-        *ngIf="
-          !loadSpinner &&
-          questionSelected != null &&
-          signUpForm.contains('fromDate')
-        "
-      >
-        <table class="table-auto border-collapse border border-gray-300 w-full">
-          <thead class="bg-gray-200">
-            <tr>
-              <th class="border border-gray-300 px-4 py-2">
-                Tarabala Category
-              </th>
-              <th class="border border-gray-300 px-4 py-2">
-                Chandra Bala category
-              </th>
-              <th class="border border-gray-300 px-4 py-2">Date</th>
-              <th class="border border-gray-300 px-4 py-2">Time</th>
-            </tr>
-          </thead>
-          <tbody class="max-h-64 overflow-y-scroll block">
-            <tr *ngFor="let data of answerText">
-              <td class="border border-gray-300 px-4 py-2">
-                {{ data["Tarabala Category"] }}
-              </td>
-              <td class="border border-gray-300 px-4 py-2">
-                {{ data["Chandra Bala category "] }}
-              </td>
-              <td class="border border-gray-300 px-4 py-2">
-                {{ data["Date"] }}
-              </td>
-              <td class="border border-gray-300 px-4 py-2">
-                {{ data["Time"] }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <!-- text area -->
-      <!-- <textarea
+            <div
+              class="table-container"
+              *ngIf="
+                !loadSpinner &&
+                questionSelected != null &&
+                signUpForm.contains('fromDate')
+              "
+            >
+              <table
+                class="table-auto border-collapse border border-gray-300 w-full"
+              >
+                <thead class="bg-gray-200">
+                  <tr>
+                    <th class="border border-gray-300 px-4 py-2">
+                      Tarabala Category
+                    </th>
+                    <th class="border border-gray-300 px-4 py-2">
+                      Chandra Bala category
+                    </th>
+                    <th class="border border-gray-300 px-4 py-2">Date</th>
+                    <th class="border border-gray-300 px-4 py-2">Time</th>
+                  </tr>
+                </thead>
+                <tbody class="max-h-64 overflow-y-scroll block">
+                  <tr *ngFor="let data of answerText">
+                    <td class="border border-gray-300 px-4 py-2">
+                      {{ data["Tarabala Category"] }}
+                    </td>
+                    <td class="border border-gray-300 px-4 py-2">
+                      {{ data["Chandra Bala category "] }}
+                    </td>
+                    <td class="border border-gray-300 px-4 py-2">
+                      {{ data["Date"] }}
+                    </td>
+                    <td class="border border-gray-300 px-4 py-2">
+                      {{ data["Time"] }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- text area -->
+            <!-- <textarea
         id="summary"
         class="form-control answer-textarea"
         [(ngModel)]="answerText"
@@ -1298,24 +1411,24 @@
         "
         disabled
       ></textarea> -->
-      <div
-        class="answer-textarea-love"
-        [innerHTML]="safeHtml"
-        style="
-          width: 100%;
-          height: 400px;
-          margin-top: 100px;
-          overflow-y: scroll;
-        "
-        *ngIf="!loadSpinner && questionSelected != null"
-      ></div>
-    </div>
+            <div
+              class="answer-textarea-love"
+              [innerHTML]="safeHtml"
+              style="
+                width: 100%;
+                height: 400px;
+                margin-top: 100px;
+                overflow-y: scroll;
+              "
+              *ngIf="!loadSpinner && questionSelected != null"
+            ></div>
+          </div>
 
-    <!-- <label for="summary" class="form-heading d-flex justify-content-center">{{
+          <!-- <label for="summary" class="form-heading d-flex justify-content-center">{{
       question
     }}</label> -->
 
-    <!-- <div class="row" *ngIf="loadSpinner">
+          <!-- <div class="row" *ngIf="loadSpinner">
       <div class="text-center">
         <div class="spinner-border mb-1 text-primary" role="status"></div>
         <div class="spinner-grow" role="status"></div>
@@ -1332,14 +1445,14 @@
       </div>
     </div> -->
 
-    <!-- <textarea
+          <!-- <textarea
       id="summary"
       class="form-control"
       [(ngModel)]="answerText"
       style="width: 100%; height: 400px"
       *ngIf="!loadSpinner"
     ></textarea> -->
-    <!-- <div class="d-flex justify-content-between mt-5">
+          <!-- <div class="d-flex justify-content-between mt-5">
       <button
         type="submit"
         id="sign-in-button"
@@ -1365,7 +1478,7 @@
         <span>Next</span>
       </button>
     </div> -->
-    <!-- <div class="d-flex justify-content-between mt-5">
+          <!-- <div class="d-flex justify-content-between mt-5">
       <button
         type="submit"
         id="sign-in-button"
@@ -1375,50 +1488,49 @@
         <span>Back To Category</span>
       </button>
     </div> -->
-  </div>
-
-  <!-- Questions And Promt -->
-  <div class="loshu-grid-continer" *ngIf="formStep == 12">
-    <div class="turtle-bg-occean">
-      <div class="bubble bubble--1"></div>
-      <div class="bubble bubble--2"></div>
-      <div class="bubble bubble--3"></div>
-      <div class="bubble bubble--4"></div>
-      <div class="bubble bubble--5"></div>
-      <div class="bubble bubble--6"></div>
-      <div class="bubble bubble--7"></div>
-      <div class="bubble bubble--8"></div>
-      <div class="bubble bubble--9"></div>
-      <div class="bubble bubble--10"></div>
-      <div class="bubble bubble--11"></div>
-      <div class="bubble bubble--12"></div>
-      <main class="turtle">
-        <div class="turtle__head"></div>
-        <div class="turtle__legs -left"></div>
-        <div class="turtle__legs -right"></div>
-        <div class="turtle__tail"></div>
-
-        <section class="turtle__shell"><div></div></section>
-        <div class="turtle__number_grid">
-          <div class="number-container" *ngFor="let item of grid">
-            {{ item }}
-          </div>
         </div>
-      </main>
+
+        <!-- Questions And Promt -->
+        <div class="loshu-grid-continer" *ngIf="formStep == 12">
+          <div class="turtle-bg-occean">
+            <div class="bubble bubble--1"></div>
+            <div class="bubble bubble--2"></div>
+            <div class="bubble bubble--3"></div>
+            <div class="bubble bubble--4"></div>
+            <div class="bubble bubble--5"></div>
+            <div class="bubble bubble--6"></div>
+            <div class="bubble bubble--7"></div>
+            <div class="bubble bubble--8"></div>
+            <div class="bubble bubble--9"></div>
+            <div class="bubble bubble--10"></div>
+            <div class="bubble bubble--11"></div>
+            <div class="bubble bubble--12"></div>
+            <main class="turtle">
+              <div class="turtle__head"></div>
+              <div class="turtle__legs -left"></div>
+              <div class="turtle__legs -right"></div>
+              <div class="turtle__tail"></div>
+
+              <section class="turtle__shell"><div></div></section>
+              <div class="turtle__number_grid">
+                <div class="number-container" *ngFor="let item of grid">
+                  {{ item }}
+                </div>
+              </div>
+            </main>
+          </div>
+
+          <div
+            class="description"
+            style="padding: 1rem"
+            [innerHTML]="safeHtml"
+          ></div>
+        </div>
+      </div>
     </div>
-
-    <div class="description" style="padding: 1rem" [innerHTML]="safeHtml"></div>
   </div>
-
   <!-- Paywall -->
-  <div
-    class="paywall-overlay"
-    *ngIf="
-      (currentUser && currentUser?.walletBalance < 29) ||
-      (loadSpinner && formStep != 4) ||
-      checkWalletBalance
-    "
-  >
+  <div class="paywall-overlay" *ngIf="0">
     <div *ngIf="loadSpinner && formStep != 4" class="initial-setup">
       <img
         class="bg-meditation"

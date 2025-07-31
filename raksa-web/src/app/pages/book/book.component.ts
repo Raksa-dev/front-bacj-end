@@ -302,6 +302,13 @@ export class BookComponent implements OnInit {
 
   setCategoryInApi = '';
 
+  public hoveredUser: any = null;
+  public selectedUser: any = null;
+
+  selectUser(user: any) {
+    this.selectedUser = user;
+  }
+
   constructor(
     // public windowRefService: WindowRefService,
     public activeModal: NgbActiveModal,
