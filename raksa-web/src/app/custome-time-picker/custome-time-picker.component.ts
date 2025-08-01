@@ -11,7 +11,7 @@ import { JsonPipe, NgIf } from '@angular/common';
   standalone: true,
 })
 export class CustomeTimePickerComponent {
-  @Input() time: any;
+  @Input() time: any = { hour: null, minute: null, second: 0 };
   @Output() timeChange = new EventEmitter<any>();
 
   updateTime(newTime: any) {
