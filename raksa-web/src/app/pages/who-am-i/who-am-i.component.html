@@ -1,0 +1,118 @@
+<div class="who-am-i-container">
+  <!-- Left Section - Form -->
+  <div class="form-section">
+    <div class="form-content">
+      <h1 class="page-title">
+        Discover Your True Self with
+        <span class="highlight">Who Am I</span>
+      </h1>
+      <p class="page-subtitle">
+        Unveil the mysteries of your personality and life path. Enter your details to receive a personalized report.
+      </p>
+      
+      <form [formGroup]="whoAmIForm" (ngSubmit)="onSubmit()" class="who-am-i-form">
+        <div class="form-group">
+          <div class="input-wrapper">
+            <i class="bx bx-envelope input-icon"></i>
+            <input
+              type="email"
+              formControlName="email"
+              placeholder="Enter your email"
+              class="form-input"
+              [class.error]="email?.invalid && email?.touched"
+            />
+          </div>
+          <div class="error-message" *ngIf="email?.invalid && email?.touched">
+            <span *ngIf="email?.errors?.['required']">Email is required</span>
+            <span *ngIf="email?.errors?.['email']">Please enter a valid email</span>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <div class="input-wrapper">
+            <i class="bx bx-phone input-icon"></i>
+            <input
+              type="tel"
+              formControlName="phone"
+              placeholder="Enter your mobile number"
+              class="form-input"
+              [class.error]="phone?.invalid && phone?.touched"
+            />
+          </div>
+          <div class="error-message" *ngIf="phone?.invalid && phone?.touched">
+            <span *ngIf="phone?.errors?.['required']">Phone number is required</span>
+            <span *ngIf="phone?.errors?.['pattern']">Please enter a valid 10-digit phone number</span>
+          </div>
+        </div>
+        
+        <button
+          type="submit"
+          class="submit-btn"
+          [disabled]="whoAmIForm.invalid || isLoading"
+        >
+          <span *ngIf="!isLoading">Get My 'Who Am I' Report</span>
+          <span *ngIf="isLoading" class="loading-text">
+            <i class="bx bx-loader-alt bx-spin"></i>
+            Processing...
+          </span>
+        </button>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Right Section - Meditative Figure with Light Beam -->
+  <div class="illustration-section">
+    <div class="cosmic-background">
+      <!-- Stars -->
+      <div class="stars">
+        <div class="star" *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]"></div>
+      </div>
+      
+      <!-- Planets -->
+      <div class="planets">
+        <div class="planet planet-1"></div>
+        <div class="planet planet-2"></div>
+        <div class="planet planet-3"></div>
+      </div>
+      
+      <!-- Horizon -->
+      <div class="horizon"></div>
+      
+      <!-- Water Reflection -->
+      <div class="water-reflection"></div>
+      
+      <!-- Meditative Figure -->
+      <div class="meditative-figure">
+        <div class="figure-body">
+          <div class="head"></div>
+          <div class="torso"></div>
+          <div class="arms">
+            <div class="arm left-arm"></div>
+            <div class="arm right-arm"></div>
+          </div>
+          <div class="legs">
+            <div class="leg left-leg"></div>
+            <div class="leg right-leg"></div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Light Beam -->
+      <div class="light-beam">
+        <div class="aura-waves">
+          <div class="wave wave-1"></div>
+          <div class="wave wave-2"></div>
+          <div class="wave wave-3"></div>
+        </div>
+        <div class="beam-column"></div>
+        <div class="energy-orbs">
+          <div class="orb orb-1"></div>
+          <div class="orb orb-2"></div>
+          <div class="orb orb-3"></div>
+          <div class="orb orb-4"></div>
+          <div class="orb orb-5"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

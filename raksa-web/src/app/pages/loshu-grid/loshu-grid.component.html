@@ -1,0 +1,237 @@
+<div class="loshu-container">
+  <!-- Left Section - Form -->
+  <div class="form-section">
+    <div class="form-content">
+      <h1 class="page-title">
+        Find Answers To Life's Most Difficult Questions
+      </h1>
+      <p class="page-subtitle">
+        Uncover your destiny with the power of the Loshu Grid. Get accurate and
+        consistent guidance.
+      </p>
+
+      <form [formGroup]="loshuForm" (ngSubmit)="onSubmit()" class="loshu-form">
+        <div class="form-group">
+          <input
+            type="email"
+            formControlName="email"
+            placeholder="Enter your Email"
+            class="form-input"
+            [class.error]="email?.invalid && email?.touched"
+          />
+          <div class="error-message" *ngIf="email?.invalid && email?.touched">
+            <span *ngIf="email?.errors?.['required']">Email is required</span>
+            <span *ngIf="email?.errors?.['email']"
+              >Please enter a valid email</span
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <input
+            type="tel"
+            formControlName="phone"
+            placeholder="Enter your Phone Number"
+            class="form-input"
+            [class.error]="phone?.invalid && phone?.touched"
+          />
+          <div class="error-message" *ngIf="phone?.invalid && phone?.touched">
+            <span *ngIf="phone?.errors?.['required']"
+              >Phone number is required</span
+            >
+            <span *ngIf="phone?.errors?.['pattern']"
+              >Please enter a valid 10-digit phone number</span
+            >
+          </div>
+        </div>
+
+        <button type="submit" class="submit-btn">
+          <span *ngIf="!isLoading">Get Your Free Report</span>
+          <span *ngIf="isLoading" class="loading-text">
+            <i class="bx bx-loader-alt bx-spin"></i>
+            Processing...
+          </span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Right Section - Loshu Grid with Mystical Figure -->
+  <div class="grid-section">
+    <div class="grid-container">
+      <div class="loshu-grid">
+        <!-- Central Mystical Figure -->
+        <div class="mystical-figure">
+          <div class="figure-body">
+            <div class="head">
+              <div class="eyes">
+                <div class="eye left-eye"></div>
+                <div class="eye right-eye"></div>
+              </div>
+              <div class="third-eye"></div>
+            </div>
+            <div class="body">
+              <div class="chakra-center"></div>
+              <div class="circuit-patterns">
+                <div class="pattern-line line-1"></div>
+                <div class="pattern-line line-2"></div>
+                <div class="pattern-line line-3"></div>
+                <div class="pattern-line line-4"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Loshu Grid Circles -->
+        <div class="grid-outer-circle">
+          <div class="grid-inner-circle">
+            <div class="grid-center">
+              <!-- Grid Numbers and Symbols -->
+              <div class="grid-numbers">
+                <div
+                  class="grid-number"
+                  *ngFor="let num of [4, 9, 2, 3, 5, 7, 8, 1, 6]"
+                >
+                  {{ num }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Radial Lines -->
+        <div class="grid-radial-lines">
+          <div
+            class="radial-line"
+            *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8]"
+          ></div>
+        </div>
+
+        <!-- Glow Effects -->
+        <div class="grid-glow"></div>
+        <div class="figure-glow"></div>
+      </div>
+    </div>
+
+    <!-- Security Message -->
+    <div class="security-message">
+      <div class="security-icon">
+        <i class="bx bx-shield-check"></i>
+      </div>
+      <div class="security-text">
+        Your security is our utmost priority. All user details are kept safe and
+        confidential.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Why Loshu Grid Section -->
+<div class="why-loshu-section">
+  <div class="container">
+    <h2 class="section-title">Why Loshu Grid?</h2>
+    <p class="section-description">
+      Discover personalized insights into all aspects of your life. Let the
+      Loshu Grid be your companion, mentor, and pathfinder, offering clarity and
+      guidance through ancient numerical wisdom.
+    </p>
+
+    <div class="benefit-cards">
+      <div class="benefit-card">
+        <div class="card-icon">
+          <i class="bx bx-user"></i>
+        </div>
+        <h3 class="card-title">Self Awareness</h3>
+        <p class="card-description">
+          Gain a deeper understanding of yourself with precise insights.
+        </p>
+      </div>
+
+      <div class="benefit-card">
+        <div class="card-icon">
+          <i class="bx bx-heart"></i>
+        </div>
+        <h3 class="card-title">Love & Relationships</h3>
+        <p class="card-description">
+          Foster cosmic connections with insights on love and partnerships.
+        </p>
+      </div>
+
+      <div class="benefit-card">
+        <div class="card-icon">
+          <i class="bx bx-briefcase"></i>
+        </div>
+        <h3 class="card-title">Health, Job, Career</h3>
+        <p class="card-description">
+          Navigate your professional and personal life with confidence.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Testimonials Section -->
+<div class="testimonials-section">
+  <div class="container">
+    <h2 class="section-title">What our users say</h2>
+
+    <div class="testimonial-cards">
+      <div class="testimonial-card">
+        <div class="testimonial-content">
+          <p class="testimonial-quote">
+            "The Loshu Grid platform is a game-changer. The astrology
+            consultations are easy to understand and the personalized guidance
+            has helped me navigate life's challenges."
+          </p>
+        </div>
+        <div class="testimonial-user">
+          <div class="user-avatar">
+            <i class="bx bx-user"></i>
+          </div>
+          <div class="user-info">
+            <h4 class="user-name">Priya Sharma</h4>
+            <p class="user-location">Mumbai, India</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-content">
+          <p class="testimonial-quote">
+            "The personalized readings and the pre-consultation information are
+            brilliant. The user-friendly platform made the process of seeking
+            astrological guidance so simple and efficient."
+          </p>
+        </div>
+        <div class="testimonial-user">
+          <div class="user-avatar">
+            <i class="bx bx-user"></i>
+          </div>
+          <div class="user-info">
+            <h4 class="user-name">Rahul Verma</h4>
+            <p class="user-location">New Delhi, India</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-content">
+          <p class="testimonial-quote">
+            "The platform's user-friendly nature and the response time is
+            fantastic! They do everything professionally and in a timely manner.
+            I'm completely satisfied, the service is outstanding!"
+          </p>
+        </div>
+        <div class="testimonial-user">
+          <div class="user-avatar">
+            <i class="bx bx-user"></i>
+          </div>
+          <div class="user-info">
+            <h4 class="user-name">Anjali Singh</h4>
+            <p class="user-location">Bangalore, India</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

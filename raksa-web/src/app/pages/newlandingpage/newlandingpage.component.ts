@@ -160,19 +160,37 @@ export class NewlandingpageComponent {
   public heroImage = [
     {
       _id: 1,
-      img: '../../../assets/images/hero-image-1.png',
-      text: 'Answers to Life’s Most Important Questions',
+      img: '../../../assets/images/hero-image-4.png',
+      text: '<span>Discover your truest self,unmask your unique design and potential. </span>',
+      header: 'Human Design',
     },
     {
       _id: 2,
-      img: '../../../assets/images/hero-image-2.png',
-      text: 'Guided Astrology to Navigate Life with Confidence',
+      img: '../../../assets/images/hero-image-5.png',
+      text: 'Unlock the wisdom of the cards, find guidance, clarity, and inspiration on your path.</span>',
+      header: 'Tarot',
     },
     {
       _id: 3,
-      img: '../../../assets/images/hero-image-3.png',
-      text: 'Find Balance and Harmony with Astrological Guidance',
+      img: '../../../assets/images/hero-image-6.png',
+      text: '<span>Embrace the journey within—healing begins with self-awareness and renewal.</span>',
+      header: 'Healing',
     },
+    // {
+    //   _id: 4,
+    //   img: '../../../assets/images/hero-image-1.png',
+    //   text: 'Answers to Life’s Most Important Questions',
+    // },
+    // {
+    //   _id: 5,
+    //   img: '../../../assets/images/hero-image-2.png',
+    //   text: 'Guided Astrology to Navigate Life with Confidence',
+    // },
+    // {
+    //   _id: 6,
+    //   img: '../../../assets/images/hero-image-3.png',
+    //   text: 'Find Balance and Harmony with Astrological Guidance',
+    // },
   ];
 
   public otherApps = [

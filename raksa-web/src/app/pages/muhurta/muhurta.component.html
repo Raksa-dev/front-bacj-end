@@ -1,0 +1,112 @@
+<div class="muhurta-container">
+  <!-- Left Section - Form -->
+  <div class="form-section">
+    <div class="form-content">
+      <h1 class="page-title">Find Auspicious Time or Muhurtha</h1>
+      <p class="page-subtitle">
+        Enter your details below to find the perfect timing for your important
+        events.
+      </p>
+
+      <form
+        [formGroup]="muhurtaForm"
+        (ngSubmit)="onSubmit()"
+        class="muhurta-form"
+      >
+        <div class="form-group">
+          <input
+            type="email"
+            formControlName="email"
+            placeholder="Your Email Address"
+            class="form-input"
+            [class.error]="email?.invalid && email?.touched"
+          />
+          <div class="error-message" *ngIf="email?.invalid && email?.touched">
+            <span *ngIf="email?.errors?.['required']">Email is required</span>
+            <span *ngIf="email?.errors?.['email']"
+              >Please enter a valid email</span
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <input
+            type="tel"
+            formControlName="phone"
+            placeholder="Your Phone Number"
+            class="form-input"
+            [class.error]="phone?.invalid && phone?.touched"
+          />
+          <div class="error-message" *ngIf="phone?.invalid && phone?.touched">
+            <span *ngIf="phone?.errors?.['required']"
+              >Phone number is required</span
+            >
+            <span *ngIf="phone?.errors?.['pattern']"
+              >Please enter a valid 10-digit phone number</span
+            >
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          class="submit-btn"
+        >
+          <span *ngIf="!isLoading">Get Started For Free</span>
+          <span *ngIf="isLoading" class="loading-text">
+            <i class="bx bx-loader-alt bx-spin"></i>
+            Processing...
+          </span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Right Section - Astrological Chart -->
+  <div class="chart-section">
+    <div class="chart-container">
+      <div class="astrological-chart">
+        <!-- Outer Circle -->
+        <div class="chart-outer-circle">
+          <!-- Inner Circles -->
+          <div class="chart-inner-circle">
+            <div class="chart-center">
+              <!-- Astrological Symbols -->
+              <div class="symbol-group symbol-group-1">
+                <div class="symbol">♈</div>
+                <div class="symbol">♉</div>
+                <div class="symbol">♊</div>
+                <div class="symbol">♋</div>
+              </div>
+              <div class="symbol-group symbol-group-2">
+                <div class="symbol">♌</div>
+                <div class="symbol">♍</div>
+                <div class="symbol">♎</div>
+                <div class="symbol">♏</div>
+              </div>
+              <div class="symbol-group symbol-group-3">
+                <div class="symbol">♐</div>
+                <div class="symbol">♑</div>
+                <div class="symbol">♒</div>
+                <div class="symbol">♓</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Moon/Planet Sphere -->
+        <div class="moon-sphere"></div>
+
+        <!-- Radial Lines -->
+        <div class="radial-lines">
+          <div
+            class="radial-line"
+            *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]"
+          ></div>
+        </div>
+
+        <!-- Glow Effect -->
+        <div class="chart-glow"></div>
+      </div>
+    </div>
+  </div>
+</div>

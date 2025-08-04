@@ -1,0 +1,877 @@
+.loshu-container {
+  min-height: 100vh;
+  display: flex;
+  background: linear-gradient(135deg, #1a1a3a 0%, #2a2257 50%, #3a2a77 100%);
+  color: white;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Left Section - Form */
+.form-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #1a1a3a 0%, #2a2257 100%);
+}
+
+.form-content {
+  max-width: 480px;
+  width: 100%;
+}
+
+.page-title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #fff 0%, #5f05fb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.2;
+  text-shadow: 0 0 20px rgba(94, 6, 237, 0.3);
+}
+
+.page-subtitle {
+  font-size: 1.1rem;
+  color: #b3a7e6;
+  margin-bottom: 3rem;
+  line-height: 1.6;
+}
+
+.loshu-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  position: relative;
+}
+
+.form-input {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background: rgb(44, 36, 77);
+  border: 2px solid rgba(124, 5, 252, 0.516);
+  border-radius: 12px;
+  color: white;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.form-input::placeholder {
+  color: #8a7f9f;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #00d4ff;
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+  background: rgba(44, 36, 77, 0.8);
+}
+
+.form-input.error {
+  border-color: #ff6b6b;
+  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+}
+
+.error-message {
+  color: #ff6b6b;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 1rem 2rem;
+  background: #571cec;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+.submit-btn:hover:not(:disabled) {
+  background: #00b8e6;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 212, 255, 0.4);
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.loading-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* Right Section - Loshu Grid */
+.grid-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.grid-container {
+  position: relative;
+  width: 500px;
+  height: 500px;
+}
+
+.loshu-grid {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Mystical Figure */
+.mystical-figure {
+  position: absolute;
+  z-index: 10;
+  width: 200px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.figure-body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.head {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, #6200ff 0%, #460fd0 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 30px rgba(85, 0, 255, 0.6);
+}
+
+.eyes {
+  display: flex;
+  gap: 15px;
+}
+
+.eye {
+  width: 12px;
+  height: 12px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  animation: blink 3s ease-in-out infinite;
+}
+
+.third-eye {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  background: #9500ff;
+  border-radius: 50%;
+  box-shadow: 0 0 15px rgba(149, 0, 255, 0.8);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.body {
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 180px;
+  background: linear-gradient(135deg, #8800ff 0%, #00a8cc 100%);
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+}
+
+.chakra-center {
+  width: 30px;
+  height: 30px;
+  background: radial-gradient(circle, #fff 0%, #00d4ff 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+  animation: rotate 4s linear infinite;
+}
+
+.circuit-patterns {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.pattern-line {
+  position: absolute;
+  background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+  height: 2px;
+  border-radius: 1px;
+  animation: flow 3s ease-in-out infinite;
+}
+
+.line-1 {
+  top: 20%;
+  left: -20px;
+  width: 100px;
+  animation-delay: 0s;
+}
+
+.line-2 {
+  top: 40%;
+  right: -20px;
+  width: 100px;
+  animation-delay: 0.5s;
+}
+
+.line-3 {
+  top: 60%;
+  left: -20px;
+  width: 100px;
+  animation-delay: 1s;
+}
+
+.line-4 {
+  top: 80%;
+  right: -20px;
+  width: 100px;
+  animation-delay: 1.5s;
+}
+
+/* Loshu Grid */
+.grid-outer-circle {
+  width: 400px;
+  height: 400px;
+  border: 3px solid rgba(111, 0, 255, 0.6);
+  border-radius: 50%;
+  position: relative;
+  animation: rotate 60s linear infinite;
+}
+
+.grid-inner-circle {
+  width: 300px;
+  height: 300px;
+  border: 2px solid rgba(144, 0, 255, 0.4);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.grid-center {
+  width: 200px;
+  height: 200px;
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 5px;
+  padding: 20px;
+}
+
+.grid-numbers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 5px;
+  width: 100%;
+  height: 100%;
+}
+
+.grid-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 8px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #00d4ff;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.grid-radial-lines {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.radial-line {
+  position: absolute;
+  width: 2px;
+  height: 200px;
+  background: linear-gradient(to bottom, rgba(0, 212, 255, 0.8), transparent);
+  top: 50%;
+  left: 50%;
+  transform-origin: bottom center;
+}
+
+.radial-line:nth-child(1) {
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+.radial-line:nth-child(2) {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.radial-line:nth-child(3) {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+.radial-line:nth-child(4) {
+  transform: translate(-50%, -50%) rotate(135deg);
+}
+.radial-line:nth-child(5) {
+  transform: translate(-50%, -50%) rotate(180deg);
+}
+.radial-line:nth-child(6) {
+  transform: translate(-50%, -50%) rotate(225deg);
+}
+.radial-line:nth-child(7) {
+  transform: translate(-50%, -50%) rotate(270deg);
+}
+.radial-line:nth-child(8) {
+  transform: translate(-50%, -50%) rotate(315deg);
+}
+
+.grid-glow {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(
+    circle,
+    rgba(0, 212, 255, 0.1) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: glow 4s ease-in-out infinite alternate;
+}
+
+.figure-glow {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(
+    circle,
+    rgba(0, 212, 255, 0.2) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: glow 3s ease-in-out infinite alternate-reverse;
+}
+
+/* Security Message */
+.security-message {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  background: rgba(44, 36, 77, 0.9);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 12px;
+  padding: 1rem;
+  max-width: 300px;
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.security-icon {
+  color: #ffd700;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.security-text {
+  font-size: 0.9rem;
+  color: #b3a7e6;
+  line-height: 1.4;
+}
+
+/* Animations */
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  from {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes blink {
+  0%,
+  90%,
+  100% {
+    opacity: 1;
+  }
+  95% {
+    opacity: 0.3;
+  }
+}
+
+@keyframes flow {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes glow {
+  from {
+    opacity: 0.3;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .loshu-container {
+    flex-direction: column;
+  }
+
+  .form-section {
+    padding: 2rem 1rem;
+  }
+
+  .grid-section {
+    padding: 1rem;
+  }
+
+  .grid-container {
+    width: 350px;
+    height: 350px;
+  }
+
+  .grid-outer-circle {
+    width: 300px;
+    height: 300px;
+  }
+
+  .grid-inner-circle {
+    width: 220px;
+    height: 220px;
+  }
+
+  .grid-center {
+    width: 150px;
+    height: 150px;
+  }
+
+  .mystical-figure {
+    width: 150px;
+    height: 220px;
+  }
+
+  .head {
+    width: 60px;
+    height: 60px;
+  }
+
+  .body {
+    width: 40px;
+    height: 120px;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 2rem;
+  }
+
+  .page-subtitle {
+    font-size: 1rem;
+  }
+
+  .grid-container {
+    width: 280px;
+    height: 280px;
+  }
+
+  .grid-outer-circle {
+    width: 220px;
+    height: 220px;
+  }
+
+  .grid-inner-circle {
+    width: 160px;
+    height: 160px;
+  }
+
+  .grid-center {
+    width: 100px;
+    height: 100px;
+  }
+
+  .grid-number {
+    font-size: 1rem;
+  }
+
+  .mystical-figure {
+    width: 120px;
+    height: 180px;
+  }
+
+  .head {
+    width: 50px;
+    height: 50px;
+  }
+
+  .body {
+    width: 30px;
+    height: 100px;
+  }
+
+  .security-message {
+    position: relative;
+    bottom: auto;
+    right: auto;
+    margin-top: 2rem;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-content {
+    padding: 0 1rem;
+  }
+
+  .page-title {
+    font-size: 1.75rem;
+  }
+
+  .grid-container {
+    width: 220px;
+    height: 220px;
+  }
+
+  .grid-outer-circle {
+    width: 180px;
+    height: 180px;
+  }
+
+  .grid-inner-circle {
+    width: 120px;
+    height: 120px;
+  }
+
+  .grid-center {
+    width: 80px;
+    height: 80px;
+  }
+
+  .grid-number {
+    font-size: 0.8rem;
+  }
+
+  .mystical-figure {
+    width: 100px;
+    height: 150px;
+  }
+
+  .head {
+    width: 40px;
+    height: 40px;
+  }
+
+  .body {
+    width: 25px;
+    height: 80px;
+  }
+}
+
+/* Why Loshu Grid Section */
+.why-loshu-section {
+  background: linear-gradient(135deg, #1a1a3a 0%, #2a2257 100%);
+  padding: 4rem 2rem;
+  color: white;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #fff 0%, #5f05fb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-description {
+  font-size: 1.1rem;
+  color: #b3a7e6;
+  text-align: center;
+  margin-bottom: 3rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+.benefit-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.benefit-card {
+  background: rgba(44, 36, 77, 0.8);
+  border: 1px solid rgba(124, 5, 252, 0.3);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: left;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.benefit-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(124, 5, 252, 0.2);
+  border-color: rgba(124, 5, 252, 0.6);
+}
+
+.card-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #5f05fb 0%, #8800ff 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 1.5rem 0;
+  font-size: 1.5rem;
+  color: white;
+  box-shadow: 0 0 20px rgba(95, 5, 251, 0.3);
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.card-description {
+  color: #b3a7e6;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* Testimonials Section */
+.testimonials-section {
+  background: linear-gradient(135deg, #2a2257 0%, #3a2a77 100%);
+  padding: 4rem 2rem;
+  color: white;
+}
+
+.testimonial-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.testimonial-card {
+  background: rgba(44, 36, 77, 0.8);
+  border: 1px solid rgba(124, 5, 252, 0.3);
+  border-radius: 16px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.testimonial-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(124, 5, 252, 0.2);
+  border-color: rgba(124, 5, 252, 0.6);
+}
+
+.testimonial-content {
+  margin-bottom: 1.5rem;
+}
+
+.testimonial-quote {
+  color: #b3a7e6;
+  line-height: 1.6;
+  font-size: 0.95rem;
+  font-style: italic;
+}
+
+.testimonial-user {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-avatar {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #5f05fb 0%, #8800ff 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.user-info {
+  flex: 1;
+}
+
+.user-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 0.25rem;
+}
+
+.user-location {
+  color: #8a7f9f;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+/* Responsive Design for New Sections */
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .section-description {
+    font-size: 1rem;
+  }
+
+  .benefit-cards {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .testimonial-cards {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .benefit-card,
+  .testimonial-card {
+    padding: 1.5rem;
+  }
+
+  .card-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.25rem;
+  }
+
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .why-loshu-section,
+  .testimonials-section {
+    padding: 2rem 1rem;
+  }
+
+  .section-title {
+    font-size: 1.75rem;
+  }
+
+  .section-description {
+    font-size: 0.95rem;
+  }
+
+  .benefit-card,
+  .testimonial-card {
+    padding: 1rem;
+  }
+
+  .card-icon {
+    width: 45px;
+    height: 45px;
+    font-size: 1.1rem;
+  }
+
+  .user-avatar {
+    width: 35px;
+    height: 35px;
+    font-size: 0.9rem;
+  }
+}

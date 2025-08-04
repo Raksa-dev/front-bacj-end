@@ -1,0 +1,460 @@
+.muhurta-container {
+  min-height: 100vh;
+  display: flex;
+  background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 50%, #2a2257 100%);
+  color: white;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Left Section - Form */
+.form-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: rgba(16, 6, 30, 0.6);
+}
+
+.form-content {
+  max-width: 480px;
+  width: 100%;
+}
+
+.page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #fff 0%, #cfc6f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.2;
+}
+
+.page-subtitle {
+  font-size: 1.1rem;
+  color: #b3a7e6;
+  margin-bottom: 3rem;
+  line-height: 1.6;
+}
+
+.muhurta-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  position: relative;
+}
+
+.form-input {
+  width: 100%;
+  height: 50px;
+  padding: 1rem 1.5rem;
+  background: rgba(44, 36, 77, 0.6);
+  border: 2px solid rgba(134, 50, 243, 0.3);
+  border-radius: 12px;
+  color: white;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.form-input::placeholder {
+  color: #8a7f9f;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #8632f3;
+  box-shadow: 0 0 0 3px rgba(134, 50, 243, 0.1);
+  background: rgba(44, 36, 77, 0.8);
+}
+
+.form-input.error {
+  border-color: #ff6b6b;
+  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+}
+
+.error-message {
+  color: #ff6b6b;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 1rem 2rem;
+  background: #8632f3;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.submit-btn:hover:not(:disabled) {
+  background: #9a4ff5;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(134, 50, 243, 0.3);
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.loading-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* Right Section - Chart */
+.chart-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.chart-container {
+  position: relative;
+  width: 400px;
+  height: 400px;
+}
+
+.astrological-chart {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chart-outer-circle {
+  width: 350px;
+  height: 350px;
+  border: 2px solid rgba(134, 50, 243, 0.4);
+  border-radius: 50%;
+  position: relative;
+  animation: rotate 60s linear infinite;
+}
+
+.chart-inner-circle {
+  width: 280px;
+  height: 280px;
+  border: 1px solid rgba(134, 50, 243, 0.3);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.chart-center {
+  width: 200px;
+  height: 200px;
+  border: 1px solid rgba(134, 50, 243, 0.2);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.symbol-group {
+  position: absolute;
+  display: flex;
+  gap: 1rem;
+}
+
+.symbol-group-1 {
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.symbol-group-2 {
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.symbol-group-3 {
+  left: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  flex-direction: column;
+}
+
+.symbol {
+  font-size: 1.5rem;
+  color: #ffd700;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  animation: pulse 2s ease-in-out infinite alternate;
+}
+
+.moon-sphere {
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle, #e0e0e0 0%, #b0b0b0 100%);
+  border-radius: 50%;
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3),
+    inset 0 0 20px rgba(0, 0, 0, 0.2);
+  animation: float 3s ease-in-out infinite;
+}
+
+.radial-lines {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.radial-line {
+  position: absolute;
+  width: 1px;
+  height: 175px;
+  background: linear-gradient(to bottom, rgba(134, 50, 243, 0.6), transparent);
+  top: 50%;
+  left: 50%;
+  transform-origin: bottom center;
+}
+
+.radial-line:nth-child(1) {
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+.radial-line:nth-child(2) {
+  transform: translate(-50%, -50%) rotate(30deg);
+}
+.radial-line:nth-child(3) {
+  transform: translate(-50%, -50%) rotate(60deg);
+}
+.radial-line:nth-child(4) {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+.radial-line:nth-child(5) {
+  transform: translate(-50%, -50%) rotate(120deg);
+}
+.radial-line:nth-child(6) {
+  transform: translate(-50%, -50%) rotate(150deg);
+}
+.radial-line:nth-child(7) {
+  transform: translate(-50%, -50%) rotate(180deg);
+}
+.radial-line:nth-child(8) {
+  transform: translate(-50%, -50%) rotate(210deg);
+}
+.radial-line:nth-child(9) {
+  transform: translate(-50%, -50%) rotate(240deg);
+}
+.radial-line:nth-child(10) {
+  transform: translate(-50%, -50%) rotate(270deg);
+}
+.radial-line:nth-child(11) {
+  transform: translate(-50%, -50%) rotate(300deg);
+}
+.radial-line:nth-child(12) {
+  transform: translate(-50%, -50%) rotate(330deg);
+}
+
+.chart-glow {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(
+    circle,
+    rgba(134, 50, 243, 0.1) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: glow 4s ease-in-out infinite alternate;
+}
+
+/* Animations */
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  from {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0px);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+}
+
+@keyframes glow {
+  from {
+    opacity: 0.3;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .muhurta-container {
+    flex-direction: column;
+  }
+
+  .form-section {
+    padding: 2rem 1rem;
+  }
+
+  .chart-section {
+    padding: 1rem;
+  }
+
+  .chart-container {
+    width: 300px;
+    height: 300px;
+  }
+
+  .chart-outer-circle {
+    width: 250px;
+    height: 250px;
+  }
+
+  .chart-inner-circle {
+    width: 200px;
+    height: 200px;
+  }
+
+  .chart-center {
+    width: 150px;
+    height: 150px;
+  }
+
+  .moon-sphere {
+    width: 40px;
+    height: 40px;
+    top: -20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 2rem;
+  }
+
+  .page-subtitle {
+    font-size: 1rem;
+  }
+
+  .chart-container {
+    width: 250px;
+    height: 250px;
+  }
+
+  .chart-outer-circle {
+    width: 200px;
+    height: 200px;
+  }
+
+  .chart-inner-circle {
+    width: 150px;
+    height: 150px;
+  }
+
+  .chart-center {
+    width: 100px;
+    height: 100px;
+  }
+
+  .symbol {
+    font-size: 1rem;
+  }
+
+  .moon-sphere {
+    width: 30px;
+    height: 30px;
+    top: -15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-content {
+    padding: 0 1rem;
+  }
+
+  .page-title {
+    font-size: 1.75rem;
+  }
+
+  .chart-container {
+    width: 200px;
+    height: 200px;
+  }
+
+  .chart-outer-circle {
+    width: 150px;
+    height: 150px;
+  }
+
+  .chart-inner-circle {
+    width: 100px;
+    height: 100px;
+  }
+
+  .chart-center {
+    width: 60px;
+    height: 60px;
+  }
+
+  .symbol {
+    font-size: 0.8rem;
+  }
+
+  .moon-sphere {
+    width: 25px;
+    height: 25px;
+    top: -12px;
+  }
+}

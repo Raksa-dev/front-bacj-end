@@ -144,6 +144,57 @@
               Our Philosophy</a
             >
           </li>
+          <li
+            class="nav-item dropdown"
+            *ngIf="!showNotificationNavs"
+            ngbDropdown
+          >
+            <a
+              class="nav-link dropdown-toggle"
+              ngbDropdownToggle
+              (mouseenter)="showToolsDropdown = true"
+              (mouseleave)="showToolsDropdown = false"
+            >
+              Tools
+            </a>
+            <div
+              class="dropdown-menu"
+              ngbDropdownMenu
+              [class.show]="showToolsDropdown"
+              (mouseenter)="showToolsDropdown = true"
+              (mouseleave)="showToolsDropdown = false"
+            >
+              <a class="dropdown-item" routerLink="/horoscopes">
+                <i class="bx bx-star me-2"></i>Horoscopes
+              </a>
+              <a class="dropdown-item" routerLink="/match-making">
+                <i class="bx bx-heart me-2"></i>Match Making
+              </a>
+              <a class="dropdown-item" routerLink="/flames">
+                <i class="bx bx-flame me-2"></i>Flames Calculator
+              </a>
+              <a class="dropdown-item" routerLink="/learn">
+                <i class="bx bx-book-open me-2"></i>Learn Astrology
+              </a>
+              <a class="dropdown-item" routerLink="/who-am-i">
+                <i class="bx bx-user-circle me-2"></i>Who Am I
+              </a>
+              <a class="dropdown-item" routerLink="/loshu-grid">
+                <i class="bx bx-grid me-2"></i>Loshu Grid
+              </a>
+              <div class="dropdown-divider"></div>
+              <a
+                class="dropdown-item"
+                routerLink="/book"
+                [queryParams]="{ cat: 'panchanga' }"
+              >
+                <i class="bx bx-calendar me-2"></i>Panchanga
+              </a>
+              <a class="dropdown-item" routerLink="/muhurta">
+                <i class="bx bx-time me-2"></i>Muhurta
+              </a>
+            </div>
+          </li>
           <!-- <li class="nav-item" *ngIf="!showNotificationNavs">
             <a
               class="nav-link"

@@ -23,18 +23,41 @@
         <ng-container *ngFor="let testimonial of heroImage">
           <ng-template carouselSlide [id]="testimonial['_id'].toString()">
             <div class="hero-card">
+              <!-- <div class="text-center" style="margin-bottom: 10px">
+                <h5
+                  class="mb-0"
+                  style="font-size: 2rem; margin-bottom: 1px"
+                  [innerHTML]="testimonial.header"
+                ></h5> -->
+              <div class="text-center">
+                <div class="hero-text" style="width: 100%">
+                  {{ testimonial.header }}
+                </div>
+              </div>
+
               <div class="flex-grow-1">
                 <img
                   [src]="testimonial['img']"
                   [alt]="testimonial['text']"
                   [title]="testimonial['text']"
-                  height="300px"
+                  height="200px"
                   style="object-fit: contain"
                 />
               </div>
 
-              <div class="text-center">
-                <h5 class="mb-0">{{ testimonial["text"] }}</h5>
+              <div
+                class="text-center"
+                style="
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                "
+              >
+                <h5
+                  class="mb-0"
+                  style="text-align: center; width: 95%; font-size: 1rem"
+                  [innerHTML]="testimonial.text"
+                ></h5>
               </div>
             </div>
           </ng-template>

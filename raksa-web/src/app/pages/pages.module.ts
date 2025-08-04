@@ -42,6 +42,9 @@ import { OurstoryComponent } from './ourstory/ourstory.component';
 import { OurphilosophyComponent } from './ourphilosophy/ourphilosophy.component';
 import { PricingComponent } from './pricing/pricing.component';
 import { UserlandingpageComponent } from './userlandingpage/userlandingpage.component';
+import { MuhurtaComponent } from './muhurta/muhurta.component';
+import { LoshuGridComponent } from './loshu-grid/loshu-grid.component';
+import { WhoAmIComponent } from './who-am-i/who-am-i.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +77,9 @@ import { UserlandingpageComponent } from './userlandingpage/userlandingpage.comp
     OurphilosophyComponent,
     PricingComponent,
     UserlandingpageComponent,
+    MuhurtaComponent,
+    LoshuGridComponent,
+    WhoAmIComponent,
   ],
   imports: [
     CommonModule,

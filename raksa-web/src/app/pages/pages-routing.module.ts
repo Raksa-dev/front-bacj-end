@@ -31,6 +31,9 @@ import { OurstoryComponent } from './ourstory/ourstory.component';
 import { OurphilosophyComponent } from './ourphilosophy/ourphilosophy.component';
 import { PricingComponent } from './pricing/pricing.component';
 import { UserlandingpageComponent } from './userlandingpage/userlandingpage.component';
+import { MuhurtaComponent } from './muhurta/muhurta.component';
+import { LoshuGridComponent } from './loshu-grid/loshu-grid.component';
+import { WhoAmIComponent } from './who-am-i/who-am-i.component';
 
 const routes: Routes = [
   {
@@ -123,6 +126,18 @@ const routes: Routes = [
   {
     path: 'pricing',
     component: PricingComponent,
+  },
+  {
+    path: 'muhurta',
+    component: MuhurtaComponent,
+  },
+  {
+    path: 'who-am-i',
+    component: WhoAmIComponent,
+  },
+  {
+    path: 'loshu-grid',
+    component: LoshuGridComponent,
   },
   {
     path: 'privacy-policy',

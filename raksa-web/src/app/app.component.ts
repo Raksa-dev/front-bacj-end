@@ -50,6 +50,7 @@ export class AppComponent implements OnInit {
   public callNotificaitionArray;
   public showThreeNavs = true;
   public showNotificationNavs = false;
+  public showToolsDropdown = false;
 
   public otpInputConfig = {
     allowNumbersOnly: true,
