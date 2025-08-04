@@ -30,7 +30,7 @@
                   [innerHTML]="testimonial.header"
                 ></h5> -->
               <div class="text-center">
-                <div class="hero-text" style="width: 100%">
+                <div class="hero-text" style="width: 100%; font-size: 2rem">
                   {{ testimonial.header }}
                 </div>
               </div>
@@ -55,7 +55,12 @@
               >
                 <h5
                   class="mb-0"
-                  style="text-align: center; width: 95%; font-size: 1rem"
+                  style="
+                    text-align: center;
+                    width: 60%;
+                    font-size: 1rem;
+                    font-weight: 600;
+                  "
                   [innerHTML]="testimonial.text"
                 ></h5>
               </div>
